@@ -21,24 +21,34 @@
         <va-button type="submit" class="mt-2">
           Login
         </va-button>
+
+        <p>
+          {{keys}}
+        </p>
       </va-form>
     </div>
   </main>
 </template>
 
 <script>
+import {newCredentials} from "@/api/LiskAPI.ts";
+
 export default {
   name: "LoginView",
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      keys: {}
     }
   },
   methods: {
     handleSubmit() {
       return;
     }
+  },
+  beforeMount() {
+    this.keys = newCredentials();
   }
 }
 </script>
