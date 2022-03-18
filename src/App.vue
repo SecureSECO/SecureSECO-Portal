@@ -1,17 +1,18 @@
 <template>
-  <package-table></package-table>
+  <div id="app">
+    <Layout/>
+  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import PackageTable from './components/PackageTable.vue';
+import Layout from '@/components/layouts/Layout.vue';
 
-@Options({
+export default {
+  name: 'portal-app',
   components: {
-    PackageTable,
+    Layout,
   },
-})
-export default class App extends Vue {}
+};
 </script>
 
 <style>
