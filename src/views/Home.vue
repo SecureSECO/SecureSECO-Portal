@@ -7,7 +7,7 @@
 import PackageTableComponent from '@/components/PackageTableComponent.vue';
 
 export default {
-  name: 'home-component',
+  name: 'home-view',
   components: {
     PackageTableComponent,
   },

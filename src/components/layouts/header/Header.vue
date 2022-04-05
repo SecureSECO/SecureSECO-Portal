@@ -7,7 +7,7 @@
     </template>
     <template #center>
       <va-navbar-item>
-        <router-link to="/packages" class="text--header">Packages</router-link>
+        <router-link to="/add-package" class="text--header">Missing package?</router-link>
       </va-navbar-item>
     </template>
   </va-navbar>
