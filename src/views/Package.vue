@@ -7,7 +7,7 @@
 import PackageComponent from '@/components/PackageComponent.vue';
 
 export default {
-  name: 'package-component',
+  name: 'package-view',
   props: {
     id: String,
   },
