@@ -9,8 +9,7 @@ env:
   NODE_VERSION: 16
 
 jobs:
-  test:
-    name: test
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,7 +21,15 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Run unit tests
         run: npm run test:unit
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Run linter
         run: npm run lint
