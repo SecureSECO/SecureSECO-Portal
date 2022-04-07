@@ -3,7 +3,7 @@
 
 name: CI on pull-requests; unit testing and linting
 
-on: [push, pull_request]
+on: [pull_request]
 
 env:
   NODE_VERSION: 16
