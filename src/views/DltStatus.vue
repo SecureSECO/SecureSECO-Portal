@@ -16,7 +16,7 @@ export default {
     };
   },
   async mounted() {
-    const clientCache = await client.apiClient.createWSClient('ws://turtle.science.uu.nl:8080/ws');
+    const clientCache = await client.apiClient.createWSClient('ws://localhost:8080/ws');
 
     const nodeInfo = await clientCache.node.getNodeInfo();
     this.block_height = nodeInfo.height;
