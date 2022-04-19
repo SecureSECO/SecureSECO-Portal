@@ -10,6 +10,11 @@
         <router-link to="/add-package" class="text--header">Missing package?</router-link>
       </va-navbar-item>
     </template>
+    <template #right>
+      <va-navbar-item>
+        <router-link to="/dlt" class="text--header">DLT Information</router-link>
+      </va-navbar-item>
+    </template>
   </va-navbar>
 </template>
 
