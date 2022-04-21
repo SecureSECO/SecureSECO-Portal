@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PackageComponent from '@/components/PackageComponent.vue';
 import Home from '../views/Home.vue';
+import Package from '../views/Package.vue';
+import AddPackage from '../views/AddPackage.vue';
+import DltStatus from '../views/DltStatus.vue';
 
 const routes = [
   {
@@ -11,7 +13,19 @@ const routes = [
   {
     path: '/package/:id',
     name: 'Package',
-    component: PackageComponent,
+    component: Package,
+    props: true,
+  },
+  {
+    path: '/add-package',
+    name: 'Add Package',
+    component: AddPackage,
+    props: true,
+  },
+  {
+    path: '/dlt',
+    name: 'Dlt Status',
+    component: DltStatus,
     props: true,
   },
 ];
