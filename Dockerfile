@@ -1,7 +1,7 @@
 FROM node:12.22.9
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
