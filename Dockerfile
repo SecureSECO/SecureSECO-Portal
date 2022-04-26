@@ -1,4 +1,4 @@
-FROM node:12.22.9
+FROM node:12.22.9 as build
 
 # Create app directory
 WORKDIR /app
@@ -11,3 +11,6 @@ RUN npm install
 COPY . .
 
 CMD [ "npm", "run", "build" ]
+
+FROM scratch
+COPY --from=build /app/dist /dist
