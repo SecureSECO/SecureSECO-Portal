@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api/DLTPlugin';
-import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'package-table-component',

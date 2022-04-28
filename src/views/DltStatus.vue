@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/no-unresolved
 import * as client from 'lisk-client';
 
 export default {
