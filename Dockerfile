@@ -1,7 +1,7 @@
-FROM node:12.22.9
+FROM node:18 as build
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
@@ -10,4 +10,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-CMD [ "npm", "run", "build" ]
+RUN npm run build
+
+FROM scratch
+COPY --from=build /app/dist /dist
