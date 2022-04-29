@@ -1,39 +1,46 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-import Packages from '../views/Packages.vue';
-import Package from '../views/Package.vue';
-import AddPackage from '../views/AddPackage.vue';
-import DltStatus from '../views/DltStatus.vue';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Layout from '@/components/layout/Layout.vue';
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
+    path: '/:catchAll(.*)',
+    redirect: { name: 'Home' },
+  },
+  {
+    name: 'app',
     path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/packages',
-    name: 'View Packages list',
-    component: Packages,
-    props: true,
-  },
-  {
-    path: '/package/:id',
-    name: 'Package',
-    component: Package,
-    props: true,
-  },
-  {
-    path: '/add-package',
-    name: 'Add Package',
-    component: AddPackage,
-    props: true,
-  },
-  {
-    path: '/dlt',
-    name: 'Dlt Status',
-    component: DltStatus,
-    props: true,
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('@/views/Home.vue'),
+      },
+      {
+        path: 'packages',
+        name: 'View Packages list',
+        component: () => import('@/views/Packages.vue'),
+        props: true,
+      },
+      {
+        path: 'package/:id',
+        name: 'Package',
+        component: () => import('@/views/Package.vue'),
+        props: true,
+      },
+      {
+        path: 'add-package',
+        name: 'Add Package',
+        component: () => import('@/views/AddPackage.vue'),
+        props: true,
+      },
+      {
+        path: 'dlt',
+        name: 'Dlt Status',
+        component: () => import('@/views/DltStatus.vue'),
+        props: true,
+      },
+    ],
   },
 ];
 

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Footer from './footer/Footer.vue';
-import Header from './header/Header.vue';
+import Footer from './Footer.vue';
+import Header from './Header.vue';
 
 export default {
   name: 'layout-component',
