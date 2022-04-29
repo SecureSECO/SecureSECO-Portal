@@ -1,16 +1,10 @@
 <template>
-  <h1 class="display-5">Package Table</h1>
-  <package-table-component></package-table-component>
+  <h1 class="display-5">Welcome</h1>
 </template>
 
 <script>
-import PackageTableComponent from '@/components/PackageTableComponent.vue';
-
 export default {
   name: 'home-view',
-  components: {
-    PackageTableComponent,
-  },
 };
 </script>
 
