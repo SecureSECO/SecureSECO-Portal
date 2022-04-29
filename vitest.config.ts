@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
@@ -19,5 +19,5 @@ export default defineConfig({
       ),
     },
   },
-  setupFiles: ['../../src/main.ts']
-})
+  setupFiles: ['../../src/main.ts'],
+});

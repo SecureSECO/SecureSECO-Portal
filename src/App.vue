@@ -17,7 +17,8 @@ export default {
 //  background: var(--va-background);
 </script>
 
-<style>
+<style lang="scss">
+@import './sass/main.scss';
 #app {
   font-family: 'Source Sans Pro', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

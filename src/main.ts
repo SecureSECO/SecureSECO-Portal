@@ -5,7 +5,6 @@ import { DLTPlugin } from '@/api/DLTPlugin';
 import App from './App.vue';
 
 import router from './router';
-import 'vuestic-ui/dist/vuestic-ui.css';
 
 const dltPlugin = new Mocking();
 
