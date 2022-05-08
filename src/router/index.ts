@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import Package from '../views/Package.vue';
 import AddPackage from '../views/AddPackage.vue';
 import DltStatus from '../views/DltStatus.vue';
+import SpiderPackage from '../views/SpiderPackage.vue';
 
 const routes = [
   {
@@ -26,6 +27,12 @@ const routes = [
     path: '/dlt',
     name: 'Dlt Status',
     component: DltStatus,
+    props: true,
+  },
+  {
+    path: '/spider-package',
+    name: 'Spider package',
+    component: SpiderPackage,
     props: true,
   },
 ];

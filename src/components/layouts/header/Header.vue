@@ -9,6 +9,9 @@
       <va-navbar-item>
         <router-link to="/add-package" class="text--header">Missing package?</router-link>
       </va-navbar-item>
+      <va-navbar-item>
+        <router-link to="/spider-package" class="text--header">Spider package</router-link>
+      </va-navbar-item>
     </template>
     <template #right>
       <va-navbar-item>
