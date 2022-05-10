@@ -14,6 +14,7 @@
     "@liskhq/lisk-client": "^5.2.1",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "schema": "Fides-UU/TrustSECO-Schema",
     "vite": "^2.9.1",
     "vue": "^3.2.33",
     "vue-class-component": "^8.0.0-0",
