@@ -1,9 +1,11 @@
 <template>
-  <div id="layout">
+  <div class="app">
     <Header/>
-    <div class="flex-center md6" style="padding: 0.75rem">
-      <div class="main-content-inner">
-        <router-view/>
+    <div class="app__content">
+      <div class="app__page">
+        <div class="layout fluid gutter--xl">
+          <router-view/>
+        </div>
       </div>
     </div>
     <Footer/>
@@ -11,8 +13,8 @@
 </template>
 
 <script>
-import Footer from './Footer.vue';
 import Header from './Header.vue';
+import Footer from './Footer.vue';
 
 export default {
   name: 'layout-component',
@@ -23,12 +25,25 @@ export default {
 };
 </script>
 
-<style>
-html body {
-  font-family: Source Sans Pro,serif;
-}
+<style lang="scss">
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 
-.main-content-inner {
-  width: 60%;
+  &__navbar {
+    min-height: 4rem;
+  }
+
+  &__content {
+    display: flex;
+    height: calc(100vh - 4rem);
+    flex: 1;
+  }
+
+  &__page {
+    flex-grow: 2;
+    overflow-y: scroll;
+  }
 }
 </style>
