@@ -40,6 +40,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/DltStatus.vue'),
         props: true,
       },
+      {
+        path: 'spider-package',
+        name: 'Spider package',
+        component: () => import('@/views/SpiderPackage.vue'),
+        props: true,
+      },
     ],
   },
 ];
