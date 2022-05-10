@@ -1,19 +1,20 @@
 <template>
-  <div id="app">
-    <Layout/>
-  </div>
+  <router-view/>
 </template>
 
 <script lang="ts">
-import Layout from '@/components/layouts/Layout.vue';
-
 export default {
   name: 'portal-app',
-  components: {
-    Layout,
-  },
 };
 </script>
 
-<style>
+<style lang="scss">
+@import './sass/main.scss';
+#app {
+  font-family: 'Source Sans Pro', Avenir, Helvetica, Arial, sans-serif;
+}
+body {
+  margin: 0;
+  background: var(--va-background);
+}
 </style>

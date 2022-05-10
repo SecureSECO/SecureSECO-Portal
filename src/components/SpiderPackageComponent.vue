@@ -6,45 +6,45 @@
       @submit.prevent="handleSubmit"
     >
       <va-input
-        class="mb-4"
         v-model="request_data.project_info.project_platform"
+        class="mb-4"
         label="Project Platform"
       />
 
       <va-input
-        class="mb-4"
         v-model="request_data.project_info.project_owner"
+        class="mb-4"
         label="Project Owner"
       />
 
       <va-input
-        class="mb-4"
         v-model="request_data.project_info.project_name"
+        class="mb-4"
         label="Project Name"
       />
 
       <va-input
-        class="mb-4"
         v-model="request_data.project_info.project_release"
+        class="mb-4"
         label="Project Release"
       />
 
       <va-input
-        class="mb-4"
         v-model="request_data.project_info.project_year"
+        class="mb-4"
         label="Project Year"
       />
 
       <va-select
-        class="mt-2"
-        label="Role"
         v-model="request_data.cve_data_points"
         :options="cve_data_points_options"
-        multiple
+        class="mt-2"
         clearable
+        label="Role"
+        multiple
       />
 
-      <va-button type="submit" class="mt-2">
+      <va-button class="mt-2" type="submit">
         Spider!
       </va-button>
     </va-form>
@@ -88,7 +88,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/DLTPlugin';
 import axios from 'axios';
 
 export default defineComponent({
