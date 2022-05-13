@@ -35,12 +35,6 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
       },
       {
-        path: 'dlt',
-        name: 'Dlt Status',
-        component: () => import('@/views/DltStatus.vue'),
-        props: true,
-      },
-      {
         path: 'spider-package',
         name: 'Spider package',
         component: () => import('@/views/SpiderPackage.vue'),
