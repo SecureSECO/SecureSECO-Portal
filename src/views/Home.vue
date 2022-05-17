@@ -28,7 +28,14 @@ import TrustFactsTableComponent from '../components/tables/TrustFactsTableCompon
 
 export default {
   name: 'home-view',
-  components: { TrustFactsTableComponent, DownloadCosyButton, SpiderToggleButton, SpiderLogComponent, AddJobComponent, JobsListComponent },
+  components: {
+    TrustFactsTableComponent,
+    DownloadCosyButton,
+    SpiderToggleButton,
+    SpiderLogComponent,
+    AddJobComponent,
+    JobsListComponent,
+  },
 };
 </script>
 
