@@ -23,6 +23,12 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
       },
       {
+        path: 'user/profile',
+        name: 'User Profile',
+        component: () => import('@/views/UserProfile.vue'),
+        props: true,
+      },
+      {
         path: 'package/:id',
         name: 'Package',
         component: () => import('@/views/Package.vue'),
