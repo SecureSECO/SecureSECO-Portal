@@ -15,14 +15,19 @@ export default defineComponent({
       logs: [],
     };
   },
-  async created() {
-    const connection = new WebSocket('ws://localhost:3000/websocket');
+  async mounted() {
+    this.setupWebsocket();
+  },
+  methods: {
+    setupWebsocket() {
+      const connection = new WebSocket('ws://localhost:3000/websocket');
 
-    connection.onmessage = (message) => {
-      this.logs.push(message.data);
+      connection.onmessage = (message) => {
+        this.logs.push(message.data);
 
-      if (this.logs.length > 10) this.logs.shift();
-    };
+        if (this.logs.length > 10) this.logs.shift();
+      };
+    },
   },
 });
 </script>
