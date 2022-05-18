@@ -54,10 +54,10 @@
 
 <script>
 import JobsListComponent from '../components/tables/JobsTableComponent.vue';
-import AddJobComponent from '../components/AddJobComponent.vue';
-import SpiderLogComponent from '../components/SpiderLogComponent.vue';
-import SpiderToggleButton from '../components/button/SpiderToggleButton.vue';
-import DownloadCosyButton from '../components/button/DownloadCoSyButton.vue';
+import AddJobComponent from '../components/AddJob.vue';
+import SpiderLogComponent from '../components/SpiderLog.vue';
+import SpiderToggleButton from '../components/button/SpiderToggle.vue';
+import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
 import TrustFactsTableComponent from '../components/tables/TrustFactsTableComponent.vue';
 
 export default {
