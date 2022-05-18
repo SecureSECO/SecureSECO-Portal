@@ -5,7 +5,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import SpiderLogComponent from '@/components/SpiderLog.vue';
 
 export default defineComponent({
   name: 'spider-toggle-button',

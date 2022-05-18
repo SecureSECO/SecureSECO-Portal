@@ -14,7 +14,7 @@ import { Package } from '@/api/DLTPlugin';
 export default defineComponent({
   name: 'package-table-component',
   data() {
-    const packages : Package[] = [];
+    const packages: Package[] = [];
 
     const columns = [
       { key: 'name' },

@@ -53,12 +53,12 @@
 </template>
 
 <script>
-import JobsListComponent from '../components/tables/JobsTableComponent.vue';
+import JobsListComponent from '../components/tables/JobsTable.vue';
 import AddJobComponent from '../components/AddJob.vue';
 import SpiderLogComponent from '../components/SpiderLog.vue';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
-import TrustFactsTableComponent from '../components/tables/TrustFactsTableComponent.vue';
+import TrustFactsTableComponent from '../components/tables/TrustFactsTable.vue';
 
 export default {
   name: 'home-view',
