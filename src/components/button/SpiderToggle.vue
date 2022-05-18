@@ -1,5 +1,10 @@
 <template>
-  <va-button v-on:click="toggleSpider">{{ running ? 'Stop Spider' : 'Start spider' }}</va-button>
+  <va-switch v-model="isRunning" :color="getColor" left-label>
+    {{ getStatusText }}
+  </va-switch>
+  <!--  <va-button :color="getColor" v-on:click="toggleSpider">-->
+  <!--    {{ getStatusText }}-->
+  <!--  </va-button>-->
 </template>
 
 <script lang="ts">
@@ -10,18 +15,26 @@ export default defineComponent({
   name: 'spider-toggle-button',
   data() {
     return {
-      running: false,
+      isRunning: false,
     };
   },
   async mounted() {
     const { data } = await axios.get('http://localhost:3000/api/spider/status');
-    this.running = data;
+    this.isRunning = data;
+  },
+  computed: {
+    getColor() {
+      return (this.isRunning ? 'success' : 'warning');
+    },
+    getStatusText() {
+      return (this.isRunning ? 'Spider is ON' : 'Spider is OFF');
+    },
   },
   methods: {
     async toggleSpider() {
-      await axios.post(`http://localhost:3000/api/spider/${this.running ? 'stop' : 'start'}`);
+      // await axios.post(`http://localhost:3000/api/spider/${this.running ? 'stop' : 'start'}`);
 
-      this.running = !this.running;
+      this.isRunning = !this.isRunning;
     },
   },
 });

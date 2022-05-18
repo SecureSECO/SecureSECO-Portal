@@ -13,6 +13,9 @@
         <va-navbar-item>
           <va-button flat to="/">My rewards</va-button>
         </va-navbar-item>
+        <va-navbar-item>
+          <SpiderToggleButton/>
+        </va-navbar-item>
       </template>
       <template v-slot:right>
         <va-navbar-item>
@@ -24,13 +27,21 @@
 </template>
 
 <script>
+import SpiderToggleButton from '../button/SpiderToggle.vue';
+import DownloadCosyButton from '../button/DownloadCoSy.vue';
+
 export default {
   name: 'header-component',
+  components: {
+    SpiderToggleButton,
+    DownloadCosyButton,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .va-navbar {
   box-shadow: var(--va-box-shadow);
+  z-index: 1;
 }
 </style>
