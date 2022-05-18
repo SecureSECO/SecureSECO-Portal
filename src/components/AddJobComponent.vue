@@ -1,38 +1,26 @@
 <template>
-  <va-form style="width: 300px; padding: 0.75rem">
-    <va-input
-      class="mb-4"
-      label="Package platform"
-      v-model="job.platform"
-      :rules="[value => (value && value.length > 0) || 'Field is required']"
-    />
-
-    <va-input
-      class="mb-4"
-      label="Package Owner"
-      v-model="job.owner"
-      :rules="[value => (value && value.length > 0) || 'Field is required']"
-    />
-
-    <va-input
-      class="mb-4"
-      label="Package name"
-      v-model="job.name"
-      :rules="[value => (value && value.length > 0) || 'Field is required']"
-    />
-
-    <va-input
-      class="mb-4"
-      label="Package Release"
-      v-model="job.release"
-      :rules="[value => (value && value.length > 0) || 'Field is required']"
-    />
-    <va-button v-on:click="addJob" type="submit" class="mt-2">
-      Submit
-    </va-button>
-  </va-form>
-  <div v-if="response">
-    <p>{{ response }}</p>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Add job</va-card-title>
+        <va-card-content>
+          <va-form>
+            <div class="row">
+              <va-input v-model="job.platform" :rules="[validateRequired]" class="flex xs6" label="Platform" />
+              <va-input v-model="job.owner" :rules="[validateRequired]" class="flex xs6" label="Owner" />
+              <va-input v-model="job.name" :rules="[validateRequired]" class="flex xs6" label="Name" />
+              <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Release" />
+              <div class="flex xs12">
+                <va-button type="submit" @click="addJob">Submit</va-button>
+                <div v-if="response">
+                  <p>{{ response }}</p>
+                </div>
+              </div>
+            </div>
+          </va-form>
+        </va-card-content>
+      </va-card>
+    </div>
   </div>
 </template>
 
@@ -48,7 +36,7 @@ interface Job {
 }
 
 export default defineComponent({
-  name: 'add-job-component',
+  name: 'add-package-component',
   data() {
     return {
       response: '',
@@ -64,6 +52,9 @@ export default defineComponent({
     async addJob(job: Job) {
       const { data } = await axios.post('http://localhost:3000/api/dlt/add-job', job);
       this.response = data;
+    },
+    validateRequired(value) {
+      return (value && value.length > 0) || 'Field is required';
     },
   },
 });
