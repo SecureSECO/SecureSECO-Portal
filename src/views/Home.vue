@@ -5,9 +5,6 @@
   <h5>Add job</h5>
   <add-job-component/>
   <hr/>
-  <h5>Spider logs</h5>
-  <spider-log-component/>
-  <hr/>
   <h5>Spider toggle button</h5>
   <SpiderToggleButton/>
   <hr/>
@@ -24,14 +21,12 @@ import AddJobComponent from '../components/AddJobComponent.vue';
 import SpiderToggleButton from '../components/button/SpiderToggleButton.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSyButton.vue';
 import TrustFactsTableComponent from '../components/tables/TrustFactsTableComponent.vue';
-import SpiderLogComponent from '../components/SpiderLogComponent.vue';
 
 export default {
   name: 'home-view',
   components: {
     TrustFactsTableComponent,
     DownloadCosyButton,
-    SpiderLogComponent,
     SpiderToggleButton,
     AddJobComponent,
     JobsListComponent,
