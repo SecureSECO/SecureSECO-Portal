@@ -8,6 +8,9 @@
       </template>
       <template v-slot:center>
         <va-navbar-item>
+          <va-button flat to="/metrics">Metrics</va-button>
+        </va-navbar-item>
+        <va-navbar-item>
           <va-button text-color="white" to="/packages">Trust Scores</va-button>
         </va-navbar-item>
         <va-navbar-item>
