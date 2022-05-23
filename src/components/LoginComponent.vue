@@ -18,7 +18,7 @@
         type="password"
       />
 
-      <va-button type="submit" class="mt-2">Submit</va-button>
+      <va-button type="submit" class="mt-2">Log in</va-button>
     </va-form><p v-if="showError" id="error">Login incorrect</p>
   </div>
 </template>

@@ -1,19 +1,26 @@
 <template>
+  <h1 class="display-5">Register login</h1>
   <div class="register">
-    <div>
-      <form @submit.prevent="registerUser">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" name="username" v-model="form.username" />
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" name="password" v-model="form.password" />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-    <p v-if="showError" id="error">Username already exists</p>
+    <va-form
+      style="width: 300px;"
+      tag="form"
+      @submit.prevent="registerUser"
+    >
+      <va-input
+        v-model="form.username"
+        class="mb-4"
+        label="Username"
+      />
+
+      <va-input
+        v-model="form.password"
+        class="mb-4"
+        label="Password"
+        type="password"
+      />
+
+      <va-button type="submit" class="mt-2">Register</va-button>
+    </va-form><p v-if="showError" id="error">Username already exists</p>
   </div>
 </template>
 
