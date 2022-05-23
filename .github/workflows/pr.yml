@@ -5,20 +5,13 @@ name: CI on pull-requests; unit testing and linting
 
 on: [pull_request]
 
-env:
-  NODE_VERSION: 16
-
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    container: node:16
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
       - name: Install dependencies
         run: npm install
       - name: Run unit tests and linter
