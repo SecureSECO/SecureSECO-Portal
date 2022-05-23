@@ -1,19 +1,25 @@
 <template>
   <div class="login">
-    <div>
-      <form @submit.prevent="tryLogIn">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" name="username" v-model="form.username" />
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" name="password" v-model="form.password" />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-      <p v-if="showError" id="error">Login incorrect</p>
-    </div>
+    <va-form
+      style="width: 300px;"
+      tag="form"
+      @submit.prevent="tryLogIn"
+    >
+      <va-input
+        v-model="form.username"
+        class="mb-4"
+        label="Username"
+      />
+
+      <va-input
+        v-model="form.password"
+        class="mb-4"
+        label="Password"
+        type="password"
+      />
+
+      <va-button type="submit" class="mt-2">Submit</va-button>
+    </va-form><p v-if="showError" id="error">Login incorrect</p>
   </div>
 </template>
 
@@ -22,7 +28,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: "Login",
-  components: {},
+  components: { },
   data() {
     return {
       form: {
