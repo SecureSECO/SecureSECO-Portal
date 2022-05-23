@@ -14,6 +14,7 @@
     "@vitejs/plugin-vue": "^2.3.1",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "schema": "Fides-UU/TrustSECO-Schema",
     "font-awesome": "^4.7.0",
     "vite": "^2.9.1",
     "vitest": "^0.10.0",

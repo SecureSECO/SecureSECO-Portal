@@ -17,6 +17,7 @@
       <template v-slot:right>
         <va-navbar-item>
           <span v-if="isLoggedIn">
+            <router-link to="/user/profile">User</router-link> | 
             <a @click="logout">Logout</a>
           </span>
           <span v-else>
