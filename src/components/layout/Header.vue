@@ -16,7 +16,14 @@
       </template>
       <template v-slot:right>
         <va-navbar-item>
-          <router-link to="/user/profile">User</router-link>
+          <span v-if="isLoggedIn">
+            <router-link to="/user/profile">User</router-link> | 
+            <a @click="logout">Logout</a>
+          </span>
+          <span v-else>
+            <router-link to="/user/register">Register</router-link> |
+            <router-link to="/user/login">Login</router-link>
+          </span>
         </va-navbar-item>
       </template>
     </va-navbar>
@@ -26,7 +33,16 @@
 <script>
 export default {
   name: 'header-component',
-};
+  computed : {
+      isLoggedIn : function(){ return this.$store.getters.isAuthenticated}
+    },
+    methods: {
+      async logout (){
+        await this.$store.dispatch('LogOut')
+        this.$router.push('/user/login')
+      }
+    },
+}
 </script>
 
 <style lang="scss" scoped>
