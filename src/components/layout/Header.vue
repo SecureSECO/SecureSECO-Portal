@@ -28,13 +28,11 @@
 
 <script>
 import SpiderToggleButton from '../button/SpiderToggle.vue';
-import DownloadCosyButton from '../button/DownloadCoSy.vue';
 
 export default {
   name: 'header-component',
   components: {
     SpiderToggleButton,
-    DownloadCosyButton,
   },
 };
 </script>
