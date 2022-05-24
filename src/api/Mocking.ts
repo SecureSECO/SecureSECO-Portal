@@ -15,7 +15,7 @@ export default class Mocking extends DLTPlugin {
 
   retrievePackages(): Package[] {
     const packages: Package[] = [];
-    for (let id = 0; id < 100; id += 1) {
+    for (let id = 0; id < 50; id += 1) {
       packages[id] = {
         id: `package-${id}`,
         name: `Package ${id}`,

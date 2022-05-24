@@ -14,13 +14,15 @@
     "@vitejs/plugin-vue": "^2.3.1",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "schema": "Fides-UU/TrustSECO-Schema",
     "font-awesome": "^4.7.0",
     "vite": "^2.9.1",
     "vitest": "^0.10.0",
     "vue": "^3.2.33",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.14",
-    "vuestic-ui": "^1.3.1"
+    "vuestic-ui": "^1.3.1",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
