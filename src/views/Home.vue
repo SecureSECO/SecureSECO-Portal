@@ -1,30 +1,64 @@
 <template>
-  <h5>Job list</h5>
-  <jobs-list-component/>
-  <hr/>
-  <h5>Add job</h5>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Job list</va-card-title>
+        <va-card-content>
+          <jobs-list-component/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
   <add-job-component/>
-  <hr/>
-  <h5>Spider logs</h5>
-  <spider-log-component/>
-  <hr/>
-  <h5>Spider toggle button</h5>
-  <SpiderToggleButton/>
-  <hr/>
-  <h5>Download</h5>
-  <DownloadCosyButton/>
-  <hr/>
-  <h5>Trust Facts</h5>
-  <TrustFactsTableComponent/>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Spider logs</va-card-title>
+        <va-card-content>
+          <spider-log-component/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Spider toggle button</va-card-title>
+        <va-card-content>
+          <SpiderToggleButton/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Download</va-card-title>
+        <va-card-content>
+          <DownloadCosyButton/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Trust Facts</va-card-title>
+        <va-card-content>
+          <TrustFactsTableComponent/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
 </template>
 
 <script>
-import JobsListComponent from '../components/tables/JobsTableComponent.vue';
-import AddJobComponent from '../components/AddJobComponent.vue';
-import SpiderToggleButton from '../components/button/SpiderToggleButton.vue';
-import DownloadCosyButton from '../components/button/DownloadCoSyButton.vue';
-import TrustFactsTableComponent from '../components/tables/TrustFactsTableComponent.vue';
-import SpiderLogComponent from '../components/SpiderLogComponent.vue';
+import JobsListComponent from '../components/tables/JobsTable.vue';
+import AddJobComponent from '../components/AddJob.vue';
+import SpiderToggleButton from '../components/button/SpiderToggle.vue';
+import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
+import TrustFactsTableComponent from '../components/tables/TrustFactsTable.vue';
+import SpiderLogComponent from '../components/SpiderLog.vue';
 
 export default {
   name: 'home-view',

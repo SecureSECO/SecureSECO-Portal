@@ -10,9 +10,11 @@ export default {
 
 <style lang="scss">
 @import './sass/main.scss';
+
 #app {
   font-family: 'Source Sans Pro', Avenir, Helvetica, Arial, sans-serif;
 }
+
 body {
   margin: 0;
   background: var(--va-background);
