@@ -3,7 +3,7 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
-          <router-link class="text--header" to="/">TrustSECO - Home</router-link>
+          <router-link class="text--header" to="/">TrustSECO - {{ currentRoute }}</router-link>
         </va-navbar-item>
       </template>
       <template v-slot:center>
@@ -11,10 +11,7 @@
           <va-button flat to="/metrics">Metrics</va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button text-color="white" to="/packages">Trust Scores</va-button>
-        </va-navbar-item>
-        <va-navbar-item>
-          <va-button flat to="/">My rewards</va-button>
+          <va-button flat to="/packages">Trust Scores</va-button>
         </va-navbar-item>
         <va-navbar-item>
           <SpiderToggleButton/>
@@ -36,6 +33,11 @@ export default {
   name: 'header-component',
   components: {
     SpiderToggleButton,
+  },
+  computed: {
+    currentRoute() {
+      return this.$route.name;
+    },
   },
 };
 </script>
