@@ -1,9 +1,5 @@
 <template>
-  <va-input
-    class="mb-4"
-    v-model="package"
-    placeholder="Enter package name"
-  />
+  <va-input v-model="package" class="mb-4" placeholder="Enter package name"/>
   <va-button v-on:click="getFacts">Search!</va-button>
   <va-data-table :items="trust_facts"></va-data-table>
 </template>

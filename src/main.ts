@@ -16,6 +16,6 @@ createApp(App)
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $dltPlugin: DLTPlugin
+    $dltPlugin: DLTPlugin;
   }
 }

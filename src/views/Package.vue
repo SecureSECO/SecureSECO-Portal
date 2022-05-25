@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import PackageComponent from '@/components/PackageComponent.vue';
+import PackageComponent from '@/components/Package.vue';
 
 export default {
   name: 'package-view',

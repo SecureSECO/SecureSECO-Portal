@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import PackageTableComponent from '@/components/PackageTableComponent.vue';
+import PackageTableComponent from '@/components/PackageTable.vue';
 
 export default {
   name: 'packages-view',
