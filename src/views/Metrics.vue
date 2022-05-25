@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import SpiderLogComponent from '../components/SpiderLogComponent.vue';
+import SpiderLogComponent from '../components/SpiderLog.vue';
 
 export default {
   name: 'metrics-view',
