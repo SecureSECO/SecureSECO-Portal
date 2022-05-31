@@ -22,7 +22,7 @@
       </template>
       <template v-slot:right>
         <va-navbar-item>
-          <router-link to="/">Youri</router-link>
+          <router-link to="/user/profile">Settings</router-link>
         </va-navbar-item>
       </template>
     </va-navbar>
