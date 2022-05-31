@@ -19,7 +19,7 @@ env:
 jobs:
   build-and-push-image:
     runs-on: self-hosted
-    container: ubuntu:latest
+    container: docker:latest
     permissions:
       contents: read
       packages: write
