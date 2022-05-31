@@ -33,7 +33,7 @@
         label="DLT GPG key"
         value="data.dlt_gpg"
       />
-
+      <va-button type="submit" class="mt-2">Save</va-button>
     </va-form>
 
   </div>
@@ -54,7 +54,7 @@ export default defineComponent({
           gh_profile_link: '',
           gh_token: '',
           librariesio_token: '',
-          dlt_gpg: 'test',
+          dlt_gpg: '',
         },
       },
       package_data: {},
@@ -63,36 +63,34 @@ export default defineComponent({
   },
   methods: {
     async handleSubmit() {
-	  axios.post('/spider/store-github-link', {
-		data: request_data.gh_profile_link
-	  })
-	  .then(function (response) {
-	  })
-	  .catch(function (error) {
-	  });
-	  
-	  axios.post('/spider/store-github-token', {
-		data: request_data.gh_token
-	  })
-	  .then(function (response) {
-	  })
-	  .catch(function (error) {
-	  });
-	  
-	  axios.post('/spider/store-librariesio-token', {
-		data: request_data.librariesio_token
-	  })
-	  .then(function (response) {
-	  })
-	  .catch(function (error) {
-	  });
-	  
+      axios.post('/api/dlt/store-github-link', {
+        data: this.request_data.user.gh_profile_link
+      })
+      .then(function (response) {
+      })
+      .catch(function (error) {
+      });
+
+      /*
+      axios.post('/api/dlt/store-github-token', {
+        data: this.request_data.user.gh_token
+      }).then(function (response) {     })
+        .catch(function (error) {      });
+      
+      
+      axios.post('/spider/store-librariesio-token', {
+      data: this.request_data.user.librariesio_token
+      })
+      .then(function (response) {
+      })
+      .catch(function (error) {
+      });*/
       console.log("User data updated");
     },
   },
   async created() {
     const { data: { gh_profile_link } } = await axios.get('http://localhost:3000/api/dlt/get-github-link');
-	  const { data: { gh_token } } = await axios.get('http://localhost:3000/api/dlt/get-github-token');
+	  //const { data: { gh_token } } = await axios.get('http://localhost:3000/api/dlt/get-github-token');
 	  //const { data: { librariesio_token } } = await axios.get('http://localhost:3000/api/dlt/get-librariesio-token');
 	  const { data: { dlt_gpg } } = await axios.get('http://localhost:3000/api/dlt/get-gpg-key');
     //this.data.dlt_gpg=data.dlt_gpg;
