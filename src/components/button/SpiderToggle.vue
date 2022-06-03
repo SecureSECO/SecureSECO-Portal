@@ -26,7 +26,7 @@ export default defineComponent({
     const { data } = await axios.get('http://localhost:3000/api/spider/status');
     this.isRunning = data;
     this.state = this.isRunning;
-    console.log(data);
+    console.log('SpiderToggle.load', data);
   },
   computed: {
     isLoading() {
@@ -44,12 +44,18 @@ export default defineComponent({
   },
   methods: {
     async toggle() {
+      if (this.isLoading) {
+        return;
+      }
+
       this.state = null;
       try {
         // Emulate loading
-        await new Promise((resolve) => {
-          setTimeout(resolve, 1000);
-        });
+        if (process.env.NODE_ENV !== 'development') {
+          await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+          });
+        }
 
         const newStatus = this.isRunning ? 'stop' : 'start';
         const result = await axios.post(`http://localhost:3000/api/spider/${newStatus}`);
