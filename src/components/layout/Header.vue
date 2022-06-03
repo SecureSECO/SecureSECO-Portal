@@ -8,13 +8,13 @@
       </template>
       <template v-slot:center>
         <va-navbar-item>
-          <va-button flat to="/metrics">Metrics</va-button>
+          <va-button color="dark" flat to="/metrics">Metrics</va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button text-color="white" to="/packages">Trust Scores</va-button>
+          <va-button color="dark" flat to="/packages">Trust Scores</va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button flat to="/">My rewards</va-button>
+          <va-button color="dark" flat to="/">My rewards</va-button>
         </va-navbar-item>
         <va-navbar-item>
           <SpiderToggleButton/>
