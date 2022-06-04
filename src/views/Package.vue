@@ -1,6 +1,14 @@
 <template>
-  <h1>Package: {{ id }}</h1>
-  <package-component :id="id"></package-component>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>View Package</va-card-title>
+        <va-card-content>
+          <package-component :id="id"></package-component>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
 </template>
 
 <script>
