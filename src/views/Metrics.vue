@@ -1,13 +1,13 @@
 <template>
   <h4>Metrics</h4>
   <spider-log-component/>
-  <dlt-metrics-component />
+  <br>
+  <DLTMetricsComponent/>
 </template>
 
 <script>
 import SpiderLogComponent from '../components/SpiderLog.vue';
 import DLTMetricsComponent from '../components/DLTMetricsComponent.vue';
-
 
 export default {
   name: 'metrics-view',

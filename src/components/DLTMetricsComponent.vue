@@ -1,35 +1,49 @@
 <template>
-<h4>DLT Metrics</h4>
-<table>
-   <tr><th>Total trust facts spidered</th><td>1</td></tr>
-   <tr><th>Total number of packages in system</th><td>1</td></tr>
-   <tr><th>Blockheight</th><td>1</td></tr>
-   <tr><th>aantal nodes</th><td>1</td></tr>
-</table>
+  <va-card>
+    <va-card-title>DLT Metrics</va-card-title>
+	<va-card-content>
+      <va-form tag="form" @submit.prevent="handleSubmit">  
+  		<va-input v-model="trustfacts"  class="flex xs6" label="Total trust facts spidered" readonly/>
+    	<va-input v-model="packages" class="flex xs6" label="Total number of packages in system" readonly/>
+    	<va-input v-model="blockheight" class="flex xs6" label="Blockheight" readonly/>
+    	<va-input v-model="nodes" class="flex xs6" label="Number of nodes" readonly/>
+    	<va-button type="submit" class="mt-2">Refresh</va-button>
+      </va-form>
+    </va-card-content>
+  </va-card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
-  name: 'dlt-metrics-component',
-  components: {  },
+  name: 'DLTMetricsComponent',
   data() {
     return {
-      logs: [],
+      trustfacts: 1,
+      packages: 1,
+      blockheight: 1,
+      nodes: 1,
     };
+  },  
+  methods: {
+    async handleSubmit() {
+      console.log("Refreshing DLT metrics data.");
+    	const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
+    	this.data.trustfacts = data.trustfacts;
+    	this.data.packages = data.packages;
+    	this.data.blockheight = data.blockheight;
+    	this.data.nodes = data.nodes;
+    },
   },
   async mounted() {
-    this.setupWebsocket();
-  },
-  methods: {
-    setupWebsocket() {
-      const connection = new WebSocket('ws://localhost:3000/websocket');
-
-      connection.onmessage = (message) => {
-        this.logs.push(message.data);
-      };
-    },
+    console.log("Refreshing DLT metrics data.");
+    const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
+    this.data.trustfacts = data.trustfacts;
+    this.data.packages = data.packages;
+    this.data.blockheight = data.blockheight;
+    this.data.nodes = data.nodes;
   },
 });
 </script>
