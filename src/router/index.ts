@@ -28,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Package.vue'),
         props: true,
       },
+      {
+        path: 'metrics',
+        name: 'Metrics',
+        component: () => import('@/views/Metrics.vue'),
+      },
     ],
   },
 ];

@@ -1,15 +1,14 @@
 <template>
-  <div v-for="(log, index) in logs" :key="index">
-    {{ log }}
-  </div>
+  <VueTerminal console-sign="$" height="350px" :messages="logs" style="width: 50%"/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import VueTerminal from '@/components/VueTerminal.vue';
 
 export default defineComponent({
   name: 'spider-log-component',
+  components: { VueTerminal },
   data() {
     return {
       logs: [],
@@ -24,8 +23,6 @@ export default defineComponent({
 
       connection.onmessage = (message) => {
         this.logs.push(message.data);
-
-        if (this.logs.length > 10) this.logs.shift();
       };
     },
   },
