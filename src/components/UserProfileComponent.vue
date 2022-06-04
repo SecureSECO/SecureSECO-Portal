@@ -71,7 +71,6 @@ export default defineComponent({
       .catch(function (error) {
       });
 
-      /*
       axios.post('/api/dlt/store-github-token', {
         data: this.request_data.user.gh_token
       }).then(function (response) {     })
@@ -84,16 +83,19 @@ export default defineComponent({
       .then(function (response) {
       })
       .catch(function (error) {
-      });*/
+      });
       console.log("User data updated");
     },
   },
   async created() {
     const { data: { gh_profile_link } } = await axios.get('http://localhost:3000/api/dlt/get-github-link');
-	  //const { data: { gh_token } } = await axios.get('http://localhost:3000/api/dlt/get-github-token');
-	  //const { data: { librariesio_token } } = await axios.get('http://localhost:3000/api/dlt/get-librariesio-token');
+	  const { data: { gh_token } } = await axios.get('http://localhost:3000/api/dlt/get-github-token');
+	  const { data: { librariesio_token } } = await axios.get('http://localhost:3000/api/dlt/get-librariesio-token');
 	  const { data: { dlt_gpg } } = await axios.get('http://localhost:3000/api/dlt/get-gpg-key');
-    //this.data.dlt_gpg=data.dlt_gpg;
+    this.data.gh_profile_link=data.gh_profile_link;
+    this.data.gh_token=data.gh_token;
+    this.data.librariesio_token=data.librariesio_token;
+    this.data.dlt_gpg=data.dlt_gpg;
   },
 });
 </script>
