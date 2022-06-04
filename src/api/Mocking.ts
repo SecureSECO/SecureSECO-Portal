@@ -2,8 +2,8 @@
 import { DLTPlugin, Package } from '@/api/DLTPlugin';
 
 export default class Mocking extends DLTPlugin {
-  retrievePackage(id: string): Package {
-    const score: number = parseInt(id.split('-')[1], 10);
+  retrievePackage(id: number): Package {
+    const score = id;
     const name = `Package ${score}`;
 
     return {
@@ -17,7 +17,7 @@ export default class Mocking extends DLTPlugin {
     const packages: Package[] = [];
     for (let id = 0; id < 100; id += 1) {
       packages[id] = {
-        id: `package-${id}`,
+        id,
         name: `Package ${id}`,
         score: id,
       };

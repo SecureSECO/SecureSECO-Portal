@@ -11,11 +11,11 @@ import { Package } from '@/api/DLTPlugin';
 export default defineComponent({
   name: 'package-component',
   props: {
-    id: String,
+    id: Number,
   },
   data() {
     const loadingPackage: Package = {
-      id: 'Loading...',
+      id: 0,
       name: 'Loading...',
       score: 0,
     };

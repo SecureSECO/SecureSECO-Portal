@@ -2,7 +2,7 @@ import { App } from 'vue';
 import { GlobalConfig } from 'vuestic-ui';
 
 export interface Package {
-  id: string,
+  id: number,
   name: string,
   score: number,
 }
@@ -10,7 +10,7 @@ export interface Package {
 export abstract class DLTPlugin {
   abstract retrievePackages(): Package[];
 
-  abstract retrievePackage(id: string): Package;
+  abstract retrievePackage(id: number): Package;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
