@@ -34,9 +34,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Metrics.vue'),
       },
       {
-        path: 'user/profile',
-        name: 'User Profile',
-        component: () => import('@/views/UserProfile.vue'),
+        path: 'user/settings',
+        name: 'User Settings',
+        component: () => import('@/views/UserSettings.vue'),
         props: true,
       },
     ],

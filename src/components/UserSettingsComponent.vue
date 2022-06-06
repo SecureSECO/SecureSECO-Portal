@@ -32,6 +32,7 @@
         class="mb-4"
         label="DLT GPG key"
         value="data.dlt_gpg"
+        readonly
       />
       <va-button type="submit" class="mt-2">Save</va-button>
     </va-form>
@@ -43,7 +44,7 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 export default defineComponent({
-  name: 'user-profile-component',
+  name: 'user-settings-component',
   props: {
     id: String,
   },

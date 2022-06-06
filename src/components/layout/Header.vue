@@ -22,7 +22,7 @@
       </template>
       <template v-slot:right>
         <va-navbar-item>
-          <router-link to="/user/profile">Settings</router-link>
+          <router-link to="/user/settings">Settings</router-link>
         </va-navbar-item>
       </template>
     </va-navbar>
