@@ -32,12 +32,12 @@ export default {
   flex-direction: column;
 
   &__navbar {
-    min-height: 4rem;
+    height: 4rem;
   }
 
   &__content {
     display: flex;
-    height: calc(100vh - 4rem);
+    height: calc(100vh - 4rem - 1px);
     flex: 1;
   }
 

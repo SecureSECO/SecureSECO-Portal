@@ -1,8 +1,11 @@
 <template>
-  <va-switch v-model="isRunning" :color="getColor" left-label>
+  <va-switch v-model="state" :color="getColor" :loading="isLoading"
+             class="spiderToggleButton" indeterminate left-label
+             @click="toggle">
+    <!-- @click.capture.stop="toggle">-->
     {{ getStatusText }}
   </va-switch>
-  <!--  <va-button :color="getColor" v-on:click="toggleSpider">-->
+  <!--  <va-button :color="getColor" v-on:click="toggle">-->
   <!--    {{ getStatusText }}-->
   <!--  </va-button>-->
 </template>
@@ -15,14 +18,23 @@ export default defineComponent({
   name: 'spider-toggle-button',
   data() {
     return {
+      state: null,
       isRunning: false,
     };
   },
   async mounted() {
     const { data } = await axios.get('http://localhost:3000/api/spider/status');
     this.isRunning = data;
+    this.state = this.isRunning;
+    console.log('SpiderToggle.load', data);
   },
   computed: {
+    isLoading() {
+      return this.state === null;
+    },
+    // getState() {
+    //   return this.isLoading ? null : this.isRunning;
+    // },
     getColor() {
       return (this.isRunning ? 'success' : 'warning');
     },
@@ -31,14 +43,35 @@ export default defineComponent({
     },
   },
   methods: {
-    async toggleSpider() {
-      // await axios.post(`http://localhost:3000/api/spider/${this.running ? 'stop' : 'start'}`);
+    async toggle() {
+      if (this.isLoading) {
+        return;
+      }
 
-      this.isRunning = !this.isRunning;
+      this.state = null;
+      try {
+        // Emulate loading
+        if (process.env.NODE_ENV !== 'development') {
+          await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+          });
+        }
+
+        const newStatus = this.isRunning ? 'stop' : 'start';
+        const result = await axios.post(`http://localhost:3000/api/spider/${newStatus}`);
+        this.isRunning = !this.isRunning;
+        console.log('SpiderToggle.toggle', result);
+      } catch (e) {
+        console.error('SpiderToggle.toggle', e);
+      }
+      this.state = this.isRunning;
     },
   },
 });
 </script>
 
-<style scoped>
+<style>
+.spiderToggleButton .va-switch__label {
+  width: 100px;
+}
 </style>
