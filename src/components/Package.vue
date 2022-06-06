@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/DLTPlugin';
+import { defaultPackage, Package, TrustFact } from '@/api/DLTPlugin';
 
 /*
  Fields to display:
@@ -57,34 +57,27 @@ import { Package } from '@/api/DLTPlugin';
 
  - Table/List of trust facts
 
- Optionally group by release as well
+ Optionally group by release as well?
  */
 
 export default defineComponent({
   name: 'package-component',
   props: {
-    id: Number,
+    package: {
+      type: Object as () => Package,
+      required: true,
+    },
   },
   data() {
     const loadingPackage: Package = {
-      id: 0,
+      ...defaultPackage,
       name: 'Loading...',
-      score: 0,
     };
 
     return {
       item: loadingPackage,
+      trustFacts: [] as TrustFact[],
     };
-  },
-  created() {
-    this.fetchData();
-  },
-  methods: {
-    fetchData() {
-      if (this.id) {
-        this.item = this.$dltPlugin.retrievePackage(this.id);
-      }
-    },
   },
 });
 </script>
