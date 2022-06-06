@@ -5,6 +5,7 @@
 
 <script>
 import UserSettingsComponent from '../components/UserSettingsComponent.vue';
+
 export default {
   name: 'user-settings-view',
   components: { UserSettingsComponent },
