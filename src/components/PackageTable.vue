@@ -1,5 +1,5 @@
 <template>
-  <va-data-table :items="items">
+  <va-data-table :columns="columns" :items="items">
     <template #cell(id)="{ source: id }">
       <va-chip @click="packageClick(id)">{{ id }}</va-chip>
     </template>
@@ -17,9 +17,13 @@ export default defineComponent({
     const packages: Package[] = [];
 
     const columns = [
-      { key: 'name' },
       { key: 'id' },
+      // { key: 'platform' },
+      // { key: 'owner' },
+      { key: 'name' },
+      // { key: 'release' },
       { key: 'score' },
+      { key: 'updatedAt' },
     ];
 
     return {
@@ -32,7 +36,7 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
-      this.items = this.$dltPlugin.retrievePackages();
+      this.items = this.$dltPlugin.getPackages();
     },
     packageClick(id: string) {
       router.push({
