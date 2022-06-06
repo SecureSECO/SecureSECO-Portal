@@ -42,17 +42,6 @@ export default defineComponent({
     fetchData() {
       this.packages = this.$dltPlugin.retrievePackages();
     },
-    test1() {
-      // console.log(testargs);
-      console.log(this.selectedPackage);
-      // router.push({
-      //   name: 'Package',
-      //   params: { id: this.selectedPackage },
-      // });
-    },
-    test() {
-      console.log(1);
-    },
   },
   watch: {
     selectedPackage() {
