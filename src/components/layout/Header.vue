@@ -22,6 +22,9 @@
       </template>
       <template v-slot:right>
         <va-navbar-item>
+          <span v-if="isDevMode">DEV</span>
+        </va-navbar-item>
+        <va-navbar-item>
           <router-link to="/user/settings">Settings</router-link>
         </va-navbar-item>
       </template>
