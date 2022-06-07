@@ -1,7 +1,7 @@
 <template>
   <div>
     <va-form
-      style="width: 300px;"
+      
       tag="form"
       @submit.prevent="handleSubmit"
     >
@@ -11,6 +11,7 @@
         class="mb-4"
         label="GitHub Profile Link"
         value="data.gh-profile-link"
+        placeholder="http://github.com/user"
       />
 
       <va-input
@@ -21,10 +22,10 @@
       />
 
       <va-input
-        v-model="request_data.user.librariesio_token"
+        v-model="request_data.user.libraries_token"
         class="mb-4"
         label="Libraries.IO personal token"
-		value="data.librariesio_token"
+		    value="data.libraries_token"
       />
 
       <va-input
@@ -32,6 +33,8 @@
         class="mb-4"
         label="DLT GPG key"
         value="data.dlt_gpg"
+        type="textarea"
+        autosize
         readonly
       />
       <va-button type="submit" class="mt-2">Save</va-button>
@@ -55,7 +58,7 @@ export default defineComponent({
         user: {
           gh_profile_link: '',
           gh_token: '',
-          librariesio_token: '',
+          libraries_token: '',
           dlt_gpg: '',
         },
       },
@@ -69,27 +72,19 @@ export default defineComponent({
         data: this.request_data.user.gh_profile_link,
       });
 
-      axios.post('http://localhost:3000/api/dlt/store-github-token', {
-        data: this.request_data.user.gh_token,
+      axios.post('http://localhost:3000/api/spider/set-tokens', {
+        "github_token": this.request_data.user.gh_token,
+        "libraries_token": this.request_data.user.libraries_token,
       });
 
-      axios.post('http://localhost:3000/spider/store-librariesio-token', {
-        data: this.request_data.user.librariesio_token,
-      });
     },
   },
   async mounted() {
-    const { data: { gh_profile_link } } = await axios.get('http://localhost:3000/api/dlt/get-github-link');
-	  this.request_data.user.gh_profile_link = data.gh_profile_link;
-
-    const { data: { gh_token } } = await axios.get('http://localhost:3000/api/dlt/get-github-token');
-    this.request_data.user.gh_token = data.gh_token;
-    
-	  const { data: { librariesio_token } } = await axios.get('http://localhost:3000/api/dlt/get-librariesio-token');
-    this.request_data.user.librariesio_token = data.librariesio_token;
-    
-	  const { data: { dlt_gpg } } = await axios.get('http://localhost:3000/api/dlt/get-gpg-key');    
-    this.request_data.user.dlt_gpg = data.dlt_gpg;
+    this.request_data.user.gh_profile_link = (await axios.get('http://localhost:3000/api/dlt/get-github-link')).data;
+    const { data } = await axios.get('http://localhost:3000/api/spider/get-tokens');
+    this.request_data.user.gh_token = data.github_token;
+    this.request_data.user.libraries_token = data.libraries_token;
+    this.request_data.user.dlt_gpg = (await axios.get('http://localhost:3000/api/dlt/get-gpg-key')).data;
   },
 });
 </script>
