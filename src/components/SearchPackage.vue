@@ -40,8 +40,8 @@ export default defineComponent({
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      this.packages = this.$dltPlugin.getPackages();
+    async fetchData() {
+      this.packages = await this.$dltPlugin.getPackages();
     },
   },
   watch: {

@@ -44,8 +44,8 @@ export default defineComponent({
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      this.items = this.$dltPlugin.getPackages();
+    async fetchData() {
+      this.items = await this.$dltPlugin.getPackages();
     },
     loadPackage(id: string) {
       router.push({
