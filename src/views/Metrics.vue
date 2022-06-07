@@ -1,8 +1,12 @@
 <template>
-  <h4>Metrics</h4>
-  <spider-log-component/>
-  <br>
-  <DLTMetricsComponent/>
+  <va-card>
+    <va-card-title>Metrics</va-card-title>
+    <va-card-content>
+      <spider-log-component/>
+      <br />
+      <DLTMetricsComponent/>
+    </va-card-content>
+  </va-card>
 </template>
 
 <script>

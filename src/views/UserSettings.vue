@@ -1,6 +1,10 @@
 <template>
-  <h1 class="display-5">User settings</h1>
-  <user-settings-component/>
+  <va-card>
+    <va-card-title>User settings</va-card-title>
+    <va-card-content>
+      <user-settings-component/>
+    </va-card-content>
+  </va-card>
 </template>
 
 <script>
