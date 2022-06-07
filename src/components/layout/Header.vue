@@ -3,6 +3,9 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
+          <va-button color="dark">TrustSECO</va-button>
+        </va-navbar-item>
+        <va-navbar-item>
           <va-button color="dark" flat to="/">Home</va-button>
         </va-navbar-item>
       </template>
