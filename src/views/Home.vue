@@ -1,12 +1,14 @@
 <template>
   <search-package-component/>
-  <add-job-component/>
   <div class="row">
     <div class="flex xs12">
       <va-card>
-        <va-card-title>Download</va-card-title>
+        <va-card-title>CoSy and Spider status</va-card-title>
         <va-card-content>
           <DownloadCosyButton/>
+        </va-card-content>
+        <va-card-content>
+          <spider-toggle-button />
         </va-card-content>
       </va-card>
     </div>
@@ -44,20 +46,17 @@
 </template>
 
 <script>
-import JobsListComponent from '../components/tables/Jobs.vue';
-import AddJobComponent from '../components/AddJob.vue';
+import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
-// import TrustFactsTableComponent from '../components/tables/TrustFacts.vue';
-import SpiderLogComponent from '../components/SpiderLog.vue';
+import JobsListComponent from '../components/tables/Jobs.vue';
+
 import SearchPackageComponent from '../components/SearchPackage.vue';
 
 export default {
   name: 'home-view',
   components: {
-    // TrustFactsTableComponent,
     DownloadCosyButton,
-    SpiderLogComponent,
-    AddJobComponent,
+    SpiderToggleButton,
     JobsListComponent,
     SearchPackageComponent,
   },

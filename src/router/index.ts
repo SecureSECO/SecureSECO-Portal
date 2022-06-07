@@ -39,6 +39,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/UserSettings.vue'),
         props: true,
       },
+      {
+        path: 'add-job',
+        name: 'Add job',
+        component: () => import('@/views/AddJob.vue'),
+        props: true,
+      },
     ],
   },
 ];

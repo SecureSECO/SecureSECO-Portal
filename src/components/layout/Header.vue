@@ -3,10 +3,16 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
-          <va-button color="dark" flat to="/">Home</va-button>
+          <va-button color="dark" :rounded="false">TrustSECO</va-button>
         </va-navbar-item>
       </template>
       <template v-slot:center>
+        <va-navbar-item>
+          <va-button color="dark" flat to="/">Home</va-button>
+        </va-navbar-item>
+        <va-navbar-item>
+          <va-button color="dark" flat to="/add-job">Add job</va-button>
+        </va-navbar-item>
         <va-navbar-item>
           <va-button color="dark" flat to="/metrics">Metrics</va-button>
         </va-navbar-item>
@@ -33,12 +39,9 @@
 </template>
 
 <script>
-import SpiderToggleButton from '../button/SpiderToggle.vue';
-
 export default {
   name: 'header-component',
   components: {
-    SpiderToggleButton,
   },
   computed: {
     isDevMode() {

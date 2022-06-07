@@ -2,7 +2,7 @@
 
 import DLTMetricsComponent from './DLTMetricsComponent.vue';
 
-//👇 This default export determines where your story goes in the story list
+// 👇 This default export determines where your story goes in the story list
 export default {
   /* 👇 The title prop is optional.
   * See https://storybook.js.org/docs/vue/configure/overview#configure-story-loading
@@ -12,11 +12,11 @@ export default {
   component: DLTMetricsComponent,
 };
 
-//👇 We create a “template” of how args map to rendering
+// 👇 We create a “template” of how args map to rendering
 const Template = (args) => ({
   components: { DLTMetricsComponent },
   setup() {
-    //👇 The args will now be passed down to the template
+    // 👇 The args will now be passed down to the template
     return { args };
   },
   template: '<DLTMetricsComponent v-bind="args"/>',
