@@ -2,7 +2,7 @@
 import { defaultPackage, DLTPlugin, Package, TrustFact } from '@/api/DLTPlugin';
 
 export default class Mocking extends DLTPlugin {
-  getPackageNames(): string[] {
+  async getPackageNames(): Promise<string[]> {
     const packageNames = [];
     for (let id = 0; id < 100; id += 1) {
       packageNames[id] = `Package ${id}`;
@@ -10,7 +10,7 @@ export default class Mocking extends DLTPlugin {
     return packageNames;
   }
 
-  getPackages(): Package[] {
+  async getPackages(): Promise<Package[]> {
     const packages: Package[] = [];
     for (let id = 0; id < 100; id += 1) {
       packages[id] = {
@@ -24,7 +24,7 @@ export default class Mocking extends DLTPlugin {
     return packages;
   }
 
-  getPackage(id: number): Package {
+  async getPackage(id: number): Promise<Package> {
     return {
       ...defaultPackage,
       id,
@@ -33,12 +33,12 @@ export default class Mocking extends DLTPlugin {
     };
   }
 
-  getTrustFacts(id: number): TrustFact[] {
+  async getTrustFacts(id: number): Promise<TrustFact[]> {
     const trustFacts = [];
-    for (let i = 0; i < id; i += 1) {
+    for (let i = 0; i < (id + 5) % 10; i += 1) {
       trustFacts[i] = {
         type: 'github stars',
-        value: i,
+        value: i + 1,
       };
     }
     return trustFacts;

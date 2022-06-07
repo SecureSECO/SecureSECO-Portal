@@ -27,13 +27,13 @@ export interface TrustFact {
 }
 
 export abstract class DLTPlugin {
-  abstract getPackageNames(): string[];
+  abstract getPackageNames(): Promise<string[]>;
 
-  abstract getPackages(): Package[];
+  abstract getPackages(): Promise<Package[]>;
 
-  abstract getPackage(id: number): Package;
+  abstract getPackage(id: number): Promise<Package>;
 
-  abstract getTrustFacts(id: number): TrustFact[];
+  abstract getTrustFacts(id: number): Promise<TrustFact[]>;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
