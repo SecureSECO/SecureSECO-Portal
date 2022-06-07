@@ -5,7 +5,7 @@
         <va-card-title>Search Package</va-card-title>
         <va-card-content>
           <va-select
-            v-model="selectedPackage"
+            v-model="selectedId"
             :options="packages"
             class="mb-4"
             label="Search package name"
@@ -23,15 +23,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Package } from '@/api/DLTPlugin';
+import router from '@/router';
 
 export default defineComponent({
   name: 'search-package-component',
   data() {
-    const selectedPackage = '';
+    const selectedId = 0;
     const packages: Package[] = [];
 
     return {
-      selectedPackage,
+      selectedId,
       packages,
     };
   },
@@ -40,12 +41,15 @@ export default defineComponent({
   },
   methods: {
     fetchData() {
-      this.packages = this.$dltPlugin.retrievePackages();
+      this.packages = this.$dltPlugin.getPackages();
     },
   },
   watch: {
-    selectedPackage() {
-      console.log(1);
+    selectedId() {
+      router.push({
+        name: 'Package',
+        params: { id: this.selectedId },
+      });
     },
   },
 });
