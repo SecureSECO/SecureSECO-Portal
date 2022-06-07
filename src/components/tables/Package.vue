@@ -4,9 +4,9 @@
       <va-card>
         <va-card-title>Add job</va-card-title>
         <va-card-content>
-          <va-data-table :items="items">
+          <va-data-table :columns="columns" :items="items">
             <template #cell(id)="{ source: id }">
-              <va-chip @click="packageClick(id)">{{ id }}</va-chip>
+              <va-chip @click="loadPackage(id)">{{ id }}</va-chip>
             </template>
           </va-data-table>
         </va-card-content>
@@ -21,14 +21,18 @@ import router from '@/router';
 import { Package } from '@/api/DLTPlugin';
 
 export default defineComponent({
-  name: 'package-table-component',
+  name: 'package-table',
   data() {
     const packages: Package[] = [];
 
     const columns = [
-      { key: 'name' },
       { key: 'id' },
+      // { key: 'platform' },
+      // { key: 'owner' },
+      { key: 'name' },
+      // { key: 'release' },
       { key: 'score' },
+      { key: 'updatedAt' },
     ];
 
     return {
@@ -40,10 +44,10 @@ export default defineComponent({
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      this.items = this.$dltPlugin.retrievePackages();
+    async fetchData() {
+      this.items = await this.$dltPlugin.getPackages();
     },
-    packageClick(id: string) {
+    loadPackage(id: string) {
       router.push({
         name: 'Package',
         params: { id },
