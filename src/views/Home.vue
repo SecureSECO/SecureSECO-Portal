@@ -1,5 +1,4 @@
 <template>
-  <add-job-component/>
   <div class="row">
     <div class="flex xs12">
       <va-card>
@@ -44,7 +43,6 @@
 
 <script>
 import JobsListComponent from '../components/tables/JobsTable.vue';
-import AddJobComponent from '../components/AddJob.vue';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
 import TrustFactsTableComponent from '../components/tables/TrustFactsTable.vue';
@@ -57,7 +55,6 @@ export default {
     DownloadCosyButton,
     SpiderLogComponent,
     SpiderToggleButton,
-    AddJobComponent,
     JobsListComponent,
   },
 };

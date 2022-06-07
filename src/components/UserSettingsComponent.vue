@@ -12,13 +12,15 @@
         label="GitHub Profile Link"
         value="data.gh-profile-link"
         placeholder="http://github.com/user"
+        :rules="[validateGitHub]"
       />
 
       <va-input
         v-model="request_data.user.gh_token"
         class="mb-4"
         label="GitHub personal token"
-		value="data.gh_token"
+		    value="data.gh_token"
+        :rules="[validateRequired]"
       />
 
       <va-input
@@ -26,6 +28,7 @@
         class="mb-4"
         label="Libraries.IO personal token"
 		    value="data.libraries_token"
+        :rules="[validateRequired]"
       />
 
       <va-input
@@ -77,6 +80,12 @@ export default defineComponent({
         "libraries_token": this.request_data.user.libraries_token,
       });
 
+    },
+    validateGitHub(value: string) {
+      return (value && value.length > 0 && (value.startsWith("http://github.com/") || value.startsWith("http://www.github.com/"))) || 'Enter GitHub profile link, i.e. http://github.com/userName';
+    },
+    validateRequired(value: string) {
+      return (value && value.length > 0) || 'Field is required';
     },
   },
   async mounted() {
