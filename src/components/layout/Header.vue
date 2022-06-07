@@ -3,26 +3,29 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
-          <router-link class="text--header" to="/">TrustSECO - Home</router-link>
+          <va-button color="dark" flat to="/">Home</va-button>
         </va-navbar-item>
       </template>
       <template v-slot:center>
         <va-navbar-item>
-          <va-button flat to="/metrics">Metrics</va-button>
+          <va-button color="dark" flat to="/metrics">Metrics</va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button text-color="white" to="/packages">Trust Scores</va-button>
+          <va-button color="dark" flat to="/packages">Trust Scores</va-button>
         </va-navbar-item>
-        <va-navbar-item>
-          <va-button flat to="/">My rewards</va-button>
-        </va-navbar-item>
-        <va-navbar-item>
+        <!-- <va-navbar-item>
+          <va-button color="dark" flat to="/">My rewards</va-button>
+        </va-navbar-item> -->
+        <!-- <va-navbar-item>
           <SpiderToggleButton/>
-        </va-navbar-item>
+        </va-navbar-item> -->
       </template>
       <template v-slot:right>
+        <!-- <va-navbar-item>
+          <span v-if="isDevMode">DEV</span>
+        </va-navbar-item> -->
         <va-navbar-item>
-          <router-link to="/">Youri</router-link>
+          <va-button color="dark" flat to="/user/settings">Settings</va-button>
         </va-navbar-item>
       </template>
     </va-navbar>
@@ -36,6 +39,11 @@ export default {
   name: 'header-component',
   components: {
     SpiderToggleButton,
+  },
+  computed: {
+    isDevMode() {
+      return process.env.NODE_ENV === 'development';
+    },
   },
 };
 </script>
