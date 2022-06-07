@@ -2,13 +2,17 @@
 import { defaultPackage, DLTPlugin, Package, TrustFact } from '@/api/DLTPlugin';
 
 export default class Mocking extends DLTPlugin {
-  async getPackageNames(): Promise<string[]> {
-    const packageNames = [];
-    for (let id = 0; id < 100; id += 1) {
-      packageNames[id] = `Package ${id}`;
-    }
-    return packageNames;
-  }
+  // async getPackageNames(): Promise<string[]> {
+  //   const packageNames = [];
+  //   for (let id = 0; id < 49; id += 1) {
+  //     packageNames[id] = `Package ${id}`;
+  //   }
+  //   packageNames[49] = 'Search me #49';
+  //   for (let id = 50; id < 100; id += 1) {
+  //     packageNames[id] = `Package ${id}`;
+  //   }
+  //   return packageNames;
+  // }
 
   async getPackages(): Promise<Package[]> {
     const packages: Package[] = [];
@@ -21,6 +25,10 @@ export default class Mocking extends DLTPlugin {
         updatedAt: new Date(Date.now() - id * 24 * 60 * 60 * 1000),
       };
     }
+    packages[49] = {
+      ...packages[49],
+      name: 'Search me #49',
+    };
     return packages;
   }
 

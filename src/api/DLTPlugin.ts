@@ -27,7 +27,7 @@ export interface TrustFact {
 }
 
 export abstract class DLTPlugin {
-  abstract getPackageNames(): Promise<string[]>;
+  // abstract getPackageNames(): Promise<string[]>;
 
   abstract getPackages(): Promise<Package[]>;
 

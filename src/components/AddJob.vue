@@ -2,7 +2,7 @@
   <div class="row">
     <div class="flex xs12">
       <va-card>
-        <va-card-title>Add job</va-card-title>
+        <va-card-title>Add new package</va-card-title>
         <va-card-content>
           <va-form>
             <div class="row">
