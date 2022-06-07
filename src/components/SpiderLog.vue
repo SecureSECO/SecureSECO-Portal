@@ -1,5 +1,10 @@
 <template>
-  <VueTerminal console-sign="$" height="350px" :messages="logs" style="width: 50%"/>
+  <va-card>
+     <va-card-title>Spider log</va-card-title>
+     <va-card-content>
+        <VueTerminal console-sign="$" height="350px" :messages="logs" style="width: 50%"/>
+     </va-card-content>
+  </va-card>
 </template>
 
 <script lang="ts">

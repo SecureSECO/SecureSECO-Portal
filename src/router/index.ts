@@ -33,6 +33,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Metrics',
         component: () => import('@/views/Metrics.vue'),
       },
+      {
+        path: 'user/settings',
+        name: 'User Settings',
+        component: () => import('@/views/UserSettings.vue'),
+        props: true,
+      },
     ],
   },
 ];
