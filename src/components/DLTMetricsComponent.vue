@@ -3,7 +3,7 @@
     <va-card-title>DLT Metrics</va-card-title>
 	<va-card-content>
       <va-form tag="form" @submit.prevent="handleSubmit">
-  		<va-input v-model="trustfacts"  class="flex xs6" label="Total trust facts spidered" readonly/>
+  		<!-- <va-input v-model="trustfacts"  class="flex xs6" label="Total trust facts spidered" readonly/> -->
     	<va-input v-model="packages" class="flex xs6" label="Total number of packages in system" readonly/>
     	<va-input v-model="blockheight" class="flex xs6" label="Blockheight" readonly/>
     	<va-input v-model="nodes" class="flex xs6" label="Number of nodes" readonly/>
@@ -21,7 +21,7 @@ export default defineComponent({
   name: 'DLTMetricsComponent',
   data() {
     return {
-      trustfacts: "",
+      // trustfacts: "",
       packages: "",
       blockheight: "",
       nodes: "",
@@ -30,7 +30,7 @@ export default defineComponent({
   methods: {
     async handleSubmit() {
     	const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
-    	this.trustfacts = data.trustfacts;
+    	// this.trustfacts = data.trustfacts;
     	this.packages = data.packages;
     	this.blockheight = data.blockheight;
     	this.nodes = data.nodes;
@@ -38,7 +38,7 @@ export default defineComponent({
   },
   async mounted() {
     const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
-    this.trustfacts = data.trustfacts;
+    // this.trustfacts = data.trustfacts;
     this.packages = data.packages;
     this.blockheight = data.blockheight;
     this.nodes = data.nodes;

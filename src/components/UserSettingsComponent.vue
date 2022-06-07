@@ -65,15 +65,15 @@ export default defineComponent({
   },
   methods: {
     async handleSubmit() {
-      axios.post('/api/dlt/store-github-link', {
+      axios.post('http://localhost:3000/api/dlt/store-github-link', {
         data: this.request_data.user.gh_profile_link,
       });
 
-      axios.post('/api/dlt/store-github-token', {
+      axios.post('http://localhost:3000/api/dlt/store-github-token', {
         data: this.request_data.user.gh_token,
       });
 
-      axios.post('/spider/store-librariesio-token', {
+      axios.post('http://localhost:3000/spider/store-librariesio-token', {
         data: this.request_data.user.librariesio_token,
       });
     },
