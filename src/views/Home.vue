@@ -46,14 +46,12 @@ import JobsListComponent from '../components/tables/JobsTable.vue';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
 import TrustFactsTableComponent from '../components/tables/TrustFactsTable.vue';
-import SpiderLogComponent from '../components/SpiderLog.vue';
 
 export default {
   name: 'home-view',
   components: {
     TrustFactsTableComponent,
     DownloadCosyButton,
-    SpiderLogComponent,
     SpiderToggleButton,
     JobsListComponent,
   },

@@ -2,7 +2,6 @@
   <div>
     <va-form tag="form" @submit.prevent="handleSubmit">
       <!-- <va-input v-model="trustfacts"  class="mb4" label="Total trust facts spidered" readonly/> -->
-      
       <va-input v-model="packages" class="mb-4" label="Total number of packages in system" readonly/>
       <va-input v-model="blockheight" class="mb-4" label="Blockheight" readonly/>
       <va-input v-model="nodes" class="mb-4" label="Number of peers connected" readonly/>
@@ -20,24 +19,21 @@ export default defineComponent({
   data() {
     return {
       // trustfacts: "",
-      packages: "",
-      blockheight: "",
-      nodes: "",
+      packages: '',
+      blockheight: '',
+      nodes: '',
     };
   },
   methods: {
     async handleSubmit() {
-    	const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
-    	// this.trustfacts = data.trustfacts;
-      
-    	this.packages = data.package_count;
-    	this.blockheight = data.block_height;
-    	this.nodes = data.peer_info.connected;
+      const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
+      this.packages = data.package_count;
+      this.blockheight = data.block_height;
+      this.nodes = data.peer_info.connected;
     },
   },
   async mounted() {
     const { data } = await axios.get('http://localhost:3000/api/dlt/metrics');
-    // this.trustfacts = data.trustfacts;
     this.packages = data.package_count;
     this.blockheight = data.block_height;
     this.nodes = data.peer_info.connected;

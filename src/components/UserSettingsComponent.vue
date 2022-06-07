@@ -1,7 +1,7 @@
 <template>
   <div>
     <va-form
-      
+
       tag="form"
       @submit.prevent="handleSubmit"
     >
@@ -10,7 +10,6 @@
         v-model="request_data.user.gh_profile_link"
         class="mb-4"
         label="GitHub Profile Link"
-        value="data.gh-profile-link"
         placeholder="http://github.com/user"
         :rules="[validateGitHub]"
       />
@@ -19,7 +18,6 @@
         v-model="request_data.user.gh_token"
         class="mb-4"
         label="GitHub personal token"
-		    value="data.gh_token"
         :rules="[validateRequired]"
       />
 
@@ -27,7 +25,6 @@
         v-model="request_data.user.libraries_token"
         class="mb-4"
         label="Libraries.IO personal token"
-		    value="data.libraries_token"
         :rules="[validateRequired]"
       />
 
@@ -35,7 +32,6 @@
         v-model="request_data.user.dlt_gpg"
         class="mb-4"
         label="DLT GPG key"
-        value="data.dlt_gpg"
         type="textarea"
         autosize
         readonly
@@ -76,13 +72,12 @@ export default defineComponent({
       });
 
       axios.post('http://localhost:3000/api/spider/set-tokens', {
-        "github_token": this.request_data.user.gh_token,
-        "libraries_token": this.request_data.user.libraries_token,
+        github_token: this.request_data.user.gh_token,
+        libraries_token: this.request_data.user.libraries_token,
       });
-
     },
     validateGitHub(value: string) {
-      return (value && value.length > 0 && (value.startsWith("http://github.com/") || value.startsWith("http://www.github.com/"))) || 'Enter GitHub profile link, i.e. http://github.com/userName';
+      return (value && value.length > 0 && (value.startsWith('http://github.com/') || value.startsWith('http://www.github.com/'))) || 'Enter GitHub profile link, i.e. http://github.com/userName';
     },
     validateRequired(value: string) {
       return (value && value.length > 0) || 'Field is required';
