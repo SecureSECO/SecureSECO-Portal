@@ -23,16 +23,7 @@
       </va-card>
     </div>
   </div>
-  <div class="row">
-    <div class="flex xs12">
-      <va-card>
-        <va-card-title>Spider logs</va-card-title>
-        <va-card-content>
-          <spider-log-component/>
-        </va-card-content>
-      </va-card>
-    </div>
-  </div>
+  
   <!--  <div class="row">-->
   <!--    <div class="flex xs12">-->
   <!--      <va-card>-->
