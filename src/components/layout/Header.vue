@@ -3,7 +3,7 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
-          <va-button color="dark">TrustSECO</va-button>
+          <va-button color="dark" :rounded="false">TrustSECO</va-button>
         </va-navbar-item>
       </template>
       <template v-slot:center>
