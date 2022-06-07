@@ -18,7 +18,7 @@ export default defineComponent({
   name: 'spider-toggle-button',
   data() {
     return {
-      state: null,
+      state: null as boolean | null,
       isRunning: false,
     };
   },
@@ -29,16 +29,16 @@ export default defineComponent({
     console.log('SpiderToggle.load', data);
   },
   computed: {
-    isLoading() {
+    isLoading(): boolean {
       return this.state === null;
     },
     // getState() {
     //   return this.isLoading ? null : this.isRunning;
     // },
-    getColor() {
+    getColor(): string {
       return (this.isRunning ? 'success' : 'warning');
     },
-    getStatusText() {
+    getStatusText(): string {
       return (this.isRunning ? 'Spider is ON' : 'Spider is OFF');
     },
   },
@@ -51,14 +51,14 @@ export default defineComponent({
       this.state = null;
       try {
         // Emulate loading
-        if (process.env.NODE_ENV !== 'development') {
+        if (process.env.NODE_ENV === 'development') {
           await new Promise((resolve) => {
             setTimeout(resolve, 1000);
           });
         }
 
-        const newStatus = this.isRunning ? 'stop' : 'start';
-        const result = await axios.post(`http://localhost:3000/api/spider/${newStatus}`);
+        const action = this.isRunning ? 'stop' : 'start';
+        const result = await axios.post(`http://localhost:3000/api/spider/${action}`);
         this.isRunning = !this.isRunning;
         console.log('SpiderToggle.toggle', result);
       } catch (e) {

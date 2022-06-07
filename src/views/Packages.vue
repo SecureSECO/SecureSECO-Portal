@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import PackageTableComponent from '@/components/PackageTable.vue';
+import PackageTableComponent from '@/components/tables/Package.vue';
 import SearchPackageComponent from '@/components/SearchPackage.vue';
 
 export default {
