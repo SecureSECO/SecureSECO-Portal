@@ -1,9 +1,18 @@
 <template>
-  <va-data-table :items="items">
-    <template #cell(id)="{ source: id }">
-      <va-chip @click="packageClick(id)">{{ id }}</va-chip>
-    </template>
-  </va-data-table>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Add job</va-card-title>
+        <va-card-content>
+          <va-data-table :items="items">
+            <template #cell(id)="{ source: id }">
+              <va-chip @click="packageClick(id)">{{ id }}</va-chip>
+            </template>
+          </va-data-table>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
