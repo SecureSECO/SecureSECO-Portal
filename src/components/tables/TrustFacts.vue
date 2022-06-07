@@ -9,7 +9,7 @@ import { defineComponent } from 'vue';
 import { TrustFact } from '@/api/DLTPlugin';
 
 export default defineComponent({
-  name: 'trust-facts-table-component',
+  name: 'trust-facts-table',
   props: {
     trustFacts: {
       type: Object as () => TrustFact[],

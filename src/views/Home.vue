@@ -53,11 +53,11 @@
 </template>
 
 <script>
-import JobsListComponent from '../components/tables/JobsTable.vue';
+import JobsListComponent from '../components/tables/Jobs.vue';
 import AddJobComponent from '../components/AddJob.vue';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
-import TrustFactsTableComponent from '../components/tables/TrustFactsTable.vue';
+import TrustFactsTableComponent from '../components/tables/TrustFacts.vue';
 import SpiderLogComponent from '../components/SpiderLog.vue';
 
 export default {

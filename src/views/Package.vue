@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table :trustFacts="trustFacts"></trust-facts-table>
+          <trust-facts-table-component :trustFacts="trustFacts"></trust-facts-table-component>
         </va-card-content>
       </va-card>
     </div>
@@ -23,12 +23,12 @@
 
 <script>
 import PackageComponent from '@/components/Package.vue';
-import TrustFactsTable from '@/components/tables/TrustFactsTable.vue';
+import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
 
 export default {
   components: {
     PackageComponent,
-    TrustFactsTable,
+    TrustFactsTableComponent,
   },
   name: 'package-view',
   props: {
