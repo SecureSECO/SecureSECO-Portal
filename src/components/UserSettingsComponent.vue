@@ -10,7 +10,7 @@
         v-model="request_data.user.gh_profile_link"
         class="mb-4"
         label="GitHub Profile Link"
-        placeholder="http://github.com/user"
+        placeholder="https://github.com/user"
         :rules="[validateGitHub]"
       />
 
@@ -77,7 +77,7 @@ export default defineComponent({
       });
     },
     validateGitHub(value: string) {
-      return (value && value.length > 0 && (value.startsWith('http://github.com/') || value.startsWith('http://www.github.com/'))) || 'Enter GitHub profile link, i.e. http://github.com/userName';
+      return (value && value.length > 0 && (value.startsWith('https://github.com/') || value.startsWith('https://www.github.com/'))) || 'Enter GitHub profile link, i.e. https://github.com/userName';
     },
     validateRequired(value: string) {
       return (value && value.length > 0) || 'Field is required';
