@@ -3,7 +3,7 @@ import {
   defaultPackage, DltApi, Package, TrustFact,
 } from '@/api/DltApi';
 
-export default class Mocking extends DltApi {
+export default class DltMock extends DltApi {
   // async getPackageNames(): Promise<string[]> {
   //   const packageNames = [];
   //   for (let id = 0; id < 49; id += 1) {

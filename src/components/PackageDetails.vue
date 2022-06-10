@@ -41,24 +41,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/DLTPlugin';
-
-/*
- Fields to display:
- - Package platform
- - Package owner
- - Package name
- - Package release
-
- - Trust score
- - Last updated timestamp
- - Number of gathered trust facts
- - Quality rating?
-
- - Table/List of trust facts
-
- Optionally group by release as well?
- */
+import { Package } from '@/api/dlt/interface';
 
 export default defineComponent({
   name: 'package-details-component',

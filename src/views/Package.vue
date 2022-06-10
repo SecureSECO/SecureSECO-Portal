@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component :package="package" :trustFactCount="trustFactCount"></package-details-component>
+          <package-details-component :package="package" :trustFactCount="trustFacts.length"></package-details-component>
         </va-card-content>
       </va-card>
     </div>
@@ -24,7 +24,7 @@
 <script>
 import PackageDetailsComponent from '@/components/PackageDetails.vue';
 import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
-import { defaultPackage } from '@/api/DltApi';
+import { defaultPackage } from '@/api/dlt/interface';
 
 export default {
   components: {
@@ -34,7 +34,7 @@ export default {
   name: 'package-view',
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
@@ -42,7 +42,6 @@ export default {
     return {
       package: defaultPackage,
       trustFacts: [],
-      trustFactCount: 0,
     };
   },
   async created() {
@@ -53,8 +52,6 @@ export default {
       if (this.id) {
         this.package = await this.$dltApi.getPackage(this.id);
         this.trustFacts = await this.$dltApi.getTrustFacts(this.id);
-        this.trustFactCount = this.trustFacts.length;
-        // const { data } = await axios.get(`http://localhost:3000/api/dlt/trust-facts/${this.packageId}`);
       }
     },
   },

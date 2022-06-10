@@ -1,12 +1,9 @@
 import { createApp } from 'vue';
 import { VuesticPlugin } from 'vuestic-ui';
-import Mocking from '@/api/Mocking';
-import { DltApi } from '@/api/DltApi';
+import { DltInterface, dltApi } from './api';
 import App from './App.vue';
 
 import router from './router';
-
-const dltApi = new Mocking();
 
 createApp(App)
   .use(VuesticPlugin)
@@ -16,6 +13,6 @@ createApp(App)
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $dltApi: DltApi;
+    $dltApi: DltInterface;
   }
 }
