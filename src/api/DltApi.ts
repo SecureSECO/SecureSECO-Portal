@@ -26,7 +26,7 @@ export interface TrustFact {
   value: number,
 }
 
-export abstract class DLTPlugin {
+export abstract class DltApi {
   // abstract getPackageNames(): Promise<string[]>;
 
   abstract getPackages(): Promise<Package[]>;
@@ -37,6 +37,6 @@ export abstract class DLTPlugin {
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
-    app.config.globalProperties.$dltPlugin = this;
+    app.config.globalProperties.$dltApi = this;
   }
 }

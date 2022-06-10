@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import router from '@/router';
-import { Package } from '@/api/DLTPlugin';
+import { Package } from '@/api/DltApi';
 
 export default defineComponent({
   name: 'package-table',
@@ -45,7 +45,7 @@ export default defineComponent({
   },
   methods: {
     async fetchData() {
-      this.items = await this.$dltPlugin.getPackages();
+      this.items = await this.$dltApi.getPackages();
     },
     loadPackage(id: string) {
       router.push({

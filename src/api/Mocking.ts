@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import { defaultPackage, DLTPlugin, Package, TrustFact } from '@/api/DLTPlugin';
+import {
+  defaultPackage, DltApi, Package, TrustFact,
+} from '@/api/DltApi';
 
-export default class Mocking extends DLTPlugin {
+export default class Mocking extends DltApi {
   // async getPackageNames(): Promise<string[]> {
   //   const packageNames = [];
   //   for (let id = 0; id < 49; id += 1) {

@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/DLTPlugin';
+import { Package } from '@/api/DltApi';
 import router from '@/router';
 
 export default defineComponent({
@@ -42,7 +42,7 @@ export default defineComponent({
   },
   methods: {
     async fetchData() {
-      this.packages = await this.$dltPlugin.getPackages();
+      this.packages = await this.$dltApi.getPackages();
     },
   },
   watch: {

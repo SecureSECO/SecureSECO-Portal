@@ -1,21 +1,21 @@
 import { createApp } from 'vue';
 import { VuesticPlugin } from 'vuestic-ui';
 import Mocking from '@/api/Mocking';
-import { DLTPlugin } from '@/api/DLTPlugin';
+import { DltApi } from '@/api/DltApi';
 import App from './App.vue';
 
 import router from './router';
 
-const dltPlugin = new Mocking();
+const dltApi = new Mocking();
 
 createApp(App)
   .use(VuesticPlugin)
   .use(router)
-  .use(dltPlugin)
+  .use(dltApi)
   .mount('#app');
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $dltPlugin: DLTPlugin;
+    $dltApi: DltApi;
   }
 }

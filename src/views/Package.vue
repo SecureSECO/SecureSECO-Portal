@@ -24,7 +24,7 @@
 <script>
 import PackageDetailsComponent from '@/components/PackageDetails.vue';
 import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
-import { defaultPackage } from '@/api/DLTPlugin';
+import { defaultPackage } from '@/api/DltApi';
 
 export default {
   components: {
@@ -51,8 +51,8 @@ export default {
   methods: {
     async fetchData() {
       if (this.id) {
-        this.package = await this.$dltPlugin.getPackage(this.id);
-        this.trustFacts = await this.$dltPlugin.getTrustFacts(this.id);
+        this.package = await this.$dltApi.getPackage(this.id);
+        this.trustFacts = await this.$dltApi.getTrustFacts(this.id);
         this.trustFactCount = this.trustFacts.length;
         // const { data } = await axios.get(`http://localhost:3000/api/dlt/trust-facts/${this.packageId}`);
       }
