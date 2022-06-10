@@ -33,7 +33,7 @@ export default {
   },
   name: 'package-view',
   props: {
-    id: {
+    name: {
       type: String,
       required: true,
     },
@@ -49,9 +49,9 @@ export default {
   },
   methods: {
     async fetchData() {
-      if (this.id) {
-        this.package = await this.$dltApi.getPackage(this.id);
-        this.trustFacts = await this.$dltApi.getTrustFacts(this.id);
+      if (this.name) {
+        this.package = await this.$dltApi.getPackage(this.name);
+        this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
       }
     },
   },

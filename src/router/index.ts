@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
       },
       {
-        path: 'package/:id',
+        path: 'package/:name',
         name: 'Package',
         component: () => import('@/views/Package.vue'),
         props: true,

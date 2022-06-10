@@ -3,13 +3,13 @@ import DltMock from './dlt/mock';
 import DltApi from './dlt/api';
 // import SpiderApi from './spider/api';
 
-export { DltInterface } from './dlt/interface';
-// export { SpiderInterface } from './spider/interface';
+export * from './dlt/interface';
+// export * from './spider/interface';
 
 // Instantiate Api or Mock based on .env
 let DltClass;
 // let spiderClass;
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'test') {
   DltClass = DltMock;
   // SpiderClass = SpiderMock;
 } else {

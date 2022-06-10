@@ -12,8 +12,8 @@
             label="Search package name"
             searchable
             text-by="name"
-            track-by="id"
-            value-by="id"
+            track-by="name"
+            value-by="name"
           />
         </va-card-content>
       </va-card>
@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/DltApi';
+import { Package } from '@/api';
 import router from '@/router';
 
 export default defineComponent({
