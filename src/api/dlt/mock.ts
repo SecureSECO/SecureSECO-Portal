@@ -43,4 +43,9 @@ export default class DltMock extends DltInterface {
   async getDownloadLink() {
     return window.location.origin;
   }
+
+  // TODO: Add mock data
+  async getJobs() {
+    return [];
+  }
 }
