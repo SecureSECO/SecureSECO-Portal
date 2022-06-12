@@ -7,7 +7,6 @@ export default class SpiderMock extends SpiderInterface {
   }
 
   async toggleSpider(targetState = !this.isActive) {
-    console.log(this.isActive, targetState);
     this.isActive = targetState;
     return this.isActive;
   }

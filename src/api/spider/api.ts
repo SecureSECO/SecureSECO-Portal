@@ -13,11 +13,9 @@ export default class SpiderApi extends SpiderInterface {
     const action = targetState ? 'start' : 'stop';
     try {
       const { data } = await axios.get(`http://localhost:3000/api/spider/${action}`);
-      if (!data.success) {
-        throw new Error(data);
+      if (data.success) {
+        this.isActive = !this.isActive;
       }
-
-      this.isActive = !this.isActive;
     } catch (e) {
       // If the case where the request returned properly but contains an error message, show that message
       if (axios.isAxiosError(e) && e.response) {

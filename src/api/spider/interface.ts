@@ -2,7 +2,7 @@ import { App } from 'vue';
 import { GlobalConfig } from 'vuestic-ui';
 
 export abstract class SpiderInterface {
-  isActive: boolean = false;
+  isActive = false;
 
   abstract getSpiderStatus(): Promise<boolean>;
 
