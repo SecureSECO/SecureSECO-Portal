@@ -5,7 +5,7 @@
         <va-card-title>Search Package</va-card-title>
         <va-card-content>
           <va-select
-            v-model="selectedId"
+            v-model="selected"
             :loading="isLoading"
             :options="packages"
             class="mb-4"
@@ -29,11 +29,9 @@ import router from '@/router';
 export default defineComponent({
   name: 'search-package-component',
   data() {
-    const packages: Package[] = [];
-
     return {
-      packages,
-      selectedId: 0,
+      packages: [] as Package[],
+      selected: 0,
       isLoading: false,
     };
   },
@@ -46,11 +44,11 @@ export default defineComponent({
     },
   },
   watch: {
-    selectedId() {
+    selected() {
       this.isLoading = true;
       router.push({
         name: 'Package',
-        params: { id: this.selectedId },
+        params: { name: this.selected },
       });
     },
   },
