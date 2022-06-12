@@ -24,18 +24,18 @@ const parsePackage = (data: ApiPackage): Package => ({
 });
 
 export default class DltApi extends DltInterface {
-  async getPackages(): Promise<Package[]> {
+  async getPackages() {
     const { data } = await axios.get('http://localhost:3000/api/dlt/packages');
     return data.packages.map((item: ApiPackage) => parsePackage(item));
   }
 
-  async getPackage(name: string): Promise<Package> {
+  async getPackage(name: string) {
     const { data } = await axios.get(`http://localhost:3000/api/dlt/package/${name}`);
     return parsePackage(data);
   }
 
   // TODO: Remove the mock data once this AP endpoint returns correct data
-  async getTrustFacts(name: string): Promise<TrustFact[]> {
+  async getTrustFacts(name: string) {
     const { data } = await axios.get(`http://localhost:3000/api/dlt/trust-facts/${name}`);
     console.log(data);
     const trustFacts = [];
@@ -46,5 +46,10 @@ export default class DltApi extends DltInterface {
       };
     }
     return trustFacts;
+  }
+
+  async getDownloadLink() {
+    const { data } = await axios.get('http://localhost:3000/api/download');
+    return data;
   }
 }

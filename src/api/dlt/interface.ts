@@ -22,6 +22,8 @@ export abstract class DltInterface {
 
   abstract getTrustFacts(name: string): Promise<TrustFact[]>;
 
+  abstract getDownloadLink(): Promise<string>;
+
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
     app.config.globalProperties.$dltApi = this;

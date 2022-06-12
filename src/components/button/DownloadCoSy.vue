@@ -1,5 +1,5 @@
 <template>
-  <va-button :href="link">Download TrustSECO instance</va-button>
+  <va-button :loading="isLoading" @click="download">Download TrustSECO instance</va-button>
 </template>
 
 <script lang="ts">
@@ -10,12 +10,15 @@ export default defineComponent({
   name: 'download-cosy-button',
   data() {
     return {
-      link: '',
+      isLoading: false,
     };
   },
-  async mounted() {
-    const { data } = await axios.get('http://localhost:3000/api/download');
-    this.link = data;
+  methods: {
+    async download() {
+      this.isLoading = true;
+      const link = await this.$dltApi.getDownloadLink();
+      window.location.href = link;
+    },
   },
 });
 </script>
