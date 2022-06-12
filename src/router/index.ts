@@ -23,10 +23,10 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
       },
       {
-        path: 'package/:id',
+        path: 'package/:name',
         name: 'Package',
         component: () => import('@/views/Package.vue'),
-        props: (route) => ({ id: Number(route.params.id) ?? 0 }),
+        props: true,
       },
       {
         path: 'metrics',
