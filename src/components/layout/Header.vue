@@ -3,12 +3,15 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
+          <va-chip color="dark" size="large" square>TrustSECO</va-chip>
+        </va-navbar-item>
+      </template>
+      <template v-slot:center>
+        <va-navbar-item>
           <va-button :flat="currentRoute !== 'Home'" :square="currentRoute === 'Home'" :to="{ name: 'Home' }"
                      color="dark">Home
           </va-button>
         </va-navbar-item>
-      </template>
-      <template v-slot:center>
         <va-navbar-item>
           <va-button :flat="currentRoute !== 'Add Job'" :square="currentRoute === 'Add Job'" :to="{ name: 'Add Job' }"
                      color="dark">Add Job
