@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'packages',
-        name: 'View Packages list',
+        name: 'Package List',
         component: () => import('@/views/Packages.vue'),
         props: true,
       },
@@ -35,13 +35,13 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'user/settings',
-        name: 'User Settings',
+        name: 'Settings',
         component: () => import('@/views/UserSettings.vue'),
         props: true,
       },
       {
         path: 'add-job',
-        name: 'Add job',
+        name: 'Add Job',
         component: () => import('@/views/AddJob.vue'),
         props: true,
       },
@@ -51,6 +51,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(),
+  // linkActiveClass: 'router-link-active',
   routes,
 });
 
