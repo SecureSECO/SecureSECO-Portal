@@ -15,12 +15,24 @@ export interface TrustFact {
   value: number,
 }
 
+export interface Job {
+  id: number,
+  package: string,
+  version: string,
+  fact: string,
+  bounty: number,
+}
+
 export abstract class DltInterface {
   abstract getPackages(): Promise<Package[]>;
 
   abstract getPackage(name: string): Promise<Package>;
 
   abstract getTrustFacts(name: string): Promise<TrustFact[]>;
+
+  abstract getDownloadLink(): Promise<string>;
+
+  abstract getJobs(): Promise<Job[]>;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
@@ -35,4 +47,12 @@ export const defaultPackage: Package = {
   releases: ['v1.2.3'],
   score: 0,
   updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+};
+
+export const defaultJob: Job = {
+  id: 0,
+  package: 'Portal',
+  version: 'v1.2.3',
+  fact: 'stars',
+  bounty: 1000,
 };

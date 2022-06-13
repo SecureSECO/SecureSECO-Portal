@@ -4,7 +4,7 @@ import {
 } from '@/api/dlt/interface';
 
 export default class DltMock extends DltInterface {
-  async getPackages(): Promise<Package[]> {
+  async getPackages() {
     const packages: Package[] = [];
     for (let i = 0; i < 100; i += 1) {
       packages[i] = {
@@ -21,7 +21,7 @@ export default class DltMock extends DltInterface {
     return packages;
   }
 
-  async getPackage(name: string): Promise<Package> {
+  async getPackage(name: string) {
     return {
       ...defaultPackage,
       name,
@@ -29,7 +29,7 @@ export default class DltMock extends DltInterface {
     };
   }
 
-  async getTrustFacts(name: string): Promise<TrustFact[]> {
+  async getTrustFacts(name: string) {
     const trustFacts = [];
     for (let i = 0; i < (name.length + 5) % 10; i += 1) {
       trustFacts[i] = {
@@ -38,5 +38,14 @@ export default class DltMock extends DltInterface {
       };
     }
     return trustFacts;
+  }
+
+  async getDownloadLink() {
+    return window.location.origin;
+  }
+
+  // TODO: Add mock data
+  async getJobs() {
+    return [];
   }
 }

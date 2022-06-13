@@ -1,45 +1,34 @@
 <template>
   <va-switch v-model="state" :color="getColor" :loading="isLoading"
              class="spiderToggleButton" indeterminate left-label
-             @click="toggle">
-    <!-- @click.capture.stop="toggle">-->
+             @click.capture.stop="toggle">
     {{ getStatusText }}
   </va-switch>
-  <!--  <va-button :color="getColor" v-on:click="toggle">-->
-  <!--    {{ getStatusText }}-->
-  <!--  </va-button>-->
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
 
 export default defineComponent({
   name: 'spider-toggle-button',
   data() {
     return {
       state: null as boolean | null,
-      isRunning: false,
+      isActive: false,
+      isLoading: false,
     };
   },
   async mounted() {
-    const { data } = await axios.get('http://localhost:3000/api/spider/status');
-    this.isRunning = data;
-    this.state = this.isRunning;
-    console.log('SpiderToggle.load', data);
+    this.isActive = await this.$spiderApi.getSpiderStatus();
+    this.state = this.isActive;
+    console.log('SpiderToggle.load', this.isActive);
   },
   computed: {
-    isLoading(): boolean {
-      return this.state === null;
-    },
-    // getState() {
-    //   return this.isLoading ? null : this.isRunning;
-    // },
     getColor(): string {
-      return (this.isRunning ? 'success' : 'warning');
+      return (this.isActive ? 'success' : 'warning');
     },
     getStatusText(): string {
-      return (this.isRunning ? 'Spider is ON' : 'Spider is OFF');
+      return (this.isActive ? 'Spider is ON' : 'Spider is OFF');
     },
   },
   methods: {
@@ -48,23 +37,25 @@ export default defineComponent({
         return;
       }
 
+      this.isLoading = true;
       this.state = null;
       try {
         // Emulate loading
         if (process.env.NODE_ENV === 'development') {
           await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
+            setTimeout(resolve, 2000);
           });
         }
 
-        const action = this.isRunning ? 'stop' : 'start';
-        const result = await axios.post(`http://localhost:3000/api/spider/${action}`);
-        this.isRunning = !this.isRunning;
-        console.log('SpiderToggle.toggle', result);
+        const newState = await this.$spiderApi.toggleSpider();
+        this.isActive = newState;
+        this.state = this.isActive;
+        console.log('SpiderToggle.toggle', newState);
       } catch (e) {
-        console.error('SpiderToggle.toggle', e);
+        this.state = this.isActive;
+        console.error('SpiderToggle.toggle', e.message);
       }
-      this.state = this.isRunning;
+      this.isLoading = false;
     },
   },
 });

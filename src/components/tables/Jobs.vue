@@ -4,18 +4,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { Job } from '@/api';
 
 export default defineComponent({
   name: 'jobs-table',
   data() {
     return {
-      jobs: [],
+      jobs: [] as Job[],
     };
   },
-  async created() {
-    const { data: { jobs } } = await axios.get('http://localhost:3000/api/dlt/jobs');
-    this.jobs = jobs;
+  async mounted() {
+    this.jobs = await this.$dltApi.getJobs();
   },
 });
 </script>
