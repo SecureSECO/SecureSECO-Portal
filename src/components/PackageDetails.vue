@@ -36,6 +36,12 @@
         <div class="flex xs8 propValue">{{ trustFactCount }}</div>
       </div>
     </div>
+    <div v-if="githubLink !== undefined" class="flex xs12">
+      <va-button :href="githubLink" flat target="_blank">
+        <va-icon name="home"/>
+        GitHub
+      </va-button>
+    </div>
   </div>
 </template>
 
@@ -53,6 +59,16 @@ export default defineComponent({
     trustFactCount: {
       type: Number,
       default: 0,
+    },
+  },
+  computed: {
+    // TODO: Add links for other Platforms and generalise
+    githubLink() {
+      if (this.package.platform !== 'github') {
+        return undefined;
+      }
+
+      return `https://github.com/${this.package.owner}/${this.package.name}`;
     },
   },
 });
