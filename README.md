@@ -1,29 +1,53 @@
-# portal
+# TrustSECO Portal
 
-## Project setup
+### Run project
+
+Project setup
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Serve a local replica of the production build
+
 ```
-npm run serve
+npm run preview
 ```
 
-### Compiles and minifies for production
+Generate the compiled and minified production build
+
 ```
 npm run build
 ```
 
-### Run your unit tests
+Run a development build with hot-reload
+
+```
+npm run dev
+```
+
+Run a development build with hot-reload, restricted to a purely local, stand-alone environment.\
+Uses mock data instead of the API.
+
+```
+npm run dev-local
+```
+
+Run unit tests.\
+Uses mock data instead of the API.
+
 ```
 npm run test:unit
 ```
 
-### Lints and fixes files
+Lint and fix files
+
 ```
 npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+See [Vite](https://vitejs.dev/config/),
+[VueJS](https://cli.vuejs.org/config/),
+[TypeScript](https://www.typescriptlang.org/tsconfig).
