@@ -1,44 +1,123 @@
 <template>
-  <div>
-    <va-form
+  <va-modal
+    v-model="modal.showGitHubProfileLinkModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>GitHub Profile Link</h2>
+    </template>
+    <div>Blabla</div>
+    <template #footer>
+      <va-button @click="modal.showGitHubProfileLinkModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+  
+  <va-modal
+    v-model="modal.showGitHubTokenModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>GitHub Token</h2>
+    </template>
+    <div>Blabla</div>
+    <template #footer>
+      <va-button @click="modal.showGitHubTokenModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
 
+  <va-modal
+    v-model="modal.showLibrariesIOTokenModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Libraries.IO Token</h2>
+    </template>
+    <div>Blabla</div>
+    <template #footer>
+      <va-button @click="modal.showLibrariesIOTokenModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+  <va-modal
+    v-model="modal.showDLTGPGModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>DLT GPG Key</h2>
+    </template>
+    <div>Blabla</div>
+    <template #footer>
+      <va-button @click="modal.showDLTGPGModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+
+  <div class="flex xs12">
+    <va-form
       tag="form"
       @submit.prevent="handleSubmit"
     >
+      <div class="row">
+        <va-input
+            v-model="request_data.user.gh_profile_link"
+            class="flex xs11"
+            label="GitHub Profile Link"
+            placeholder="https://github.com/user"
+            :rules="[validateGitHub]"
+          />
 
-    <va-input
-        v-model="request_data.user.gh_profile_link"
-        class="mb-4"
-        label="GitHub Profile Link"
-        placeholder="https://github.com/user"
-        :rules="[validateGitHub]"
-      />
+        <va-icon class="flex xs1 material-icons" @click="modal.showGitHubProfileLinkModal = true">info</va-icon>
+      </div>
 
-      <va-input
-        v-model="request_data.user.gh_token"
-        class="mb-4"
-        label="GitHub personal token"
-        :rules="[validateRequired]"
-      />
+      <div class="row">
+        <va-input
+          v-model="request_data.user.gh_token"
+          class="flex xs11"
+          label="GitHub personal token"
+          :rules="[validateRequired]"
+        />
 
-      <va-input
-        v-model="request_data.user.libraries_token"
-        class="mb-4"
-        label="Libraries.IO personal token"
-        :rules="[validateRequired]"
-      />
+        <va-icon class="flex xs1 material-icons" @click="modal.showGitHubTokenModal = true">info</va-icon>
+      </div>
 
-      <va-input
-        v-model="request_data.user.dlt_gpg"
-        class="mb-4"
-        label="DLT GPG key"
-        type="textarea"
-        autosize
-        readonly
-      />
+      <div class="row">
+        <va-input
+          v-model="request_data.user.libraries_token"
+          class="flex xs11"
+          label="Libraries.IO personal token"
+          :rules="[validateRequired]"
+        />
+
+        <va-icon class="flex xs1 material-icons" @click="modal.showLibrariesIOTokenModal = true">info</va-icon>
+      </div>
+
+      <div class="row">
+        <va-input
+          v-model="request_data.user.dlt_gpg"
+          class="flex xs11"
+          label="DLT GPG key"
+          type="textarea"
+          autosize
+          readonly
+        />
+      
+        <va-icon class="flex xs1 material-icons" @click="modal.showDLTGPGModal = true">info</va-icon>
+      </div>
+
       <va-button type="submit" class="mt-2">Save</va-button>
     </va-form>
-
   </div>
 </template>
 
@@ -60,6 +139,12 @@ export default defineComponent({
           libraries_token: '',
           dlt_gpg: '',
         },
+      },
+      modal: {
+        showGitHubProfileLinkModal: false,
+        showGitHubTokenModal: false,
+        showLibrariesIOTokenModal: false,
+        showDLTGPGModal: false,
       },
       package_data: {},
       loading: false,
