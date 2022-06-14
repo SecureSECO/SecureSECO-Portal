@@ -23,7 +23,7 @@
     <template #header>
       <h2>GitHub Profile Link</h2>
     </template>
-    <div>Enter your GitHub profile link here. <br />For example, if your username is <i>Programmer</i>, your GitHub profile link becomes: <i>https://github.com/Programmer</i>.</div>
+    <div>Enter your GitHub profile link here. <br />For example, if your username is <i>Programmer</i>, your GitHub profile link becomes: <i>https://github.com/Programmer.gpg</i></div>
     <template #footer>
       <va-button @click="modal.showGitHubProfileLinkModal = false">
         Close
@@ -182,7 +182,7 @@ export default defineComponent({
       this.modal.showSavedModal=true;
     },
     validateGitHub(value: string) {
-      return (value && value.length > 0 && (value.startsWith('https://github.com/') || value.startsWith('https://www.github.com/'))) || 'Enter GitHub profile link, i.e. https://github.com/userName';
+      return (value && value.length > 0 && value.endsWith('.gpg') && (value.startsWith('https://github.com/') || value.startsWith('https://www.github.com/'))) || 'Enter GitHub profile link, i.e. https://github.com/userName.gpg';
     },
     validateRequired(value: string) {
       return (value && value.length > 0) || 'Field is required';
