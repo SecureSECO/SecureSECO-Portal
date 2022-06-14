@@ -5,6 +5,9 @@
         <va-navbar-item>
           <va-chip color="dark" size="large" square>TrustSECO</va-chip>
         </va-navbar-item>
+        <va-navbar-item>
+          <va-chip color="dark" flat>User tokens: 0</va-chip>
+        </va-navbar-item>
       </template>
       <template v-slot:center>
         <va-navbar-item>
