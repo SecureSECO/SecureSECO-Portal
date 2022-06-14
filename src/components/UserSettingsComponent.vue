@@ -39,7 +39,7 @@
     <template #header>
       <h2>GitHub Token</h2>
     </template>
-    <div>Follow <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">this guide</a> on how to create a personal acces token on GitHub, and paste it here.</div>
+    <div>Follow <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">this guide</a> on how to create a personal acces token on GitHub, and paste it here.<br />You do not need to select scopes.</div>
     <template #footer>
       <va-button @click="modal.showGitHubTokenModal = false">
         Close
@@ -55,7 +55,7 @@
     <template #header>
       <h2>Libraries.IO Token</h2>
     </template>
-    <div>Blabla</div>
+    <div>Go to your Libaries.IO <a href="https://libraries.io/account" target="_blank" rel="noopener noreferrer">account page</a> and copy your API token.</div>
     <template #footer>
       <va-button @click="modal.showLibrariesIOTokenModal = false">
         Close
@@ -71,7 +71,7 @@
     <template #header>
       <h2>DLT GPG Key</h2>
     </template>
-    <div>Blabla</div>
+    <div>Copy the key below and add it to your GitHub account, following <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-new-gpg-key-to-your-github-account">this guide</a></div>
     <template #footer>
       <va-button @click="modal.showDLTGPGModal = false">
         Close
