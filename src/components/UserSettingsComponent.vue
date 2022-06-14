@@ -185,18 +185,22 @@ export default defineComponent({
   },
   methods: {
     async handleSubmit() {
-      const { data } = await axios.post('http://localhost:3000/api/dlt/store-github-link', {
+      axios.post('http://localhost:3000/api/dlt/store-github-link', {
         data: "https://github.com/"+this.request_data.user.gh_username.toLowerCase()+".gpg",
-      });
-      this.modal.showGPGkeyInGitHub = !data.stored_on_github;
-
-      axios.post('http://localhost:3000/api/spider/set-tokens', {
-        github_token: this.request_data.user.gh_token,
-        libraries_token: this.request_data.user.libraries_token,
-      });
-
-      //TODO: Check whether succeeded
-      this.modal.showSavedModal=true;
+      }).then((response) => {
+        this.modal.showGPGkeyInGitHub = !(response.data.stored_on_github);
+        
+        axios.post('http://localhost:3000/api/spider/set-tokens', {
+          github_token: this.request_data.user.gh_token,
+          libraries_token: this.request_data.user.libraries_token,
+        }).then((response) => {
+          this.modal.showSavedModal=true;
+        }).catch((error) => {
+            console.log(error.message);
+        });
+      }).catch((error) => {
+          console.log(error.message);
+      });            
     },
     validateRequired(value: string) {
       return (value && value.length > 0) || 'Field is required';
