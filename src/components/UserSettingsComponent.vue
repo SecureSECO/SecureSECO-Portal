@@ -1,44 +1,139 @@
 <template>
-  <div>
-    <va-form
+  <va-modal
+    v-model="modal.showSavedModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Settings saved</h2>
+    </template>
+    <div>Your settings have been saved</div>
+    <template #footer>
+      <va-button @click="modal.showSavedModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
 
+  <va-modal
+    v-model="modal.showGitHubProfileLinkModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>GitHub Profile Link</h2>
+    </template>
+    <div>Enter your GitHub profile link here. <br />For example, if your username is <i>Programmer</i>, your GitHub profile link becomes: <i>https://github.com/Programmer</i>.</div>
+    <template #footer>
+      <va-button @click="modal.showGitHubProfileLinkModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+  
+  <va-modal
+    v-model="modal.showGitHubTokenModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>GitHub Token</h2>
+    </template>
+    <div>Follow <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">this guide</a> on how to create a personal acces token on GitHub, and paste it here.<br />You do not need to select scopes.</div>
+    <template #footer>
+      <va-button @click="modal.showGitHubTokenModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+  <va-modal
+    v-model="modal.showLibrariesIOTokenModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Libraries.IO Token</h2>
+    </template>
+    <div>Go to your Libaries.IO <a href="https://libraries.io/account" target="_blank" rel="noopener noreferrer">account page</a> and copy your API token.</div>
+    <template #footer>
+      <va-button @click="modal.showLibrariesIOTokenModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+  <va-modal
+    v-model="modal.showDLTGPGModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>DLT GPG Key</h2>
+    </template>
+    <div>Copy the key below and add it to your GitHub account, following <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-new-gpg-key-to-your-github-account">this guide</a></div>
+    <template #footer>
+      <va-button @click="modal.showDLTGPGModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+
+  <div class="flex xs12">
+    <va-form
       tag="form"
       @submit.prevent="handleSubmit"
     >
+      <div class="row">
+        <va-input
+            v-model="request_data.user.gh_profile_link"
+            class="flex xs11"
+            label="GitHub Profile Link"
+            placeholder="https://github.com/user"
+            :rules="[validateGitHub]"
+          />
 
-    <va-input
-        v-model="request_data.user.gh_profile_link"
-        class="mb-4"
-        label="GitHub Profile Link"
-        placeholder="https://github.com/user"
-        :rules="[validateGitHub]"
-      />
+        <va-icon class="flex xs1 material-icons" @click="modal.showGitHubProfileLinkModal = true">info</va-icon>
+      </div>
 
-      <va-input
-        v-model="request_data.user.gh_token"
-        class="mb-4"
-        label="GitHub personal token"
-        :rules="[validateRequired]"
-      />
+      <div class="row">
+        <va-input
+          v-model="request_data.user.gh_token"
+          class="flex xs11"
+          label="GitHub personal token"
+          :rules="[validateRequired]"
+        />
 
-      <va-input
-        v-model="request_data.user.libraries_token"
-        class="mb-4"
-        label="Libraries.IO personal token"
-        :rules="[validateRequired]"
-      />
+        <va-icon class="flex xs1 material-icons" @click="modal.showGitHubTokenModal = true">info</va-icon>
+      </div>
 
-      <va-input
-        v-model="request_data.user.dlt_gpg"
-        class="mb-4"
-        label="DLT GPG key"
-        type="textarea"
-        autosize
-        readonly
-      />
+      <div class="row">
+        <va-input
+          v-model="request_data.user.libraries_token"
+          class="flex xs11"
+          label="Libraries.IO personal token"
+          :rules="[validateRequired]"
+        />
+
+        <va-icon class="flex xs1 material-icons" @click="modal.showLibrariesIOTokenModal = true">info</va-icon>
+      </div>
+
+      <div class="row">
+        <va-input
+          v-model="request_data.user.dlt_gpg"
+          class="flex xs11"
+          label="DLT GPG key"
+          type="textarea"
+          autosize
+          readonly
+        />
+      
+        <va-icon class="flex xs1 material-icons" @click="modal.showDLTGPGModal = true">info</va-icon>
+      </div>
+
       <va-button type="submit" class="mt-2">Save</va-button>
     </va-form>
-
   </div>
 </template>
 
@@ -61,6 +156,13 @@ export default defineComponent({
           dlt_gpg: '',
         },
       },
+      modal: {
+        showGitHubProfileLinkModal: false,
+        showGitHubTokenModal: false,
+        showLibrariesIOTokenModal: false,
+        showDLTGPGModal: false,
+        showSavedModal: false,
+      },
       package_data: {},
       loading: false,
     };
@@ -75,6 +177,9 @@ export default defineComponent({
         github_token: this.request_data.user.gh_token,
         libraries_token: this.request_data.user.libraries_token,
       });
+
+      //TODO: Check whether succeeded
+      this.modal.showSavedModal=true;
     },
     validateGitHub(value: string) {
       return (value && value.length > 0 && (value.startsWith('https://github.com/') || value.startsWith('https://www.github.com/'))) || 'Enter GitHub profile link, i.e. https://github.com/userName';

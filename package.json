@@ -6,9 +6,10 @@
   "scripts": {
     "test:unit": "vitest",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "dev": "vite",
+    "dev": "vite dev",
+    "dev-local": "vite dev --mode no-api",
     "build": "vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^2.3.1",

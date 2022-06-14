@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { VuesticPlugin } from 'vuestic-ui';
+import { createVuestic } from 'vuestic-ui';
 import {
   DltInterface, SpiderInterface, dltApi, spiderApi,
 } from './api';
@@ -26,7 +26,7 @@ declare module '@vue/runtime-core' {
 }
 
 const app = createApp(App)
-  .use(VuesticPlugin)
+  .use(createVuestic())
   .use(router)
   .use(dltApi)
   .use(spiderApi);

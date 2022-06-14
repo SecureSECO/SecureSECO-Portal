@@ -15,11 +15,17 @@ export default class SpiderApi extends SpiderInterface {
     const action = targetState ? 'start' : 'stop';
     try {
       const { data } = await axios.get(this.#getLink(action));
+
       if (data.success) {
         this.isActive = !this.isActive;
+        return this.isActive;
+      } else {
+        return data.message;
       }
+
     } catch (e) {
       // If the case where the request returned properly but contains an error message, show that message
+
       if (axios.isAxiosError(e) && e.response) {
         const { data }: AxiosResponse = e.response;
         if (data.success === false) {
@@ -29,7 +35,6 @@ export default class SpiderApi extends SpiderInterface {
         throw e;
       }
     }
-    return this.isActive;
   }
 
   #getLink(to: string) {
