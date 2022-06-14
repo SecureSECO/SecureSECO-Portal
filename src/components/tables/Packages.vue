@@ -4,8 +4,8 @@
       <va-card>
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
-          <va-data-table :columns="columns" :height="height" :items="items" allow-footer-sorting clickable hoverable
-                         sticky-header striped @row:click="loadPackage($event)">
+          <va-data-table :columns="columns" :height="height" :items="items" :loading="isLoading" allow-footer-sorting
+                         clickable hoverable sticky-header striped @row:click="loadPackage($event)">
             <!--            <template #cell(id)="{ source: id }">-->
             <!--              <va-chip @click="loadPackage(id)">{{ id }}</va-chip>-->
             <!--            </template>-->
@@ -59,14 +59,17 @@ export default defineComponent({
       items: packages,
       columns,
       height,
+      isLoading: true,
     };
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   methods: {
     async fetchData() {
+      await this.$fakeDelay();
       this.items = await this.$dltApi.getPackages();
+      this.isLoading = false;
     },
     loadPackage(e) { // TODO: How to type this parameter? Vuestic docs say `RowClickEmit` but it doesn't exist
       const { name } = e.item;

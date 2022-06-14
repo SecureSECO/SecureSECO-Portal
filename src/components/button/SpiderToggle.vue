@@ -40,13 +40,7 @@ export default defineComponent({
       this.isLoading = true;
       this.state = null;
       try {
-        // Emulate loading
-        if (process.env.NODE_ENV === 'development') {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 2000);
-          });
-        }
-
+        await this.$fakeDelay();
         const newState = await this.$spiderApi.toggleSpider();
         this.isActive = newState;
         this.state = this.isActive;
