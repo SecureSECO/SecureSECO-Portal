@@ -103,10 +103,9 @@
     >
       <div class="row">
         <va-input
-            v-model="request_data.user.gh_profile_link"
+            v-model="request_data.user.gh_username"
             class="flex xs11"
-            label="GitHub Profile Link"
-            placeholder="https://github.com/user"
+            label="GitHub username"
             :rules="[validateGitHub]"
           />
 
@@ -166,7 +165,7 @@ export default defineComponent({
     return {
       request_data: {
         user: {
-          gh_profile_link: '',
+          gh_username: '',
           gh_token: '',
           libraries_token: '',
           dlt_gpg: '',
@@ -187,7 +186,7 @@ export default defineComponent({
   methods: {
     async handleSubmit() {
       const { data } = await axios.post('http://localhost:3000/api/dlt/store-github-link', {
-        data: this.request_data.user.gh_profile_link,
+        data: "https://github.com/"+this.request_data.user.gh_username.toLowerCase()+".gpg",
       });
       this.modal.showGPGkeyInGitHub = !data.stored_on_github;
 
@@ -199,15 +198,12 @@ export default defineComponent({
       //TODO: Check whether succeeded
       this.modal.showSavedModal=true;
     },
-    validateGitHub(value: string) {
-      return (value && value.length > 0 && value.endsWith('.gpg') && (value.startsWith('https://github.com/') || value.startsWith('https://www.github.com/'))) || 'Enter GitHub profile link, i.e. https://github.com/userName.gpg';
-    },
     validateRequired(value: string) {
       return (value && value.length > 0) || 'Field is required';
     },
   },
   async mounted() {
-    this.request_data.user.gh_profile_link = (await axios.get('http://localhost:3000/api/dlt/get-github-link')).data;
+    this.request_data.user.gh_username = (await axios.get('http://localhost:3000/api/dlt/get-github-link')).data.slice(19).slice(0,-4);
     const { data } = await axios.get('http://localhost:3000/api/spider/get-tokens');
     this.request_data.user.gh_token = data.github_token;
     this.request_data.user.libraries_token = data.libraries_token;
