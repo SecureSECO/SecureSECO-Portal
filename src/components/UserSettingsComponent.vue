@@ -1,5 +1,21 @@
 <template>
   <va-modal
+    v-model="modal.showSavedModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Settings saved</h2>
+    </template>
+    <div>Your settings have been saved</div>
+    <template #footer>
+      <va-button @click="modal.showSavedModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+  <va-modal
     v-model="modal.showGitHubProfileLinkModal"
     hide-default-actions
     overlay-opacity="0.2"
@@ -7,7 +23,7 @@
     <template #header>
       <h2>GitHub Profile Link</h2>
     </template>
-    <div>Blabla</div>
+    <div>Enter your GitHub profile link here. <br />For example, if your username is <i>Programmer</i>, your GitHub profile link becomes: <i>https://github.com/Programmer</i>.</div>
     <template #footer>
       <va-button @click="modal.showGitHubProfileLinkModal = false">
         Close
@@ -23,7 +39,7 @@
     <template #header>
       <h2>GitHub Token</h2>
     </template>
-    <div>Blabla</div>
+    <div>Follow <a target="_blank" rel="noopener noreferrer" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">this guide</a> on how to create a personal acces token on GitHub, and paste it here.</div>
     <template #footer>
       <va-button @click="modal.showGitHubTokenModal = false">
         Close
@@ -145,6 +161,7 @@ export default defineComponent({
         showGitHubTokenModal: false,
         showLibrariesIOTokenModal: false,
         showDLTGPGModal: false,
+        showSavedModal: false,
       },
       package_data: {},
       loading: false,
@@ -160,6 +177,9 @@ export default defineComponent({
         github_token: this.request_data.user.gh_token,
         libraries_token: this.request_data.user.libraries_token,
       });
+
+      //TODO: Check whether succeeded
+      this.modal.showSavedModal=true;
     },
     validateGitHub(value: string) {
       return (value && value.length > 0 && (value.startsWith('https://github.com/') || value.startsWith('https://www.github.com/'))) || 'Enter GitHub profile link, i.e. https://github.com/userName';
