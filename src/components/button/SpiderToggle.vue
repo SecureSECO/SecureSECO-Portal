@@ -79,6 +79,8 @@ export default defineComponent({
         this.state = this.isActive;
         
       } catch (e) {
+        this.modalErrorMessage=e.message;
+        this.showSpiderErrorModal=true;
         this.state = this.isActive;
         console.error('SpiderToggle.toggle', e.message);
       }

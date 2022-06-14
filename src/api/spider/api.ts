@@ -28,11 +28,9 @@ export default class SpiderApi extends SpiderInterface {
         const { data }: AxiosResponse = e.response;
         if (data.success === false) {
           throw new Error(data.message);
-          return data.message;
         }
       } else {
         throw e;
-        return false;
       }
     }
   }
