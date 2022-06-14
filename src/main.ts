@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { VuesticPlugin } from 'vuestic-ui';
+import { createVuestic } from 'vuestic-ui';
 import {
   DltInterface, SpiderInterface, dltApi, spiderApi,
 } from './api';
@@ -8,7 +8,7 @@ import App from './App.vue';
 import router from './router';
 
 createApp(App)
-  .use(VuesticPlugin)
+  .use(createVuestic())
   .use(router)
   .use(dltApi)
   .use(spiderApi)
