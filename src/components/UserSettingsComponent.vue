@@ -106,7 +106,7 @@
             v-model="request_data.user.gh_username"
             class="flex xs11"
             label="GitHub username"
-            :rules="[validateGitHub]"
+            :rules="[validateRequired]"
           />
 
         <va-icon class="flex xs1 material-icons" @click="modal.showGitHubProfileLinkModal = true">info</va-icon>
