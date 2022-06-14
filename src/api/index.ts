@@ -9,7 +9,7 @@ export * from './spider/interface';
 // Instantiate Api or Mock based on .env
 let DltClass;
 let SpiderClass;
-if (process.env.NODE_ENV === 'test') {
+if (import.meta.env.MODE === 'test' || import.meta.env.MODE === 'no-api') {
   DltClass = DltMock;
   SpiderClass = SpiderMock;
 } else {
