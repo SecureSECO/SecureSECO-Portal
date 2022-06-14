@@ -140,11 +140,15 @@
           class="flex xs11"
           label="DLT GPG key"
           type="textarea"
+          ref="dltgpg"
+          @click="copyToClipboard"
           autosize
           readonly
         />
-      
-        <va-icon class="flex xs1 material-icons" @click="modal.showDLTGPGModal = true">info</va-icon>
+        <div>
+        <va-icon class="flex xs1 material-icons" @click="modal.showDLTGPGModal = true">info</va-icon><br>
+        <va-icon class="flex xs1 material-icons" @click="copyToClipboard">content_copy</va-icon>
+        </div>
       </div>
 
       <va-button type="submit" class="mt-2">Save</va-button>
@@ -205,6 +209,9 @@ export default defineComponent({
     validateRequired(value: string) {
       return (value && value.length > 0) || 'Field is required';
     },
+    copyToClipboard(){      
+      this.$copyText(this.request_data.user.dlt_gpg);            
+    }
   },
   async mounted() {
     this.request_data.user.gh_username = (await axios.get('http://localhost:3000/api/dlt/get-github-link')).data.slice(19).slice(0,-4);
