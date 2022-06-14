@@ -44,19 +44,21 @@ const parseJob = (data: ApiJob): Job => ({
 });
 
 export default class DltApi extends DltInterface {
+  #baseUrl = 'http://localhost:3000/api/dlt/';
+
   async getPackages() {
-    const { data } = await axios.get('http://localhost:3000/api/dlt/packages');
+    const { data } = await axios.get(this.#getLink('packages'));
     return data.packages.map((item: ApiPackage) => parsePackage(item));
   }
 
   async getPackage(name: string) {
-    const { data } = await axios.get(`http://localhost:3000/api/dlt/package/${name}`);
+    const { data } = await axios.get(this.#getLink(`package/${name}`));
     return parsePackage(data);
   }
 
   // TODO: Remove the mock data once this AP endpoint returns correct data
   async getTrustFacts(name: string) {
-    const { data } = await axios.get(`http://localhost:3000/api/dlt/trust-facts/${name}`);
+    const { data } = await axios.get(this.#getLink(`trust-facts/${name}`));
     console.log(data);
     const trustFacts = [];
     for (let i = 0; i < (name.length + 5) % 10; i += 1) {
@@ -74,7 +76,11 @@ export default class DltApi extends DltInterface {
   }
 
   async getJobs() {
-    const { data } = await axios.get('http://localhost:3000/api/dlt/jobs');
+    const { data } = await axios.get(this.#getLink('jobs'));
     return data.map((item: ApiJob) => parseJob(item));
+  }
+
+  #getLink(to: string) {
+    return `${this.#baseUrl}${to}`;
   }
 }

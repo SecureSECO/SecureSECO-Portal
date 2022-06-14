@@ -3,8 +3,10 @@ import { SpiderInterface } from '@/api/spider/interface';
 import axios, { AxiosResponse } from 'axios';
 
 export default class SpiderApi extends SpiderInterface {
+  #baseUrl = 'http://localhost:3000/api/spider/';
+
   async getSpiderStatus() {
-    const { data } = await axios.get('http://localhost:3000/api/spider/status');
+    const { data } = await axios.get(this.#getLink('status'));
     this.isActive = data;
     return this.isActive;
   }
@@ -12,7 +14,7 @@ export default class SpiderApi extends SpiderInterface {
   async toggleSpider(targetState = !this.isActive) {
     const action = targetState ? 'start' : 'stop';
     try {
-      const { data } = await axios.get(`http://localhost:3000/api/spider/${action}`);
+      const { data } = await axios.get(this.#getLink(action));
       if (data.success) {
         this.isActive = !this.isActive;
       }
@@ -28,5 +30,9 @@ export default class SpiderApi extends SpiderInterface {
       }
     }
     return this.isActive;
+  }
+
+  #getLink(to: string) {
+    return `${this.#baseUrl}${to}`;
   }
 }
