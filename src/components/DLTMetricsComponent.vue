@@ -9,13 +9,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { defaultMetrics } from '@/api';
+import { defaultMetrics, Metrics } from '@/api';
 
 export default defineComponent({
   name: 'DLTMetricsComponent',
   data() {
     return {
-      metrics: { ...defaultMetrics },
+      metrics: { ...defaultMetrics } as Metrics,
       isLoading: true,
     };
   },
