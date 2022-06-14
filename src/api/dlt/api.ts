@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import {
-  defaultPackage, defaultJob, DltInterface, Job, JobForm, Package, TrustFact,
+  defaultJob, defaultMetrics, defaultPackage,
+  DltInterface, Job, JobForm, Metrics, Package, TrustFact,
 } from '@/api/dlt/interface';
 import axios from 'axios';
 
@@ -22,6 +23,16 @@ interface ApiJob {
   account: { uid: string },
 }
 
+interface ApiMetrics {
+  block_height: number,
+  package_count: number,
+  peer_info: {
+    banned: number,
+    connected: number,
+    disconnected: number,
+  },
+}
+
 // Convert package data as received from the Dlt Api into the local Package interface
 const parsePackage = (data: ApiPackage): Package => ({
   ...defaultPackage,
@@ -41,6 +52,14 @@ const parseJob = (data: ApiJob): Job => ({
   version: data.version,
   fact: data.fact,
   bounty: data.bounty,
+});
+
+// Convert metrics data as received from the Dlt Api into the local Metrics interface
+const parseMetrics = (data: ApiMetrics): Metrics => ({
+  ...defaultMetrics,
+  packages: data.package_count,
+  blockheight: data.block_height,
+  nodes: data.peer_info.connected,
 });
 
 export default class DltApi extends DltInterface {
@@ -84,6 +103,11 @@ export default class DltApi extends DltInterface {
     const { data } = await axios.post(this.#getLink('add-job'), job);
     console.log(data);
     return data;
+  }
+
+  async getMetrics() {
+    const { data } = await axios.get(this.#getLink('metrics'));
+    return parseMetrics(data);
   }
 
   #getLink(to: string) {

@@ -43,6 +43,7 @@ export default defineComponent({
   },
   methods: {
     async addJob() {
+      await this.$fakeDelay();
       const result = await this.$dltApi.addJob(this.job);
       if (typeof result === 'string') {
         this.response = result;

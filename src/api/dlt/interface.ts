@@ -30,6 +30,12 @@ export interface JobForm {
   release: string,
 }
 
+export interface Metrics {
+  packages: number,
+  blockheight: number,
+  nodes: number,
+}
+
 export abstract class DltInterface {
   abstract getPackages(): Promise<Package[]>;
 
@@ -42,6 +48,8 @@ export abstract class DltInterface {
   abstract getJobs(): Promise<Job[]>;
 
   abstract addJob(job: JobForm): Promise<string | void>;
+
+  abstract getMetrics(): Promise<Metrics>;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
@@ -64,4 +72,10 @@ export const defaultJob: Job = {
   version: 'v1.2.3',
   fact: 'stars',
   bounty: 1000,
+};
+
+export const defaultMetrics: Metrics = {
+  packages: 0,
+  blockheight: 0,
+  nodes: 0,
 };
