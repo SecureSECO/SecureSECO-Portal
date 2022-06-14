@@ -79,6 +79,22 @@
     </template>
   </va-modal>
 
+  <va-modal
+    v-model="modal.showGPGkeyInGitHub"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>GPG Key</h2>
+    </template>
+    <div>The DLT GPG key has not been added to your GitHub account yet!</div>
+    <template #footer>
+      <va-button @click="modal.showGPGkeyInGitHub = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
 
   <div class="flex xs12">
     <va-form
@@ -162,6 +178,7 @@ export default defineComponent({
         showLibrariesIOTokenModal: false,
         showDLTGPGModal: false,
         showSavedModal: false,
+        showGPGkeyInGitHub: false,
       },
       package_data: {},
       loading: false,
@@ -172,7 +189,7 @@ export default defineComponent({
       const { data } = await axios.post('http://localhost:3000/api/dlt/store-github-link', {
         data: this.request_data.user.gh_profile_link,
       });
-      
+      this.modal.showGPGkeyInGitHub = !data.stored_on_github;
 
       axios.post('http://localhost:3000/api/spider/set-tokens', {
         github_token: this.request_data.user.gh_token,
