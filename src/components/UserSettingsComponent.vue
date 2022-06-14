@@ -67,9 +67,10 @@ export default defineComponent({
   },
   methods: {
     async handleSubmit() {
-      axios.post('http://localhost:3000/api/dlt/store-github-link', {
+      const { data } = await axios.post('http://localhost:3000/api/dlt/store-github-link', {
         data: this.request_data.user.gh_profile_link,
       });
+      console.log("hoi:" + data);
 
       axios.post('http://localhost:3000/api/spider/set-tokens', {
         github_token: this.request_data.user.gh_token,
