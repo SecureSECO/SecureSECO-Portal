@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import {
-  defaultPackage, defaultJob, DltInterface, Package, TrustFact, Job,
+  defaultPackage, defaultJob, DltInterface, Job, JobForm, Package, TrustFact,
 } from '@/api/dlt/interface';
 import axios from 'axios';
 
@@ -78,6 +78,12 @@ export default class DltApi extends DltInterface {
   async getJobs() {
     const { data } = await axios.get(this.#getLink('jobs'));
     return data.map((item: ApiJob) => parseJob(item));
+  }
+
+  async addJob(job: JobForm) {
+    const { data } = await axios.post(this.#getLink('add-job'), job);
+    console.log(data);
+    return data;
   }
 
   #getLink(to: string) {

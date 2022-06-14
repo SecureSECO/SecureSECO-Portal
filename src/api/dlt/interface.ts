@@ -23,6 +23,13 @@ export interface Job {
   bounty: number,
 }
 
+export interface JobForm {
+  platform: string,
+  owner: string,
+  name: string,
+  release: string,
+}
+
 export abstract class DltInterface {
   abstract getPackages(): Promise<Package[]>;
 
@@ -33,6 +40,8 @@ export abstract class DltInterface {
   abstract getDownloadLink(): Promise<string>;
 
   abstract getJobs(): Promise<Job[]>;
+
+  abstract addJob(job: JobForm): Promise<string | void>;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign

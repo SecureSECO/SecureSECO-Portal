@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import {
-  defaultPackage, DltInterface, Package, TrustFact,
+  defaultPackage, DltInterface, JobForm, Package, TrustFact,
 } from '@/api/dlt/interface';
 
 export default class DltMock extends DltInterface {
@@ -47,5 +47,9 @@ export default class DltMock extends DltInterface {
   // TODO: Add mock data
   async getJobs() {
     return [];
+  }
+
+  async addJob(job: JobForm) {
+    return 'Success';
   }
 }

@@ -28,13 +28,6 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 
-// interface Job {
-//   platform: string,
-//   owner: string,
-//   name: string,
-//   release: string
-// }
-
 export default defineComponent({
   name: 'add-package-component',
   data() {
@@ -50,8 +43,10 @@ export default defineComponent({
   },
   methods: {
     async addJob() {
-      const { data } = await axios.post('http://localhost:3000/api/dlt/add-job', this.job);
-      this.response = data;
+      const result = await this.$dltApi.addJob(this.job);
+      if (typeof result === 'string') {
+        this.response = result;
+      }
     },
     // TODO: Move to generalized validation system
     validateRequired(value: string) {
