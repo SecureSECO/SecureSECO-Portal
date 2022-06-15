@@ -6,9 +6,9 @@
         <va-card-content>
           <va-data-table :columns="columns" :height="height" :items="items" allow-footer-sorting clickable hoverable
                          sticky-header striped @row:click="loadPackage($event)">
-            <!--            <template #cell(id)="{ source: id }">-->
-            <!--              <va-chip @click="loadPackage(id)">{{ id }}</va-chip>-->
-            <!--            </template>-->
+            <template #cell(updatedAt)="{ rowData }">
+              <DisplayDateComponent :date="rowData.updatedAt" isTimeAgo/>
+            </template>
           </va-data-table>
         </va-card-content>
       </va-card>
@@ -20,9 +20,13 @@
 import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api';
+import DisplayDateComponent from '@/components/DisplayDate.vue';
 
 export default defineComponent({
   name: 'packages-table',
+  components: {
+    DisplayDateComponent,
+  },
   data() {
     const packages: Package[] = [];
 
