@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/dlt/interface';
+import { Package } from '@/api';
 
 export default defineComponent({
   name: 'package-details-component',
