@@ -5,6 +5,9 @@
         <va-navbar-item>
           <va-chip color="dark" size="large" square>TrustSECO</va-chip>
         </va-navbar-item>
+        <va-navbar-item>
+          <va-chip color="dark" flat @click="refreshUserTokens">User tokens: {{ usertokens }}</va-chip>
+        </va-navbar-item>
       </template>
       <template v-slot:center>
         <va-navbar-item>
@@ -53,11 +56,30 @@
 <script>
 import router from '@/router';
 import SpiderToggleButton from '../button/SpiderToggle.vue';
+import axios from 'axios';
 
 export default {
   name: 'header-component',
   components: {
     SpiderToggleButton,
+  },
+  data() {
+    return {
+      usertokens: 0,
+    };
+  },
+  methods: {
+    async refreshUserTokens() {
+      try {
+        const { data } = await axios.get('http://localhost:3000/api/dlt/account');
+        this.usertokens = data.slingers;
+      } catch {
+        this.usertokens = 0;
+      }
+    }
+  },
+  async mounted(){
+    this.refreshUserTokens();
   },
   computed: {
     isDevMode() {
