@@ -1,6 +1,7 @@
 import { App } from 'vue';
 import { GlobalConfig } from 'vuestic-ui';
 
+/** @deprecated */
 export const defaultPackage = {
   id: 0,
   platform: 'Github',
@@ -11,6 +12,7 @@ export const defaultPackage = {
   updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
 };
 
+/** @deprecated */
 export interface Package {
   id: number,
   platform: string,
@@ -21,11 +23,13 @@ export interface Package {
   updatedAt: Date,
 }
 
+/** @deprecated */
 export interface TrustFact {
   type: string,
   value: number,
 }
 
+/** @deprecated */
 export abstract class DltApi {
   // abstract getPackageNames(): Promise<string[]>;
 
