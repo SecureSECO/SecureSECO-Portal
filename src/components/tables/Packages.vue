@@ -5,9 +5,18 @@
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
           <va-data-table :columns="columns" :height="height" :items="items" allow-footer-sorting clickable hoverable
-                         sticky-header striped @row:click="loadPackage($event)">
-            <template #cell(updatedAt)="{ rowData }">
-              <DisplayDateComponent :date="rowData.updatedAt" isTimeAgo/>
+                         sticky-header striped @row:click="loadPackage">
+            <template #cell(releases)="{ rowData }">
+              <div v-if="rowData.releases.length >= 3" class="range">
+                <va-badge :text="rowData.releases[rowData.releases.length - 1]" color="secondary"/>
+                -
+                <va-badge :text="rowData.releases[0]" color="secondary"/>
+              </div>
+              <div class="list">
+                <span v-for="release in rowData.releases" :key="rowData.name + release">
+                  <va-badge :text="release" color="secondary"/>
+                </span>
+              </div>
             </template>
           </va-data-table>
         </va-card-content>
@@ -20,39 +29,36 @@
 import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api';
-import DisplayDateComponent from '@/components/DisplayDate.vue';
+import semver from 'semver';
 
 export default defineComponent({
   name: 'packages-table',
-  components: {
-    DisplayDateComponent,
-  },
   data() {
     const packages: Package[] = [];
 
     const columns = [
       {
         key: 'platform',
+        verticalAlign: 'top',
+        width: '25%',
         sortable: true,
       },
       {
         key: 'owner',
+        verticalAlign: 'top',
+        width: '25%',
         sortable: true,
       },
       {
         key: 'name',
-        sortable: true,
-      },
-      { key: 'releases' },
-      {
-        key: 'score',
-        alignHead: 'right',
-        align: 'right',
+        verticalAlign: 'top',
+        width: '25%',
         sortable: true,
       },
       {
-        key: 'updatedAt',
-        sortable: true,
+        key: 'releases',
+        classes: ['cellReleases'],
+        width: '25%',
       },
     ];
 
@@ -70,7 +76,15 @@ export default defineComponent({
   },
   methods: {
     async fetchData() {
-      this.items = await this.$dltApi.getPackages();
+      const packages = await this.$dltApi.getPackages();
+      packages.forEach((pack) => {
+        pack.releases.sort((a, b) => {
+          const a2 = semver.coerce(a) ?? a;
+          const b2 = semver.coerce(b) ?? b;
+          return -semver.compareLoose(a2, b2);
+        });
+      });
+      this.items = packages;
     },
     loadPackage(e) { // TODO: How to type this parameter? Vuestic docs say `RowClickEmit` but it doesn't exist
       const { name } = e.item;
@@ -82,5 +96,31 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.va-badge {
+  margin: 0 2px;
+}
+
+/* For multiple releases, on row hover switch between range and list views */
+.va-data-table__table-tr {
+  .cellReleases {
+    .range {
+      display: block;
+    }
+
+    .range + .list {
+      display: none;
+    }
+  }
+
+  &:hover .cellReleases {
+    .range {
+      display: none;
+    }
+
+    .list {
+      display: block;
+    }
+  }
+}
 </style>
