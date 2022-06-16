@@ -17,6 +17,7 @@
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "font-awesome": "^4.7.0",
+    "semver": "^7.3.7",
     "timeago.js": "^4.0.2",
     "vite": "^2.9.1",
     "vitest": "^0.10.0",
@@ -26,6 +27,7 @@
     "vuestic-ui": "^1.4.0"
   },
   "devDependencies": {
+    "@types/semver": "^7.3.10",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
