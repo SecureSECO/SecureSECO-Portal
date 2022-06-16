@@ -9,7 +9,6 @@ interface ApiPackage {
   packageOwner: string,
   packageName: string,
   packageReleases: string[],
-  // TODO: this should get `score` and `updatedAt` fields
 }
 
 interface ApiJob {
@@ -29,8 +28,6 @@ const parsePackage = (data: ApiPackage): Package => ({
   owner: data.packageOwner,
   name: data.packageName,
   releases: data.packageReleases,
-  score: Math.floor(100 * Math.random()), // TODO: Why is this not already in the request?
-  updatedAt: new Date(Date.now() - data.packageName.length * 24 * 60 * 60 * 1000), // TODO: nice to have for UE
 });
 
 // Convert job data as received from the Dlt Api into the local Job interface
@@ -51,6 +48,7 @@ export default class DltApi extends DltInterface {
 
   async getPackage(name: string) {
     const { data } = await axios.get(`http://localhost:3000/api/dlt/package/${name}`);
+    console.log(data);
     return parsePackage(data);
   }
 
@@ -68,6 +66,7 @@ export default class DltApi extends DltInterface {
     return trustFacts;
   }
 
+  // TODO: This doesn't really belong to the DLT Api, but...
   async getDownloadLink() {
     const { data } = await axios.get('http://localhost:3000/api/download');
     return data;

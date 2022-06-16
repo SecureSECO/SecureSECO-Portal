@@ -6,8 +6,6 @@ export interface Package {
   owner: string,
   name: string,
   releases: string[],
-  score: number,
-  updatedAt: Date,
 }
 
 export interface TrustFact {
@@ -44,9 +42,7 @@ export const defaultPackage: Package = {
   platform: 'Github',
   owner: 'Fides',
   name: 'Portal',
-  releases: ['v1.2.3'],
-  score: 0,
-  updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+  releases: ['v1.2.3', 'v7.8.9', 'v4.5.6'],
 };
 
 export const defaultJob: Job = {

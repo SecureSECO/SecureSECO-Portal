@@ -10,8 +10,6 @@ export default class DltMock extends DltInterface {
       packages[i] = {
         ...defaultPackage,
         name: `Package ${i}`,
-        score: i,
-        updatedAt: new Date(Date.now() - i * 24 * 60 * 60 * 1000),
       };
     }
     packages[49] = {
