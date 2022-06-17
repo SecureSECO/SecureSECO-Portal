@@ -14,8 +14,8 @@
         <div class="flex xs8 propValue">{{ package.name }}</div>
       </div>
       <div class="row">
-        <div class="flex xs4 propName">Release:</div>
-        <div class="flex xs8 propValue">{{ package.release }}</div>
+        <div class="flex xs4 propName">Selected release:</div>
+        <div class="flex xs8 propValue">{{ selectedRelease }}</div>
       </div>
     </div>
     <div class="flex xs6">
@@ -28,14 +28,15 @@
         <div class="flex xs8 propValue">TODO</div>
       </div>
       <div class="row">
-        <div class="flex xs4 propName">Updated:</div>
-        <div class="flex xs8 propValue">
-          <DisplayDateComponent :date="package.updatedAt" isTimeAgo/>
-        </div>
-      </div>
-      <div class="row">
         <div class="flex xs4 propName">Number of trust facts:</div>
         <div class="flex xs8 propValue">{{ trustFactCount }}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="flex xs12">
+        <va-radio v-for="release in package.releases" :key="release" v-model="selectedRelease" :option="release">
+          <va-badge :text="release" color="secondary"/>
+        </va-radio>
       </div>
     </div>
     <div v-if="githubLink !== undefined" class="flex xs12">
@@ -50,13 +51,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Package } from '@/api';
-import DisplayDateComponent from '@/components/DisplayDate.vue';
 
 export default defineComponent({
   name: 'package-details-component',
-  components: {
-    DisplayDateComponent,
-  },
   props: {
     package: {
       type: Object as () => Package,
@@ -66,6 +63,11 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
+  },
+  data() {
+    return {
+      selectedRelease: this.package.releases[0],
+    };
   },
   computed: {
     // TODO: Add links for other Platforms and generalise
@@ -80,8 +82,28 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss">
 .propName {
   text-align: right;
+}
+
+.va-radio {
+  margin: 0 !important;
+
+  .va-radio__icon {
+    display: none;
+  }
+
+  .va-radio__text {
+    margin-left: 0;
+  }
+}
+
+.va-badge {
+  margin: 2px;
+
+  .va-badge__text {
+    font-size: 0.8rem;
+  }
 }
 </style>

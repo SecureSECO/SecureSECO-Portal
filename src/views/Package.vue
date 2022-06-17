@@ -24,7 +24,7 @@
 <script>
 import PackageDetailsComponent from '@/components/PackageDetails.vue';
 import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
-import { defaultPackage } from '@/api/dlt/interface';
+import { defaultPackage } from '@/api';
 
 export default {
   components: {
