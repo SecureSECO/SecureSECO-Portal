@@ -5,7 +5,7 @@
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
           <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
-          <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" allow-footer-sorting
+          <va-data-table :loading="isLoading" :columns="columns" :filter="filter" :height="height" :items="items" allow-footer-sorting
                          clickable hoverable sticky-header striped @row:click="loadPackage">
             <template #cell(updatedAt)="{ rowData }">
               <DisplayDateComponent :date="rowData.updatedAt" isTimeAgo/>
@@ -71,14 +71,17 @@ export default defineComponent({
       height,
       items: packages,
       filter: '',
+      isLoading: true,
     };
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   methods: {
     async fetchData() {
+      await this.$fakeDelay();
       this.items = await this.$dltApi.getPackages();
+      this.isLoading = false;
     },
     // TODO: How to type this parameter?
     // Vuestic docs say `RowClickEmit` but it doesn't exist, so it's manually defined up above

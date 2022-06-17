@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api/dlt/interface';
+import { Package } from '@/api';
 import DisplayDateComponent from '@/components/DisplayDate.vue';
 
 export default defineComponent({
