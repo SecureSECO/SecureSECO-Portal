@@ -5,8 +5,8 @@
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
           <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
-          <va-data-table :loading="isLoading" :filter="filter" :columns="columns" :height="height" :items="items" allow-footer-sorting clickable hoverable
-                         sticky-header striped @row:click="loadPackage">
+          <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
+                         allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
             <template #cell(releases)="{ rowData }">
               <div v-if="rowData.releases.length >= 3" class="range">
                 <va-badge :text="rowData.releases[rowData.releases.length - 1]" color="secondary"/>
@@ -14,7 +14,7 @@
                 <va-badge :text="rowData.releases[0]" color="secondary"/>
               </div>
               <div class="list">
-                <span v-for="release in rowData.releases" :key="rowData.name + release">
+                <span v-for="release in rowData.releases" :key="release">
                   <va-badge :text="release" color="secondary"/>
                 </span>
               </div>
@@ -30,7 +30,6 @@
 import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api';
-import semver from 'semver';
 
 interface RowClickEmit {
   event: Event,
@@ -86,15 +85,7 @@ export default defineComponent({
   methods: {
     async fetchData() {
       await this.$fakeDelay();
-      const packages = await this.$dltApi.getPackages();
-      packages.forEach((pack) => {
-        pack.releases.sort((a, b) => {
-          const a2 = semver.coerce(a) ?? a;
-          const b2 = semver.coerce(b) ?? b;
-          return -semver.compareLoose(a2, b2);
-        });
-      });
-      this.items = packages;
+      this.items = await this.$dltApi.getPackages();
       this.isLoading = false;
     },
     // TODO: How to type this parameter?

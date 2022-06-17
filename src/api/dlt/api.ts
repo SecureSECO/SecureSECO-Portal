@@ -1,9 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import {
   defaultJob, defaultMetrics, defaultPackage,
-  DltInterface, Job, JobForm, Metrics, Package, TrustFact,
+  DltInterface, Job, JobForm, Metrics, Package,
 } from '@/api/dlt/interface';
 import axios from 'axios';
+import semver from 'semver';
 
 interface ApiPackage {
   packagePlatform: string,
@@ -32,13 +33,24 @@ interface ApiMetrics {
   },
 }
 
+// Perform a best-effort sort on the given list of releases by attempting to treat them as SemVers
+const sortReleases = (releases: string[]): string[] => {
+  const copy = Array.from(releases);
+  copy.sort((a, b) => {
+    const a2 = semver.coerce(a) ?? a;
+    const b2 = semver.coerce(b) ?? b;
+    return -semver.compareLoose(a2, b2);
+  });
+  return copy;
+};
+
 // Convert package data as received from the Dlt Api into the local Package interface
 const parsePackage = (data: ApiPackage): Package => ({
   ...defaultPackage,
   platform: data.packagePlatform,
   owner: data.packageOwner,
   name: data.packageName,
-  releases: data.packageReleases,
+  releases: sortReleases(data.packageReleases),
 });
 
 // Convert job data as received from the Dlt Api into the local Job interface

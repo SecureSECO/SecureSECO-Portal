@@ -59,7 +59,7 @@ export const defaultPackage: Package = {
   platform: 'Github',
   owner: 'Fides',
   name: 'Portal',
-  releases: ['v1.2.3', 'v7.8.9', 'v4.5.6'],
+  releases: ['v7.8.9', 'v4.5.6', 'v1.2.3'],
 };
 
 export const defaultJob: Job = {

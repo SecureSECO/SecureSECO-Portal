@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import {
-  defaultMetrics, defaultPackage, DltInterface, JobForm, Metrics, Package, TrustFact,
+  defaultMetrics, defaultPackage,
+  DltInterface, JobForm, Package,
 } from '@/api/dlt/interface';
 
 export default class DltMock extends DltInterface {
