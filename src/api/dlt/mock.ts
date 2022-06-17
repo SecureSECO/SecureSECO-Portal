@@ -24,7 +24,6 @@ export default class DltMock extends DltInterface {
     return {
       ...defaultPackage,
       name,
-      score: Math.floor(100 * Math.random()),
     };
   }
 
@@ -57,5 +56,10 @@ export default class DltMock extends DltInterface {
     return {
       ...defaultMetrics,
     };
+  }
+
+  async getTrustScore(name: string, release: string) {
+    const maxScore = 100 * (name.length + release.length);
+    return Math.floor(maxScore * Math.random());
   }
 }

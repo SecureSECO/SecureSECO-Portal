@@ -81,7 +81,6 @@ export default class DltApi extends DltInterface {
 
   async getPackage(name: string) {
     const { data } = await axios.get(this.#getLink(`package/${name}`));
-    console.log(data);
     return parsePackage(data);
   }
 
@@ -119,6 +118,11 @@ export default class DltApi extends DltInterface {
   async getMetrics() {
     const { data } = await axios.get(this.#getLink('metrics'));
     return parseMetrics(data);
+  }
+
+  async getTrustScore(name: string, release: string) {
+    const { data } = await axios.get(this.#getLink(`package/${name}/trustscore/${release}`));
+    return data;
   }
 
   #getLink(to: string) {

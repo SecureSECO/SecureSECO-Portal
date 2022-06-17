@@ -21,7 +21,7 @@
     <div class="flex xs6">
       <div class="row">
         <div class="flex xs4 propName">Trust score:</div>
-        <div class="flex xs8 propValue">{{ package.score }}</div>
+        <div class="flex xs8 propValue">{{ score }}</div>
       </div>
       <div class="row">
         <div class="flex xs4 propName">Confidence rating:</div>
@@ -66,7 +66,8 @@ export default defineComponent({
   },
   data() {
     return {
-      selectedRelease: this.package.releases[0],
+      selectedRelease: '',
+      score: 0,
     };
   },
   computed: {
@@ -78,6 +79,14 @@ export default defineComponent({
 
       return `https://github.com/${this.package.owner}/${this.package.name}`;
     },
+  },
+  watch: {
+    async selectedRelease() {
+      this.score = await this.$dltApi.getTrustScore(this.package.name, this.selectedRelease);
+    },
+  },
+  mounted() {
+    this.selectedRelease = this.package.releases[0];
   },
 });
 </script>
