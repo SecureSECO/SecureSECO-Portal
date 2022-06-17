@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import {
-  defaultPackage, defaultJob, DltInterface, Package, TrustFact, Job,
+  defaultJob, defaultMetrics, defaultPackage,
+  DltInterface, Job, JobForm, Metrics, Package, TrustFact,
 } from '@/api/dlt/interface';
 import axios from 'axios';
 
@@ -19,6 +20,16 @@ interface ApiJob {
   bounty: number,
   date: Date,
   account: { uid: string },
+}
+
+interface ApiMetrics {
+  block_height: number,
+  package_count: number,
+  peer_info: {
+    banned: number,
+    connected: number,
+    disconnected: number,
+  },
 }
 
 // Convert package data as received from the Dlt Api into the local Package interface
@@ -40,21 +51,31 @@ const parseJob = (data: ApiJob): Job => ({
   bounty: data.bounty,
 });
 
+// Convert metrics data as received from the Dlt Api into the local Metrics interface
+const parseMetrics = (data: ApiMetrics): Metrics => ({
+  ...defaultMetrics,
+  packages: data.package_count,
+  blockheight: data.block_height,
+  nodes: data.peer_info.connected,
+});
+
 export default class DltApi extends DltInterface {
+  #baseUrl = 'http://localhost:3000/api/dlt/';
+
   async getPackages() {
-    const { data } = await axios.get('http://localhost:3000/api/dlt/packages');
+    const { data } = await axios.get(this.#getLink('packages'));
     return data.packages.map((item: ApiPackage) => parsePackage(item));
   }
 
   async getPackage(name: string) {
-    const { data } = await axios.get(`http://localhost:3000/api/dlt/package/${name}`);
+    const { data } = await axios.get(this.#getLink(`package/${name}`));
     console.log(data);
     return parsePackage(data);
   }
 
   // TODO: Remove the mock data once this AP endpoint returns correct data
   async getTrustFacts(name: string) {
-    const { data } = await axios.get(`http://localhost:3000/api/dlt/trust-facts/${name}`);
+    const { data } = await axios.get(this.#getLink(`trust-facts/${name}`));
     console.log(data);
     const trustFacts = [];
     for (let i = 0; i < (name.length + 5) % 10; i += 1) {
@@ -73,7 +94,22 @@ export default class DltApi extends DltInterface {
   }
 
   async getJobs() {
-    const { data } = await axios.get('http://localhost:3000/api/dlt/jobs');
+    const { data } = await axios.get(this.#getLink('jobs'));
     return data.map((item: ApiJob) => parseJob(item));
+  }
+
+  async addJob(job: JobForm) {
+    const { data } = await axios.post(this.#getLink('add-job'), job);
+    console.log(data);
+    return data;
+  }
+
+  async getMetrics() {
+    const { data } = await axios.get(this.#getLink('metrics'));
+    return parseMetrics(data);
+  }
+
+  #getLink(to: string) {
+    return `${this.#baseUrl}${to}`;
   }
 }

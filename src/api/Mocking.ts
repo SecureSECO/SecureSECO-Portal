@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import {
-  defaultPackage, DltApi, Package, TrustFact,
-} from '@/api/DltApi';
+import { defaultPackage, DltApi, Package, TrustFact, } from '@/api/DltApi';
 
+/** @deprecated */
 export default class DltMock extends DltApi {
   // async getPackageNames(): Promise<string[]> {
   //   const packageNames = [];

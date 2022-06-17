@@ -16,7 +16,8 @@
     "types": [
       "webpack-env",
       "jest",
-      "node"
+      "node",
+      "vite/client"
     ],
     "paths": {
       "@/*": [

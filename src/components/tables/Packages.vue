@@ -4,7 +4,8 @@
       <va-card>
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
-          <va-data-table :columns="columns" :height="height" :items="items" allow-footer-sorting clickable hoverable
+          <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
+          <va-data-table :loading="isLoading" :filter="filter" :columns="columns" :height="height" :items="items" allow-footer-sorting clickable hoverable
                          sticky-header striped @row:click="loadPackage">
             <template #cell(releases)="{ rowData }">
               <div v-if="rowData.releases.length >= 3" class="range">
@@ -30,6 +31,12 @@ import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api';
 import semver from 'semver';
+
+interface RowClickEmit {
+  event: Event,
+  item: Package,
+  itemIndex: number,
+}
 
 export default defineComponent({
   name: 'packages-table',
@@ -62,20 +69,23 @@ export default defineComponent({
       },
     ];
 
-    // The full viewport, minus the navbar and page body margin/padding and card title and card body margin/padding
-    const height = 'calc(100vh - 65px - 3rem - 52px - 20px)';
+    // The full viewport, minus the navbar and page body margin/padding and card title and card body margin/padding and filter input height/margin
+    const height = 'calc(100vh - 65px - 3rem - 52px - 20px - 56px)';
 
     return {
-      items: packages,
       columns,
       height,
+      items: packages,
+      filter: '',
+      isLoading: true,
     };
   },
-  created() {
+  mounted() {
     this.fetchData();
   },
   methods: {
     async fetchData() {
+      await this.$fakeDelay();
       const packages = await this.$dltApi.getPackages();
       packages.forEach((pack) => {
         pack.releases.sort((a, b) => {
@@ -85,8 +95,11 @@ export default defineComponent({
         });
       });
       this.items = packages;
+      this.isLoading = false;
     },
-    loadPackage(e) { // TODO: How to type this parameter? Vuestic docs say `RowClickEmit` but it doesn't exist
+    // TODO: How to type this parameter?
+    // Vuestic docs say `RowClickEmit` but it doesn't exist, so it's manually defined up above
+    loadPackage(e: RowClickEmit) {
       const { name } = e.item;
       router.push({
         name: 'Package',
@@ -97,6 +110,10 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+.va-input {
+  margin-bottom: 20px;
+}
+
 .va-badge {
   margin: 0 2px;
 }
