@@ -4,11 +4,12 @@
       <va-card>
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
-          <va-data-table :columns="columns" :height="height" :items="items" :loading="isLoading" allow-footer-sorting
-                         clickable hoverable sticky-header striped @row:click="loadPackage($event)">
-            <!--            <template #cell(id)="{ source: id }">-->
-            <!--              <va-chip @click="loadPackage(id)">{{ id }}</va-chip>-->
-            <!--            </template>-->
+          <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
+          <va-data-table :loading="isLoading" :columns="columns" :filter="filter" :height="height" :items="items" allow-footer-sorting
+                         clickable hoverable sticky-header striped @row:click="loadPackage">
+            <template #cell(updatedAt)="{ rowData }">
+              <DisplayDateComponent :date="rowData.updatedAt" isTimeAgo/>
+            </template>
           </va-data-table>
         </va-card-content>
       </va-card>
@@ -20,9 +21,19 @@
 import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api';
+import DisplayDateComponent from '@/components/DisplayDate.vue';
+
+interface RowClickEmit {
+  event: Event,
+  item: Package,
+  itemIndex: number,
+}
 
 export default defineComponent({
   name: 'packages-table',
+  components: {
+    DisplayDateComponent,
+  },
   data() {
     const packages: Package[] = [];
 
@@ -52,13 +63,14 @@ export default defineComponent({
       },
     ];
 
-    // The full viewport, minus the navbar and page body margin/padding and card title and card body margin/padding
-    const height = 'calc(100vh - 65px - 3rem - 52px - 20px)';
+    // The full viewport, minus the navbar and page body margin/padding and card title and card body margin/padding and filter input height/margin
+    const height = 'calc(100vh - 65px - 3rem - 52px - 20px - 56px)';
 
     return {
-      items: packages,
       columns,
       height,
+      items: packages,
+      filter: '',
       isLoading: true,
     };
   },
@@ -71,7 +83,9 @@ export default defineComponent({
       this.items = await this.$dltApi.getPackages();
       this.isLoading = false;
     },
-    loadPackage(e) { // TODO: How to type this parameter? Vuestic docs say `RowClickEmit` but it doesn't exist
+    // TODO: How to type this parameter?
+    // Vuestic docs say `RowClickEmit` but it doesn't exist, so it's manually defined up above
+    loadPackage(e: RowClickEmit) {
       const { name } = e.item;
       router.push({
         name: 'Package',
@@ -82,4 +96,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.va-input {
+  margin-bottom: 20px;
+}
 </style>

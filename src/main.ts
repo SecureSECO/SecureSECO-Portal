@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createVuestic } from 'vuestic-ui';
+import copyText from "@meforma/vue-copy-to-clipboard";
 import {
   DltInterface, SpiderInterface, dltApi, spiderApi,
 } from './api';
@@ -29,7 +30,8 @@ const app = createApp(App)
   .use(createVuestic())
   .use(router)
   .use(dltApi)
-  .use(spiderApi);
+  .use(spiderApi)
+  .use(copyText);
 
 app.config.globalProperties.$fakeDelay = fakeDelay;
 

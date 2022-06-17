@@ -28,8 +28,10 @@
         <div class="flex xs8 propValue">TODO</div>
       </div>
       <div class="row">
-        <div class="flex xs4 propName">Updated at:</div>
-        <div class="flex xs8 propValue">{{ package.updatedAt }}</div>
+        <div class="flex xs4 propName">Updated:</div>
+        <div class="flex xs8 propValue">
+          <DisplayDateComponent :date="package.updatedAt" isTimeAgo/>
+        </div>
       </div>
       <div class="row">
         <div class="flex xs4 propName">Number of trust facts:</div>
@@ -48,9 +50,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Package } from '@/api';
+import DisplayDateComponent from '@/components/DisplayDate.vue';
 
 export default defineComponent({
   name: 'package-details-component',
+  components: {
+    DisplayDateComponent,
+  },
   props: {
     package: {
       type: Object as () => Package,
