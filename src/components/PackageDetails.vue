@@ -88,6 +88,7 @@ export default defineComponent({
   },
   async created() {
     this.package = await this.$dltApi.getPackage(this.name);
+    this.selectedVersion = this.package.versions[0];
   },
 });
 </script>
