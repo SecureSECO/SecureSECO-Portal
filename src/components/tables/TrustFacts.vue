@@ -1,12 +1,5 @@
 <template>
-  <div class="row">
-    <div class="flex xs6">
-      Release: {{ selectedRelease }}
-    </div>
-    <div class="flex xs6 trustFactCount">
-      {{ trustFacts.length }} known Trust Facts
-    </div>
-  </div>
+  <va-badge :text="badgeText"/>
   <va-data-table :columns="columns" :items="trustFacts"/>
 </template>
 
@@ -38,6 +31,11 @@ export default defineComponent({
       columns,
     };
   },
+  computed: {
+    badgeText() {
+      return `${this.trustFacts.length} known facts`;
+    },
+  },
   watch: {
     async selectedRelease() {
       this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
@@ -46,8 +44,21 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .trustFactCount {
   text-align: right;
+}
+
+.va-badge {
+  position: absolute;
+  top: -0.5em;
+  right: -0.5em;
+  margin: -2px;
+}
+</style>
+
+<style lang="scss">
+.va-badge__text {
+  text-transform: none;
 }
 </style>

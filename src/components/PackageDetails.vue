@@ -20,8 +20,8 @@
     </div>
     <div class="flex xs6">
       <div class="row">
-        <div class="flex xs4 propName">Trust score:</div>
-        <div class="flex xs8 propValue">{{ score }}</div>
+        <div class="flex xs4 propName"><b>Trust score:</b></div>
+        <div class="flex xs8 propValue"><b>{{ score }}</b></div>
       </div>
       <div class="row">
         <div class="flex xs4 propName">Confidence rating:</div>

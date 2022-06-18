@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table-component :name="name" :selectedRelease="selectedRelease"/>
+          <trust-facts-table-component ref="trustFactsTable" :name="name" :selectedRelease="selectedRelease"/>
         </va-card-content>
       </va-card>
     </div>
