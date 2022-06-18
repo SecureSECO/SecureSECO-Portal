@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component ref="packageDetails" :package="package" :trustFactCount="trustFacts.length"/>
+          <package-details-component ref="packageDetails" :name="name" :trustFactCount="trustFacts.length"/>
         </va-card-content>
       </va-card>
     </div>
@@ -53,10 +53,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      if (this.name) {
-        this.package = await this.$dltApi.getPackage(this.name);
-        this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
-      }
+      this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
     },
   },
 };

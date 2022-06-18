@@ -50,13 +50,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Package } from '@/api';
+import { defaultPackage } from '@/api';
 
 export default defineComponent({
   name: 'package-details-component',
   props: {
-    package: {
-      type: Object as () => Package,
+    name: {
+      type: String,
       required: true,
     },
     trustFactCount: {
@@ -66,7 +66,8 @@ export default defineComponent({
   },
   data() {
     return {
-      selectedRelease: this.package.releases[0],
+      package: defaultPackage,
+      selectedRelease: defaultPackage.releases[0],
       score: 0,
     };
   },
@@ -84,6 +85,9 @@ export default defineComponent({
     async selectedRelease() {
       this.score = await this.$dltApi.getTrustScore(this.package.name, this.selectedRelease);
     },
+  },
+  async created() {
+    this.package = await this.$dltApi.getPackage(this.name);
   },
 });
 </script>
