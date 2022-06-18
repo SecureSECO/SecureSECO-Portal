@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table-component ref="trustFactsTable" :name="name" :selectedRelease="selectedRelease"/>
+          <trust-facts-table-component ref="trustFactsTable" :name="name" :selectedVersion="selectedVersion"/>
         </va-card-content>
       </va-card>
     </div>
@@ -39,12 +39,12 @@ export default {
   },
   data() {
     return {
-      selectedRelease: '',
+      selectedVersion: '',
     };
   },
   async mounted() {
-    this.$watch('$refs.packageDetails.selectedRelease', (newValue) => {
-      this.selectedRelease = newValue;
+    this.$watch('$refs.packageDetails.selectedVersion', (newValue) => {
+      this.selectedVersion = newValue;
     }, { immediate: true });
   },
 };

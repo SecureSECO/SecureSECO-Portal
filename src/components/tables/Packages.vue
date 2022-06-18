@@ -7,15 +7,15 @@
           <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
           <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
                          allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
-            <template #cell(releases)="{ rowData }">
-              <div v-if="rowData.releases.length >= 3" class="range">
-                <va-badge :text="rowData.releases[rowData.releases.length - 1]" color="secondary"/>
+            <template #cell(versions)="{ rowData }">
+              <div v-if="rowData.versions.length >= 3" class="range">
+                <va-badge :text="rowData.versions[rowData.versions.length - 1]" color="secondary"/>
                 -
-                <va-badge :text="rowData.releases[0]" color="secondary"/>
+                <va-badge :text="rowData.versions[0]" color="secondary"/>
               </div>
               <div class="list">
-                <span v-for="release in rowData.releases" :key="release">
-                  <va-badge :text="release" color="secondary"/>
+                <span v-for="version in rowData.versions" :key="version">
+                  <va-badge :text="version" color="secondary"/>
                 </span>
               </div>
             </template>
@@ -62,8 +62,8 @@ export default defineComponent({
         sortable: true,
       },
       {
-        key: 'releases',
-        classes: ['cellReleases'],
+        key: 'versions',
+        classes: ['cellVersions'],
         width: '25%',
       },
     ];
@@ -109,9 +109,9 @@ export default defineComponent({
   margin: 0 2px;
 }
 
-/* For multiple releases, on row hover switch between range and list views */
+/* For multiple versions, on row hover switch between range and list views */
 .va-data-table__table-tr {
-  .cellReleases {
+  .cellVersions {
     .range {
       display: block;
     }
@@ -121,7 +121,7 @@ export default defineComponent({
     }
   }
 
-  &:hover .cellReleases {
+  &:hover .cellVersions {
     .range {
       display: none;
     }

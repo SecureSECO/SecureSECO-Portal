@@ -14,8 +14,8 @@
         <div class="flex xs8 propValue">{{ package.name }}</div>
       </div>
       <div class="row">
-        <div class="flex xs4 propName">Selected release:</div>
-        <div class="flex xs8 propValue">{{ selectedRelease }}</div>
+        <div class="flex xs4 propName">Selected version:</div>
+        <div class="flex xs8 propValue">{{ selectedVersion }}</div>
       </div>
     </div>
     <div class="flex xs6">
@@ -34,8 +34,8 @@
     </div>
     <div class="row">
       <div class="flex xs12">
-        <va-radio v-for="release in package.releases" :key="release" v-model="selectedRelease" :option="release">
-          <va-badge :text="release" color="secondary"/>
+        <va-radio v-for="version in package.versions" :key="version" v-model="selectedVersion" :option="version">
+          <va-badge :text="version" color="secondary"/>
         </va-radio>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default defineComponent({
   data() {
     return {
       package: defaultPackage,
-      selectedRelease: defaultPackage.releases[0],
+      selectedVersion: defaultPackage.versions[0],
       score: 0,
     };
   },
@@ -82,8 +82,8 @@ export default defineComponent({
     },
   },
   watch: {
-    async selectedRelease() {
-      this.score = await this.$dltApi.getTrustScore(this.package.name, this.selectedRelease);
+    async selectedVersion() {
+      this.score = await this.$dltApi.getTrustScore(this.package.name, this.selectedVersion);
     },
   },
   async created() {

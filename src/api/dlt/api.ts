@@ -33,9 +33,9 @@ interface ApiMetrics {
   },
 }
 
-// Perform a best-effort sort on the given list of releases by attempting to treat them as SemVers
-const sortReleases = (releases: string[]): string[] => {
-  const copy = Array.from(releases);
+// Perform a best-effort sort on the given list of versions by attempting to treat them as SemVers
+const sortVersions = (versions: string[]): string[] => {
+  const copy = Array.from(versions);
   copy.sort((a, b) => {
     const a2 = semver.coerce(a) ?? a;
     const b2 = semver.coerce(b) ?? b;
@@ -50,7 +50,7 @@ const parsePackage = (data: ApiPackage): Package => ({
   platform: data.packagePlatform,
   owner: data.packageOwner,
   name: data.packageName,
-  releases: sortReleases(data.packageReleases),
+  versions: sortVersions(data.packageReleases),
 });
 
 // Convert job data as received from the Dlt Api into the local Job interface
@@ -120,8 +120,8 @@ export default class DltApi extends DltInterface {
     return parseMetrics(data);
   }
 
-  async getTrustScore(name: string, release: string) {
-    const { data } = await axios.get(this.#getLink(`package/${name}/trustscore/${release}`));
+  async getTrustScore(name: string, version: string) {
+    const { data } = await axios.get(this.#getLink(`package/${name}/trustscore/${version}`));
     return data;
   }
 

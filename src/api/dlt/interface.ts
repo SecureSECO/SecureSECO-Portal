@@ -5,7 +5,7 @@ export interface Package {
   platform: string,
   owner: string,
   name: string,
-  releases: string[],
+  versions: string[],
 }
 
 export interface TrustFact {
@@ -49,7 +49,7 @@ export abstract class DltInterface {
 
   abstract getMetrics(): Promise<Metrics>;
 
-  abstract getTrustScore(name: string, release: string): Promise<number>;
+  abstract getTrustScore(name: string, version: string): Promise<number>;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
@@ -61,7 +61,7 @@ export const defaultPackage: Package = {
   platform: 'Github',
   owner: 'Fides',
   name: 'Portal',
-  releases: ['v7.8.9', 'v4.5.6', 'v1.2.3'],
+  versions: ['v7.8.9', 'v4.5.6', 'v1.2.3'],
 };
 
 export const defaultJob: Job = {

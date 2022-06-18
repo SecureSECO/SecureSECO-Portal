@@ -14,7 +14,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    selectedRelease: {
+    selectedVersion: {
       type: String,
       required: true,
     },
@@ -37,7 +37,7 @@ export default defineComponent({
     },
   },
   watch: {
-    async selectedRelease() {
+    async selectedVersion() {
       this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
     },
   },

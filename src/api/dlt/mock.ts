@@ -58,8 +58,8 @@ export default class DltMock extends DltInterface {
     };
   }
 
-  async getTrustScore(name: string, release: string) {
-    const maxScore = 100 * (name.length + release.length);
+  async getTrustScore(name: string, version: string) {
+    const maxScore = 100 * (name.length + version.length);
     return Math.floor(maxScore * Math.random());
   }
 }
