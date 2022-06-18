@@ -1,5 +1,12 @@
 <template>
-  Release: {{ selectedRelease }}
+  <div class="row">
+    <div class="flex xs6">
+      Release: {{ selectedRelease }}
+    </div>
+    <div class="flex xs6 trustFactCount">
+      {{ trustFacts.length }} known Trust Facts
+    </div>
+  </div>
   <va-data-table :columns="columns" :items="trustFacts"/>
 </template>
 
@@ -40,4 +47,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.trustFactCount {
+  text-align: right;
+}
 </style>

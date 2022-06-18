@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component ref="packageDetails" :name="name" :trustFactCount="0"/>
+          <package-details-component ref="packageDetails" :name="name"/>
         </va-card-content>
       </va-card>
     </div>
