@@ -36,6 +36,10 @@ export default {
       type: String,
       required: true,
     },
+    version: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -45,7 +49,7 @@ export default {
   async mounted() {
     this.$watch('$refs.packageDetails.selectedVersion', (newValue) => {
       this.selectedVersion = newValue;
-    }, { immediate: true });
+    });
   },
 };
 </script>

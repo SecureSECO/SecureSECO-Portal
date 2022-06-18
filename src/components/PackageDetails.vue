@@ -67,7 +67,7 @@ export default defineComponent({
   data() {
     return {
       package: defaultPackage,
-      selectedVersion: defaultPackage.versions[0],
+      selectedVersion: '',
       score: 0,
     };
   },
@@ -88,7 +88,7 @@ export default defineComponent({
   },
   async created() {
     this.package = await this.$dltApi.getPackage(this.name);
-    this.selectedVersion = this.package.versions[0];
+    this.selectedVersion = this.$route.params.version as string ?? this.package.versions[0];
   },
 });
 </script>
