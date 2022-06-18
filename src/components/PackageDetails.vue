@@ -13,10 +13,6 @@
         <div class="flex xs4 propName">Name:</div>
         <div class="flex xs8 propValue">{{ package.name }}</div>
       </div>
-      <div class="row">
-        <div class="flex xs4 propName">Selected version:</div>
-        <div class="flex xs8 propValue">{{ selectedVersion }}</div>
-      </div>
     </div>
     <div class="flex xs6">
       <div class="row">

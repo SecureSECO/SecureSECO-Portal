@@ -1,5 +1,8 @@
 <template>
-  <va-badge :text="badgeText"/>
+  <div class="badgeWrapper">
+    <va-badge :text="`Version: ${selectedVersion}`" color="secondary"/>
+    <va-badge :text="`${trustFacts.length} known facts`" color="info"/>
+  </div>
   <va-data-table :columns="columns" :items="trustFacts"/>
 </template>
 
@@ -31,11 +34,6 @@ export default defineComponent({
       columns,
     };
   },
-  computed: {
-    badgeText() {
-      return `${this.trustFacts.length} known facts`;
-    },
-  },
   watch: {
     async selectedVersion() {
       this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
@@ -49,7 +47,7 @@ export default defineComponent({
   text-align: right;
 }
 
-.va-badge {
+.badgeWrapper {
   position: absolute;
   top: -0.5em;
   right: -0.5em;
