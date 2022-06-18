@@ -15,7 +15,7 @@
               </div>
               <div class="list">
                 <span v-for="version in rowData.versions" :key="version">
-                  <va-badge :text="version" color="secondary"/>
+                  <va-badge :text="version" color="secondary" @click.stop="loadPackageVersion(rowData.name, version)"/>
                 </span>
               </div>
             </template>
@@ -90,11 +90,23 @@ export default defineComponent({
     },
     // TODO: How to type this parameter?
     // Vuestic docs say `RowClickEmit` but it doesn't exist, so it's manually defined up above
-    loadPackage(e: RowClickEmit) {
-      const { name } = e.item;
+    loadPackage(event: RowClickEmit) {
+      const { name } = event.item;
       router.push({
         name: 'Package',
-        params: { name },
+        params: {
+          name,
+        },
+      });
+    },
+    // Sadly cannot easily merge the two `loadPackage` variants, due to VuesticUI limitations
+    loadPackageVersion(name: string, version: string) {
+      router.push({
+        name: 'Package with Version',
+        params: {
+          name,
+          version,
+        },
       });
     },
   },
