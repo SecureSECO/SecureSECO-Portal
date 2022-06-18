@@ -10,8 +10,8 @@ import { TrustFact } from '@/api';
 export default defineComponent({
   name: 'trust-facts-table',
   props: {
-    trustFacts: {
-      type: Object as () => TrustFact[],
+    name: {
+      type: String,
       required: true,
     },
     selectedRelease: {
@@ -20,18 +20,20 @@ export default defineComponent({
     },
   },
   data() {
+    const trustFacts: TrustFact[] = [];
     const columns = [
       { key: 'type' },
       { key: 'value' },
     ];
 
     return {
+      trustFacts,
       columns,
     };
   },
   watch: {
-    selectedRelease() {
-      console.log(this.selectedRelease);
+    async selectedRelease() {
+      this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
     },
   },
 });

@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component ref="packageDetails" :name="name" :trustFactCount="trustFacts.length"/>
+          <package-details-component ref="packageDetails" :name="name" :trustFactCount="0"/>
         </va-card-content>
       </va-card>
     </div>
@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table-component :selectedRelease="selectedRelease" :trustFacts="trustFacts"/>
+          <trust-facts-table-component :name="name" :selectedRelease="selectedRelease"/>
         </va-card-content>
       </va-card>
     </div>
@@ -24,7 +24,6 @@
 <script>
 import PackageDetailsComponent from '@/components/PackageDetails.vue';
 import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
-import { defaultPackage } from '@/api';
 
 export default {
   components: {
@@ -40,21 +39,13 @@ export default {
   },
   data() {
     return {
-      package: defaultPackage,
-      trustFacts: [],
       selectedRelease: '',
     };
   },
-  async created() {
-    await this.fetchData();
+  async mounted() {
     this.$watch('$refs.packageDetails.selectedRelease', (newValue) => {
       this.selectedRelease = newValue;
     }, { immediate: true });
-  },
-  methods: {
-    async fetchData() {
-      this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
-    },
   },
 };
 </script>
