@@ -1,4 +1,5 @@
 <template>
+  Release: {{ selectedRelease }}
   <va-data-table :columns="columns" :items="trustFacts"/>
 </template>
 
@@ -13,6 +14,10 @@ export default defineComponent({
       type: Object as () => TrustFact[],
       required: true,
     },
+    selectedRelease: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     const columns = [
@@ -23,6 +28,11 @@ export default defineComponent({
     return {
       columns,
     };
+  },
+  watch: {
+    selectedRelease() {
+      console.log(this.selectedRelease);
+    },
   },
 });
 </script>

@@ -66,7 +66,7 @@ export default defineComponent({
   },
   data() {
     return {
-      selectedRelease: '',
+      selectedRelease: this.package.releases[0],
       score: 0,
     };
   },
@@ -84,9 +84,6 @@ export default defineComponent({
     async selectedRelease() {
       this.score = await this.$dltApi.getTrustScore(this.package.name, this.selectedRelease);
     },
-  },
-  mounted() {
-    this.selectedRelease = this.package.releases[0];
   },
 });
 </script>

@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component :package="package" :trustFactCount="trustFacts.length"></package-details-component>
+          <package-details-component ref="packageDetails" :package="package" :trustFactCount="trustFacts.length"/>
         </va-card-content>
       </va-card>
     </div>
@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table-component :trustFacts="trustFacts"></trust-facts-table-component>
+          <trust-facts-table-component :selectedRelease="selectedRelease" :trustFacts="trustFacts"/>
         </va-card-content>
       </va-card>
     </div>
@@ -42,10 +42,14 @@ export default {
     return {
       package: defaultPackage,
       trustFacts: [],
+      selectedRelease: '',
     };
   },
   async created() {
     await this.fetchData();
+    this.$watch('$refs.packageDetails.selectedRelease', (newValue) => {
+      this.selectedRelease = newValue;
+    }, { immediate: true });
   },
   methods: {
     async fetchData() {
