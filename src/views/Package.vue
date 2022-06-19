@@ -1,18 +1,55 @@
 <template>
-  <h1>Package: {{ id }}</h1>
-  <package-component :id="id"></package-component>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>View Package</va-card-title>
+        <va-card-content>
+          <package-details-component ref="packageDetails" :name="name"/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="flex xs12">
+      <va-card>
+        <va-card-title>Trust facts</va-card-title>
+        <va-card-content>
+          <trust-facts-table-component ref="trustFactsTable" :name="name" :selectedVersion="selectedVersion"/>
+        </va-card-content>
+      </va-card>
+    </div>
+  </div>
 </template>
 
 <script>
-import PackageComponent from '@/components/Package.vue';
+import PackageDetailsComponent from '@/components/PackageDetails.vue';
+import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
 
 export default {
+  components: {
+    PackageDetailsComponent,
+    TrustFactsTableComponent,
+  },
   name: 'package-view',
   props: {
-    id: String,
+    name: {
+      type: String,
+      required: true,
+    },
+    version: {
+      type: String,
+      default: '',
+    },
   },
-  components: {
-    PackageComponent,
+  data() {
+    return {
+      selectedVersion: '',
+    };
+  },
+  async mounted() {
+    this.$watch('$refs.packageDetails.selectedVersion', (newValue) => {
+      this.selectedVersion = newValue;
+    });
   },
 };
 </script>

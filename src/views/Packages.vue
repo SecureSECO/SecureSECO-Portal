@@ -1,19 +1,19 @@
 <template>
   <div>
-    <search-package-component></search-package-component>
-    <package-table-component></package-table-component>
+    <!--    <search-package-component></search-package-component>-->
+    <packages-table-component></packages-table-component>
   </div>
 </template>
 
 <script>
-import PackageTableComponent from '@/components/PackageTable.vue';
-import SearchPackageComponent from '@/components/SearchPackage.vue';
+import PackagesTableComponent from '@/components/tables/Packages.vue';
+// import SearchPackageComponent from '@/components/SearchPackage.vue';
 
 export default {
   name: 'packages-view',
   components: {
-    PackageTableComponent,
-    SearchPackageComponent,
+    PackagesTableComponent,
+    // SearchPackageComponent,
   },
 };
 </script>

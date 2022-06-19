@@ -1,45 +1,53 @@
 <template>
   <va-switch v-model="state" :color="getColor" :loading="isLoading"
              class="spiderToggleButton" indeterminate left-label
-             @click="toggle">
-    <!-- @click.capture.stop="toggle">-->
+             @click.capture.stop="toggle">
     {{ getStatusText }}
   </va-switch>
-  <!--  <va-button :color="getColor" v-on:click="toggle">-->
-  <!--    {{ getStatusText }}-->
-  <!--  </va-button>-->
+
+   <va-modal
+    v-model="showSpiderErrorModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Error: couldn't start spider</h2>
+    </template>
+    <div>{{ modalErrorMessage }}</div>
+    <template #footer>
+      <va-button @click="showSpiderErrorModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+
 
 export default defineComponent({
   name: 'spider-toggle-button',
   data() {
     return {
-      state: null,
-      isRunning: false,
+      state: null as boolean | null,
+      isActive: false,
+      isLoading: false,
+      showSpiderErrorModal: false,
+      modalErrorMessage: "",
     };
   },
   async mounted() {
-    const { data } = await axios.get('http://localhost:3000/api/spider/status');
-    this.isRunning = data;
-    this.state = this.isRunning;
-    console.log('SpiderToggle.load', data);
+    this.isActive = await this.$spiderApi.getSpiderStatus();
+    this.state = this.isActive;
+    console.log('SpiderToggle.load', this.isActive);
   },
   computed: {
-    isLoading() {
-      return this.state === null;
+    getColor(): string {
+      return (this.isActive ? 'success' : 'warning');
     },
-    // getState() {
-    //   return this.isLoading ? null : this.isRunning;
-    // },
-    getColor() {
-      return (this.isRunning ? 'success' : 'warning');
-    },
-    getStatusText() {
-      return (this.isRunning ? 'Spider is ON' : 'Spider is OFF');
+    getStatusText(): string {
+      return (this.isActive ? 'Spider is ON' : 'Spider is OFF');
     },
   },
   methods: {
@@ -48,23 +56,29 @@ export default defineComponent({
         return;
       }
 
+      this.isLoading = true;
       this.state = null;
       try {
-        // Emulate loading
-        if (process.env.NODE_ENV !== 'development') {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 1000);
-          });
+        await this.$fakeDelay();
+        const newState = await this.$spiderApi.toggleSpider();
+        if (typeof newState === 'string' || newState instanceof String){
+          //Not succeeded
+          this.modalErrorMessage=newState;
+          this.showSpiderErrorModal=true;
+          this.isActive=false;
+        } else  {
+          this.isActive = newState;
         }
-
-        const newStatus = this.isRunning ? 'stop' : 'start';
-        const result = await axios.post(`http://localhost:3000/api/spider/${newStatus}`);
-        this.isRunning = !this.isRunning;
-        console.log('SpiderToggle.toggle', result);
+        
+        this.state = this.isActive;
+        
       } catch (e) {
-        console.error('SpiderToggle.toggle', e);
+        this.modalErrorMessage=e.message;
+        this.showSpiderErrorModal=true;
+        this.state = this.isActive;
+        console.error('SpiderToggle.toggle', e.message);
       }
-      this.state = this.isRunning;
+      this.isLoading = false;
     },
   },
 });

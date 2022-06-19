@@ -2,14 +2,14 @@
   <div class="row">
     <div class="flex xs12">
       <va-card>
-        <va-card-title>Add job</va-card-title>
+        <va-card-title>Add new package</va-card-title>
         <va-card-content>
           <va-form>
             <div class="row">
               <va-input v-model="job.platform" :rules="[validateRequired]" class="flex xs6" label="Platform"/>
               <va-input v-model="job.owner" :rules="[validateRequired]" class="flex xs6" label="Owner"/>
               <va-input v-model="job.name" :rules="[validateRequired]" class="flex xs6" label="Name"/>
-              <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Release"/>
+              <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Version"/>
               <div class="flex xs12">
                 <va-button type="submit" @click="addJob">Submit</va-button>
                 <div v-if="response">
@@ -26,14 +26,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
-
-interface Job {
-  platform: string,
-  owner: string,
-  name: string,
-  release: string
-}
 
 export default defineComponent({
   name: 'add-package-component',
@@ -49,9 +41,12 @@ export default defineComponent({
     };
   },
   methods: {
-    async addJob(job: Job) {
-      const { data } = await axios.post('http://localhost:3000/api/dlt/add-job', job);
-      this.response = data;
+    async addJob() {
+      await this.$fakeDelay();
+      const result = await this.$dltApi.addJob(this.job);
+      if (typeof result === 'string') {
+        this.response = result;
+      }
     },
     // TODO: Move to generalized validation system
     validateRequired(value: string) {

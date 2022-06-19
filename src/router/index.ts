@@ -17,26 +17,40 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Home.vue'),
       },
       {
-        path: 'packages',
-        name: 'View Packages list',
+        path: 'packages/',
+        name: 'Package List',
         component: () => import('@/views/Packages.vue'),
         props: true,
       },
       {
-        path: 'package/:id',
+        path: 'package/:name/',
         name: 'Package',
         component: () => import('@/views/Package.vue'),
         props: true,
+        children: [
+          {
+            path: 'version/:version/',
+            name: 'Package with Version',
+            component: () => import('@/views/Package.vue'),
+            props: true,
+          },
+        ],
       },
       {
-        path: 'metrics',
+        path: 'metrics/',
         name: 'Metrics',
         component: () => import('@/views/Metrics.vue'),
       },
       {
-        path: 'user/settings',
-        name: 'User Settings',
+        path: 'user/settings/',
+        name: 'Settings',
         component: () => import('@/views/UserSettings.vue'),
+        props: true,
+      },
+      {
+        path: 'add-job/',
+        name: 'Add Job',
+        component: () => import('@/views/AddJob.vue'),
         props: true,
       },
     ],
@@ -45,6 +59,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(),
+  // linkActiveClass: 'router-link-active',
   routes,
 });
 

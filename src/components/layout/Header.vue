@@ -3,29 +3,50 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
-          <va-button color="dark" flat to="/">Home</va-button>
+          <va-chip color="dark" size="large" square>TrustSECO</va-chip>
+        </va-navbar-item>
+        <va-navbar-item>
+          <va-chip color="dark" flat @click="refreshUserTokens">User tokens: {{ usertokens }}</va-chip>
         </va-navbar-item>
       </template>
       <template v-slot:center>
         <va-navbar-item>
-          <va-button color="dark" flat to="/metrics">Metrics</va-button>
+          <va-button :flat="currentRoute !== 'Home'" :square="currentRoute === 'Home'" :to="{ name: 'Home' }"
+                     color="dark">Home
+          </va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button color="dark" flat to="/packages">Trust Scores</va-button>
+          <va-button :flat="currentRoute !== 'Add Job'" :square="currentRoute === 'Add Job'" :to="{ name: 'Add Job' }"
+                     color="dark">Add Job
+          </va-button>
         </va-navbar-item>
-        <!-- <va-navbar-item>
-          <va-button color="dark" flat to="/">My rewards</va-button>
-        </va-navbar-item> -->
-        <!-- <va-navbar-item>
+        <va-navbar-item>
+          <va-button :flat="currentRoute !== 'Metrics'" :square="currentRoute === 'Metrics'" :to="{ name: 'Metrics' }"
+                     color="dark">Metrics
+          </va-button>
+        </va-navbar-item>
+        <va-navbar-item>
+          <va-button :flat="currentRoute !== 'Package List'" :square="currentRoute === 'Package List'"
+                     :to="{ name: 'Package List' }" color="dark">Trust Scores
+          </va-button>
+        </va-navbar-item>
+        <!--        <va-navbar-item>-->
+        <!--          <va-button :flat="currentRoute !== 'Rewards'" :square="currentRoute === 'Rewards'" :to="{ name: 'Rewards' }"-->
+        <!--                     color="dark">My rewards-->
+        <!--          </va-button>-->
+        <!--        </va-navbar-item>-->
+        <va-navbar-item>
           <SpiderToggleButton/>
-        </va-navbar-item> -->
+        </va-navbar-item>
       </template>
       <template v-slot:right>
-        <!-- <va-navbar-item>
-          <span v-if="isDevMode">DEV</span>
-        </va-navbar-item> -->
         <va-navbar-item>
-          <va-button color="dark" flat to="/user/settings">Settings</va-button>
+          <va-button v-if="isDevMode" color="dark" disabled flat>DEV</va-button>
+        </va-navbar-item>
+        <va-navbar-item>
+          <va-button :flat="currentRoute !== 'Settings'" :square="currentRoute === 'Settings'"
+                     :to="{ name: 'Settings' }" color="dark">Settings
+          </va-button>
         </va-navbar-item>
       </template>
     </va-navbar>
@@ -33,16 +54,39 @@
 </template>
 
 <script>
+import router from '@/router';
 import SpiderToggleButton from '../button/SpiderToggle.vue';
+import axios from 'axios';
 
 export default {
   name: 'header-component',
   components: {
     SpiderToggleButton,
   },
+  data() {
+    return {
+      usertokens: 0,
+    };
+  },
+  methods: {
+    async refreshUserTokens() {
+      try {
+        const { data } = await axios.get('http://localhost:3000/api/dlt/account');
+        this.usertokens = data.slingers;
+      } catch {
+        this.usertokens = 0;
+      }
+    }
+  },
+  async mounted(){
+    this.refreshUserTokens();
+  },
   computed: {
     isDevMode() {
       return process.env.NODE_ENV === 'development';
+    },
+    currentRoute() {
+      return router.currentRoute.value.name;
     },
   },
 };
