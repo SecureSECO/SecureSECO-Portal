@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     isDevMode() {
-      return process.env.NODE_ENV === 'development';
+      return !import.meta.env.PROD;
     },
     currentRoute() {
       return router.currentRoute.value.name;
