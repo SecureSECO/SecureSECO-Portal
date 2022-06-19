@@ -5,8 +5,8 @@
         <va-card-title>View Packages</va-card-title>
         <va-card-content>
           <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
-          <va-data-table :loading="isLoading" :columns="columns" :filter="filter" :height="height" :items="items" allow-footer-sorting
-                         clickable hoverable sticky-header striped @row:click="loadPackage">
+          <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
+                         allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
             <template #cell(updatedAt)="{ rowData }">
               <DisplayDateComponent :date="rowData.updatedAt" isTimeAgo/>
             </template>
@@ -79,7 +79,6 @@ export default defineComponent({
   },
   methods: {
     async fetchData() {
-      await this.$fakeDelay();
       this.items = await this.$dltApi.getPackages();
       this.isLoading = false;
     },

@@ -59,7 +59,6 @@ export default defineComponent({
       this.isLoading = true;
       this.state = null;
       try {
-        await this.$fakeDelay();
         const newState = await this.$spiderApi.toggleSpider();
         if (typeof newState === 'string' || newState instanceof String){
           //Not succeeded

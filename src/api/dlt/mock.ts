@@ -1,10 +1,13 @@
 /* eslint-disable class-methods-use-this */
+import { fakeDelay } from '@/lib.js';
 import {
-  defaultMetrics, defaultPackage, DltInterface, JobForm, Metrics, Package, TrustFact,
+  defaultMetrics, defaultPackage,
+  DltInterface, JobForm, Metrics, Package, TrustFact,
 } from '@/api/dlt/interface';
 
 export default class DltMock extends DltInterface {
   async getPackages() {
+    await fakeDelay();
     const packages: Package[] = [];
     for (let i = 0; i < 100; i += 1) {
       packages[i] = {
@@ -22,6 +25,7 @@ export default class DltMock extends DltInterface {
   }
 
   async getPackage(name: string) {
+    await fakeDelay();
     return {
       ...defaultPackage,
       name,
@@ -30,6 +34,7 @@ export default class DltMock extends DltInterface {
   }
 
   async getTrustFacts(name: string) {
+    await fakeDelay();
     const trustFacts = [];
     for (let i = 0; i < (name.length + 5) % 10; i += 1) {
       trustFacts[i] = {
@@ -41,20 +46,24 @@ export default class DltMock extends DltInterface {
   }
 
   async getDownloadLink() {
+    await fakeDelay();
     return window.location.origin;
   }
 
   // TODO: Add mock data
   async getJobs() {
+    await fakeDelay();
     return [];
   }
 
   async addJob(job: JobForm) {
+    await fakeDelay();
     console.log('Added Job', job);
     return 'Success';
   }
 
   async getMetrics() {
+    await fakeDelay();
     return {
       ...defaultMetrics,
     };
