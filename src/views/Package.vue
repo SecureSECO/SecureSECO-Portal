@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component :package="package" :trustFactCount="trustFacts.length"></package-details-component>
+          <package-details-component ref="packageDetails" :name="name"/>
         </va-card-content>
       </va-card>
     </div>
@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table-component :trustFacts="trustFacts"></trust-facts-table-component>
+          <trust-facts-table-component ref="trustFactsTable" :name="name" :selectedVersion="selectedVersion"/>
         </va-card-content>
       </va-card>
     </div>
@@ -24,7 +24,6 @@
 <script>
 import PackageDetailsComponent from '@/components/PackageDetails.vue';
 import TrustFactsTableComponent from '@/components/tables/TrustFacts.vue';
-import { defaultPackage } from '@/api/dlt/interface';
 
 export default {
   components: {
@@ -37,23 +36,20 @@ export default {
       type: String,
       required: true,
     },
+    version: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
-      package: defaultPackage,
-      trustFacts: [],
+      selectedVersion: '',
     };
   },
-  async created() {
-    await this.fetchData();
-  },
-  methods: {
-    async fetchData() {
-      if (this.name) {
-        this.package = await this.$dltApi.getPackage(this.name);
-        this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
-      }
-    },
+  async mounted() {
+    this.$watch('$refs.packageDetails.selectedVersion', (newValue) => {
+      this.selectedVersion = newValue;
+    });
   },
 };
 </script>
