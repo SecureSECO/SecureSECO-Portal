@@ -1,16 +1,16 @@
 /* eslint-disable class-methods-use-this */
 import {
   defaultJob, defaultMetrics, defaultPackage,
-  DltInterface, Job, JobForm, Metrics, Package, TrustFact,
+  DltInterface, Job, JobForm, Metrics, Package,
 } from '@/api/dlt/interface';
 import axios from 'axios';
+import semver from 'semver';
 
 interface ApiPackage {
   packagePlatform: string,
   packageOwner: string,
   packageName: string,
   packageReleases: string[],
-  // TODO: this should get `score` and `updatedAt` fields
 }
 
 interface ApiJob {
@@ -33,15 +33,24 @@ interface ApiMetrics {
   },
 }
 
+// Perform a best-effort sort on the given list of versions by attempting to treat them as SemVers
+const sortVersions = (versions: string[]): string[] => {
+  const copy = Array.from(versions);
+  copy.sort((a, b) => {
+    const a2 = semver.coerce(a) ?? a;
+    const b2 = semver.coerce(b) ?? b;
+    return -semver.compareLoose(a2, b2);
+  });
+  return copy;
+};
+
 // Convert package data as received from the Dlt Api into the local Package interface
 const parsePackage = (data: ApiPackage): Package => ({
   ...defaultPackage,
   platform: data.packagePlatform,
   owner: data.packageOwner,
   name: data.packageName,
-  releases: data.packageReleases,
-  score: Math.floor(100 * Math.random()), // TODO: Why is this not already in the request?
-  updatedAt: new Date(Date.now() - data.packageName.length * 24 * 60 * 60 * 1000), // TODO: nice to have for UE
+  versions: sortVersions(data.packageReleases),
 });
 
 // Convert job data as received from the Dlt Api into the local Job interface
@@ -89,6 +98,7 @@ export default class DltApi extends DltInterface {
     return trustFacts;
   }
 
+  // TODO: This doesn't really belong to the DLT Api, but...
   async getDownloadLink() {
     const { data } = await axios.get('http://localhost:3000/api/download');
     return data;
@@ -108,6 +118,11 @@ export default class DltApi extends DltInterface {
   async getMetrics() {
     const { data } = await axios.get(this.#getLink('metrics'));
     return parseMetrics(data);
+  }
+
+  async getTrustScore(name: string, version: string) {
+    const { data } = await axios.get(this.#getLink(`package/${name}/trustscore/${version}`));
+    return data;
   }
 
   #getLink(to: string) {

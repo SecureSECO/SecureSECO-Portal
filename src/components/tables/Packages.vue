@@ -7,8 +7,17 @@
           <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
           <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
                          allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
-            <template #cell(updatedAt)="{ rowData }">
-              <DisplayDateComponent :date="rowData.updatedAt" isTimeAgo/>
+            <template #cell(versions)="{ rowData }">
+              <div v-if="rowData.versions.length >= 3" class="range">
+                <va-badge :text="rowData.versions[rowData.versions.length - 1]" color="secondary"/>
+                -
+                <va-badge :text="rowData.versions[0]" color="secondary"/>
+              </div>
+              <div class="list">
+                <span v-for="version in rowData.versions" :key="version">
+                  <va-badge :text="version" color="secondary" @click.stop="loadPackageVersion(rowData.name, version)"/>
+                </span>
+              </div>
             </template>
           </va-data-table>
         </va-card-content>
@@ -21,7 +30,6 @@
 import { defineComponent } from 'vue';
 import router from '@/router';
 import { Package } from '@/api';
-import DisplayDateComponent from '@/components/DisplayDate.vue';
 
 interface RowClickEmit {
   event: Event,
@@ -31,35 +39,32 @@ interface RowClickEmit {
 
 export default defineComponent({
   name: 'packages-table',
-  components: {
-    DisplayDateComponent,
-  },
   data() {
     const packages: Package[] = [];
 
     const columns = [
       {
         key: 'platform',
+        verticalAlign: 'top',
+        width: '25%',
         sortable: true,
       },
       {
         key: 'owner',
+        verticalAlign: 'top',
+        width: '25%',
         sortable: true,
       },
       {
         key: 'name',
-        sortable: true,
-      },
-      { key: 'releases' },
-      {
-        key: 'score',
-        alignHead: 'right',
-        align: 'right',
+        verticalAlign: 'top',
+        width: '25%',
         sortable: true,
       },
       {
-        key: 'updatedAt',
-        sortable: true,
+        key: 'versions',
+        classes: ['cellVersions'],
+        width: '25%',
       },
     ];
 
@@ -84,18 +89,57 @@ export default defineComponent({
     },
     // TODO: How to type this parameter?
     // Vuestic docs say `RowClickEmit` but it doesn't exist, so it's manually defined up above
-    loadPackage(e: RowClickEmit) {
-      const { name } = e.item;
+    loadPackage(event: RowClickEmit) {
+      const { name } = event.item;
       router.push({
         name: 'Package',
-        params: { name },
+        params: {
+          name,
+        },
+      });
+    },
+    // Sadly cannot easily merge the two `loadPackage` variants, due to VuesticUI limitations
+    loadPackageVersion(name: string, version: string) {
+      router.push({
+        name: 'Package with Version',
+        params: {
+          name,
+          version,
+        },
       });
     },
   },
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .va-input {
   margin-bottom: 20px;
+}
+
+.va-badge {
+  margin: 0 2px;
+}
+
+/* For multiple versions, on row hover switch between range and list views */
+.va-data-table__table-tr {
+  .cellVersions {
+    .range {
+      display: block;
+    }
+
+    .range + .list {
+      display: none;
+    }
+  }
+
+  &:hover .cellVersions {
+    .range {
+      display: none;
+    }
+
+    .list {
+      display: block;
+    }
+  }
 }
 </style>

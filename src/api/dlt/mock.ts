@@ -2,7 +2,7 @@
 import { fakeDelay } from '@/lib.js';
 import {
   defaultMetrics, defaultPackage,
-  DltInterface, JobForm, Metrics, Package, TrustFact,
+  DltInterface, JobForm, Package,
 } from '@/api/dlt/interface';
 
 export default class DltMock extends DltInterface {
@@ -13,8 +13,6 @@ export default class DltMock extends DltInterface {
       packages[i] = {
         ...defaultPackage,
         name: `Package ${i}`,
-        score: i,
-        updatedAt: new Date(Date.now() - i * 24 * 60 * 60 * 1000),
       };
     }
     packages[49] = {
@@ -29,7 +27,6 @@ export default class DltMock extends DltInterface {
     return {
       ...defaultPackage,
       name,
-      score: Math.floor(100 * Math.random()),
     };
   }
 
@@ -67,5 +64,10 @@ export default class DltMock extends DltInterface {
     return {
       ...defaultMetrics,
     };
+  }
+
+  async getTrustScore(name: string, version: string) {
+    const maxScore = 100 * (name.length + version.length);
+    return Math.floor(maxScore * Math.random());
   }
 }

@@ -9,7 +9,7 @@
               <va-input v-model="job.platform" :rules="[validateRequired]" class="flex xs6" label="Platform"/>
               <va-input v-model="job.owner" :rules="[validateRequired]" class="flex xs6" label="Owner"/>
               <va-input v-model="job.name" :rules="[validateRequired]" class="flex xs6" label="Name"/>
-              <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Release"/>
+              <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Version"/>
               <div class="flex xs12">
                 <va-button type="submit" @click="addJob">Submit</va-button>
                 <div v-if="response">
