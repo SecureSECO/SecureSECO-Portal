@@ -4,7 +4,7 @@
       <va-card>
         <va-card-title>View Package</va-card-title>
         <va-card-content>
-          <package-details-component ref="packageDetails" :name="name"/>
+          <package-details-component ref="packageDetails" :name="name" :version="version"/>
         </va-card-content>
       </va-card>
     </div>
@@ -14,7 +14,7 @@
       <va-card>
         <va-card-title>Trust facts</va-card-title>
         <va-card-content>
-          <trust-facts-table-component ref="trustFactsTable" :name="name" :selectedVersion="selectedVersion"/>
+          <trust-facts-table-component ref="trustFactsTable" :name="name" :version="version"/>
         </va-card-content>
       </va-card>
     </div>
@@ -40,16 +40,6 @@ export default {
       type: String,
       default: '',
     },
-  },
-  data() {
-    return {
-      selectedVersion: '',
-    };
-  },
-  async mounted() {
-    this.$watch('$refs.packageDetails.selectedVersion', (newValue) => {
-      this.selectedVersion = newValue;
-    });
   },
 };
 </script>
