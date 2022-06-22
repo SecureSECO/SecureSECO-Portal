@@ -30,14 +30,6 @@
                      :to="{ name: 'Package List' }" color="dark">Trust Scores
           </va-button>
         </va-navbar-item>
-        <!--        <va-navbar-item>-->
-        <!--          <va-button :flat="currentRoute !== 'Rewards'" :square="currentRoute === 'Rewards'" :to="{ name: 'Rewards' }"-->
-        <!--                     color="dark">My rewards-->
-        <!--          </va-button>-->
-        <!--        </va-navbar-item>-->
-        <va-navbar-item>
-          <SpiderToggleButton/>
-        </va-navbar-item>
       </template>
       <template v-slot:right>
         <va-navbar-item>
@@ -55,14 +47,10 @@
 
 <script>
 import router from '@/router';
-import SpiderToggleButton from '../button/SpiderToggle.vue';
 import axios from 'axios';
 
 export default {
   name: 'header-component',
-  components: {
-    SpiderToggleButton,
-  },
   data() {
     return {
       usertokens: 0,
@@ -76,9 +64,9 @@ export default {
       } catch {
         this.usertokens = 0;
       }
-    }
+    },
   },
-  async mounted(){
+  async mounted() {
     this.refreshUserTokens();
   },
   computed: {
