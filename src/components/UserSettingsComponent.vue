@@ -21,9 +21,9 @@
     overlay-opacity="0.2"
   >
     <template #header>
-      <h2>GitHub Profile Link</h2>
+      <h2>GitHub Username</h2>
     </template>
-    <div>Enter your GitHub profile link here. <br />For example, if your username is <i>Programmer</i>, your GitHub profile link becomes: <i>https://github.com/Programmer.gpg</i></div>
+    <div>Enter your GitHub Username here. <br /></div>
     <template #footer>
       <va-button @click="modal.showGitHubProfileLinkModal = false">
         Close
