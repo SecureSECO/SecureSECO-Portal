@@ -18,7 +18,7 @@
       <div class="row">
         <div class="flex xs4 propName"><b>Trust score:</b></div>
         <div class="flex xs8 propValue"><b>
-          <span v-if="score !== undefined">{{ score }}</span>
+          <span v-if="score !== undefined" :title="score">{{ score.toFixed(2) }}</span>
           <span v-if="score === undefined" title="We do not yet have any Trust Facts on this Package Version">
             Unknown
             <va-icon class="material-icons" name="info"/>
