@@ -41,12 +41,6 @@ export default {
   &__page {
     flex-grow: 2;
     overflow-y: scroll;
-
-    .layout {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
   }
 }
 
@@ -55,11 +49,6 @@ export default {
 
   &:last-child {
     margin-bottom: 0;
-  }
-
-  &.flex-grow {
-    flex-grow: 2;
-    min-height: 0;
   }
 }
 </style>
