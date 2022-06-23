@@ -1,27 +1,18 @@
 <template>
-  <div class="row">
-    <div class="flex xs12">
-      <va-card>
-        <va-card-title>Add new package</va-card-title>
-        <va-card-content>
-          <va-form>
-            <div class="row">
-              <va-input v-model="job.platform" :rules="[validateRequired]" class="flex xs6" label="Platform"/>
-              <va-input v-model="job.owner" :rules="[validateRequired]" class="flex xs6" label="Owner"/>
-              <va-input v-model="job.name" :rules="[validateRequired]" class="flex xs6" label="Name"/>
-              <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Version"/>
-              <div class="flex xs12">
-                <va-button type="submit" @click="addJob">Submit</va-button>
-                <div v-if="response">
-                  <p>{{ response }}</p>
-                </div>
-              </div>
-            </div>
-          </va-form>
-        </va-card-content>
-      </va-card>
+  <va-form>
+    <div class="row">
+      <va-input v-model="job.platform" :rules="[validateRequired]" class="flex xs6" label="Platform"/>
+      <va-input v-model="job.owner" :rules="[validateRequired]" class="flex xs6" label="Owner"/>
+      <va-input v-model="job.name" :rules="[validateRequired]" class="flex xs6" label="Name"/>
+      <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Version"/>
+      <div class="flex xs12">
+        <va-button type="submit" @click="addJob">Submit</va-button>
+        <div v-if="response">
+          <p>{{ response }}</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </va-form>
 </template>
 
 <script lang="ts">

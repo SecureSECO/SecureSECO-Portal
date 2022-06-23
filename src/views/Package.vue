@@ -1,24 +1,16 @@
 <template>
-  <div class="row">
-    <div class="flex xs12">
-      <va-card>
-        <va-card-title>View Package</va-card-title>
-        <va-card-content>
-          <package-details-component ref="packageDetails" :name="name" :version="version"/>
-        </va-card-content>
-      </va-card>
-    </div>
-  </div>
-  <div class="row">
-    <div class="flex xs12">
-      <va-card>
-        <va-card-title>Trust facts</va-card-title>
-        <va-card-content>
-          <trust-facts-table-component ref="trustFactsTable" :name="name" :version="version"/>
-        </va-card-content>
-      </va-card>
-    </div>
-  </div>
+  <va-card>
+    <va-card-title>View Package</va-card-title>
+    <va-card-content>
+      <package-details-component ref="packageDetails" :name="name" :version="version"/>
+    </va-card-content>
+  </va-card>
+  <va-card class="flex-grow">
+    <va-card-title>Trust facts</va-card-title>
+    <va-card-content>
+      <trust-facts-table-component ref="trustFactsTable" :name="name" :version="version"/>
+    </va-card-content>
+  </va-card>
 </template>
 
 <script>

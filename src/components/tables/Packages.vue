@@ -1,29 +1,20 @@
 <template>
-  <div class="row">
-    <div class="flex xs12">
-      <va-card>
-        <va-card-title>View Packages</va-card-title>
-        <va-card-content>
-          <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
-          <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
-                         allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
-            <template #cell(versions)="{ rowData }">
-              <div v-if="rowData.versions.length >= 3" class="range">
-                <va-badge :text="rowData.versions[rowData.versions.length - 1]" color="secondary"/>
-                -
-                <va-badge :text="rowData.versions[0]" color="secondary"/>
-              </div>
-              <div class="list">
-                <span v-for="version in rowData.versions" :key="version">
-                  <va-badge :text="version" color="secondary" @click.stop="loadPackageVersion(rowData.name, version)"/>
-                </span>
-              </div>
-            </template>
-          </va-data-table>
-        </va-card-content>
-      </va-card>
-    </div>
-  </div>
+  <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
+  <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
+                 allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
+    <template #cell(versions)="{ rowData }">
+      <div v-if="rowData.versions.length >= 3" class="range">
+        <va-badge :text="rowData.versions[rowData.versions.length - 1]" color="secondary"/>
+        -
+        <va-badge :text="rowData.versions[0]" color="secondary"/>
+      </div>
+      <div class="list">
+        <span v-for="version in rowData.versions" :key="version">
+          <va-badge :text="version" color="secondary" @click.stop="loadPackageVersion(rowData.name, version)"/>
+        </span>
+      </div>
+    </template>
+  </va-data-table>
 </template>
 
 <script lang="ts">
@@ -111,6 +102,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="scss" scoped>
 .va-input {
   margin-bottom: 20px;

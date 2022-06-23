@@ -1,5 +1,10 @@
 <template>
-  <add-job-component/>
+  <va-card>
+    <va-card-title>Add new package</va-card-title>
+    <va-card-content>
+      <add-job-component/>
+    </va-card-content>
+  </va-card>
 </template>
 
 <script>
