@@ -1,29 +1,20 @@
 <template>
-  <div class="row">
-    <div class="flex xs12">
-      <va-card>
-        <va-card-title>View Packages</va-card-title>
-        <va-card-content>
-          <va-input v-model="filter" class="xs12" placeholder="Filter Packages"/>
-          <va-data-table :columns="columns" :filter="filter" :height="height" :items="items" :loading="isLoading"
-                         allow-footer-sorting clickable hoverable sticky-header striped @row:click="loadPackage">
-            <template #cell(versions)="{ rowData }">
-              <div v-if="rowData.versions.length >= 3" class="range">
-                <va-badge :text="rowData.versions[rowData.versions.length - 1]" color="secondary"/>
-                -
-                <va-badge :text="rowData.versions[0]" color="secondary"/>
-              </div>
-              <div class="list">
-                <span v-for="version in rowData.versions" :key="version">
-                  <va-badge :text="version" color="secondary" @click.stop="loadPackageVersion(rowData.name, version)"/>
-                </span>
-              </div>
-            </template>
-          </va-data-table>
-        </va-card-content>
-      </va-card>
-    </div>
-  </div>
+  <va-input v-model="filter" class="xs12 filter" placeholder="Filter Packages"/>
+  <va-data-table :columns="columns" :filter="filter" :items="packages" :loading="isLoading" allow-footer-sorting
+                 clickable hoverable sticky-header striped @row:click="loadPackage">
+    <template #cell(versions)="{ rowData }">
+      <div v-if="rowData.versions.length >= 3" class="range">
+        <va-badge :text="rowData.versions[rowData.versions.length - 1]" color="secondary"/>
+        -
+        <va-badge :text="rowData.versions[0]" color="secondary"/>
+      </div>
+      <div class="list">
+        <span v-for="version in rowData.versions" :key="version">
+          <va-badge :text="version" color="secondary" @click.stop="loadPackageVersion(rowData.name, version)"/>
+        </span>
+      </div>
+    </template>
+  </va-data-table>
 </template>
 
 <script lang="ts">
@@ -40,8 +31,6 @@ interface RowClickEmit {
 export default defineComponent({
   name: 'packages-table',
   data() {
-    const packages: Package[] = [];
-
     const columns = [
       {
         key: 'platform',
@@ -68,13 +57,9 @@ export default defineComponent({
       },
     ];
 
-    // The full viewport, minus the navbar and page body margin/padding and card title and card body margin/padding and filter input height/margin
-    const height = 'calc(100vh - 65px - 3rem - 52px - 20px - 56px)';
-
     return {
       columns,
-      height,
-      items: packages,
+      packages: [] as Package[],
       filter: '',
       isLoading: true,
     };
@@ -84,8 +69,7 @@ export default defineComponent({
   },
   methods: {
     async fetchData() {
-      await this.$fakeDelay();
-      this.items = await this.$dltApi.getPackages();
+      this.packages = await this.$dltApi.getPackages();
       this.isLoading = false;
     },
     // TODO: How to type this parameter?
@@ -112,16 +96,14 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="scss" scoped>
-.va-input {
-  margin-bottom: 20px;
+.va-data-table {
+  // The full viewport - .app__navbar height - .layout padding - .va-card__* padding - .va-card__title font-size - filter input height - 2px (idk)
+  max-height: calc(100vh - 4.0625rem - 2 * 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height) - 2px);
 }
 
-.va-badge {
-  margin: 0 2px;
-}
-
-/* For multiple versions, on row hover switch between range and list views */
+// For multiple versions, on row hover switch between range and list views
 .va-data-table__table-tr {
   .cellVersions {
     .range {

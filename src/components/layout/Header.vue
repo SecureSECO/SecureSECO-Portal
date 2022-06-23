@@ -16,8 +16,8 @@
           </va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button :flat="currentRoute !== 'Add Job'" :square="currentRoute === 'Add Job'" :to="{ name: 'Add Job' }"
-                     color="dark">Add Job
+          <va-button :flat="currentRoute !== 'Add Package'" :square="currentRoute === 'Add Package'"
+                     :to="{ name: 'Add Package' }" color="dark">Add Package
           </va-button>
         </va-navbar-item>
         <va-navbar-item>
@@ -29,14 +29,6 @@
           <va-button :flat="currentRoute !== 'Package List'" :square="currentRoute === 'Package List'"
                      :to="{ name: 'Package List' }" color="dark">Trust Scores
           </va-button>
-        </va-navbar-item>
-        <!--        <va-navbar-item>-->
-        <!--          <va-button :flat="currentRoute !== 'Rewards'" :square="currentRoute === 'Rewards'" :to="{ name: 'Rewards' }"-->
-        <!--                     color="dark">My rewards-->
-        <!--          </va-button>-->
-        <!--        </va-navbar-item>-->
-        <va-navbar-item>
-          <SpiderToggleButton/>
         </va-navbar-item>
       </template>
       <template v-slot:right>
@@ -55,14 +47,10 @@
 
 <script>
 import router from '@/router';
-import SpiderToggleButton from '../button/SpiderToggle.vue';
 import axios from 'axios';
 
 export default {
   name: 'header-component',
-  components: {
-    SpiderToggleButton,
-  },
   data() {
     return {
       usertokens: 0,
@@ -76,14 +64,14 @@ export default {
       } catch {
         this.usertokens = 0;
       }
-    }
+    },
   },
-  async mounted(){
+  async mounted() {
     this.refreshUserTokens();
   },
   computed: {
     isDevMode() {
-      return process.env.NODE_ENV === 'development';
+      return !import.meta.env.PROD;
     },
     currentRoute() {
       return router.currentRoute.value.name;

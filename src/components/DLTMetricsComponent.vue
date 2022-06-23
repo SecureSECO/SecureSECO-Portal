@@ -25,7 +25,6 @@ export default defineComponent({
   },
   methods: {
     async refreshMetrics() {
-      await this.$fakeDelay();
       this.metrics = await this.$dltApi.getMetrics();
     },
   },
