@@ -24,7 +24,7 @@ export default {
 
 <style lang="scss">
 .va-input.filter {
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--va-card-padding);
 }
 
 .app {

@@ -11,7 +11,7 @@
 import AddPackageComponent from '../components/AddPackageComponent.vue';
 
 export default {
-  name: 'addjob-view',
+  name: 'add-package-view',
   components: {
     AddPackageComponent,
   },

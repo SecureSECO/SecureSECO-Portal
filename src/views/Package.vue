@@ -5,7 +5,7 @@
       <package-details-component ref="packageDetails" :name="name" :version="version"/>
     </va-card-content>
   </va-card>
-  <va-card class="flex-grow">
+  <va-card>
     <va-card-title>Trust facts</va-card-title>
     <va-card-content>
       <trust-facts-table-component ref="trustFactsTable" :name="name" :version="version"/>

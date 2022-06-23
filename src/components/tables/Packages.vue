@@ -57,8 +57,8 @@ export default defineComponent({
       },
     ];
 
-    // The full viewport - .app__navbar height - .layout padding - .va-card__title font-size - .va-card__* padding - filter input height
-    const height = 'calc(100vh - 4.0625rem - 2 * 1.5rem - 0.625rem - 4 * var(--va-card-padding) - var(--va-input-min-height))';
+    // The full viewport - .app__navbar height - .layout padding - .va-card__* padding - .va-card__title font-size - filter input height
+    const height = 'calc(100vh - 4.0625rem - 2 * 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height))';
 
     return {
       columns,

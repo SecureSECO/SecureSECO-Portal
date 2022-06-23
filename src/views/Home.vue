@@ -8,7 +8,7 @@
       <SpiderToggleButton/>
     </va-card-content>
   </va-card>
-  <va-card class="flex-grow">
+  <va-card>
     <va-card-title>Job list</va-card-title>
     <va-card-content>
       <JobsListComponent/>
