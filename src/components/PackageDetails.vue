@@ -17,11 +17,24 @@
     <div class="flex xs6">
       <div class="row">
         <div class="flex xs4 propName"><b>Trust score:</b></div>
-        <div class="flex xs8 propValue"><b>{{ score }}</b></div>
+        <div class="flex xs8 propValue"><b>
+          <span v-if="score !== undefined">{{ score }}</span>
+          <span v-if="score === undefined" title="We do not yet have any Trust Facts on this Package Version">
+            Unknown
+            <va-icon class="material-icons" name="info"/>
+          </span>
+        </b></div>
       </div>
-      <div class="row">
-        <div class="flex xs4 propName">Confidence rating:</div>
-        <div class="flex xs8 propValue">TODO</div>
+      <!--      <div class="row">-->
+      <!--        <div class="flex xs4 propName">Confidence rating:</div>-->
+      <!--        <div class="flex xs8 propValue">TODO</div>-->
+      <!--      </div>-->
+      <br/>
+      <div v-if="githubLink !== undefined">
+        <va-button :href="githubLink" flat target="_blank">
+          <va-icon name="home"/>
+          GitHub
+        </va-button>
       </div>
     </div>
     <div class="row">
@@ -30,12 +43,6 @@
           <va-button color="secondary" size="small" @click="selectVersion(version)">{{ version }}</va-button>
         </va-radio>
       </div>
-    </div>
-    <div v-if="githubLink !== undefined" class="flex xs12">
-      <va-button :href="githubLink" flat target="_blank">
-        <va-icon name="home"/>
-        GitHub
-      </va-button>
     </div>
   </div>
 </template>
@@ -60,7 +67,7 @@ export default defineComponent({
   data() {
     return {
       package: defaultPackage,
-      score: 0,
+      score: 0 as number | undefined,
     };
   },
   computed: {
