@@ -3,7 +3,7 @@
     <Header/>
     <div class="app__content">
       <div class="app__page">
-        <div class="layout gutter--xl">
+        <div class="layout">
           <router-view/>
         </div>
       </div>
@@ -23,14 +23,14 @@ export default {
 </script>
 
 <style lang="scss">
+.va-input.filter {
+  margin-bottom: 1.25rem;
+}
+
 .app {
   height: 100vh;
   display: flex;
   flex-direction: column;
-
-  &__navbar {
-    height: 4rem;
-  }
 
   &__content {
     display: flex;
@@ -44,7 +44,6 @@ export default {
 
     .layout {
       height: 100%;
-      max-height: 100%;
       display: flex;
       flex-direction: column;
     }
