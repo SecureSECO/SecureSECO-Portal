@@ -6,7 +6,7 @@
       <va-input v-model="job.name" :rules="[validateRequired]" class="flex xs6" label="Name"/>
       <va-input v-model="job.release" :rules="[validateRequired]" class="flex xs6" label="Version"/>
       <div class="flex xs12">
-        <va-button type="submit" @click="addJob">Submit</va-button>
+        <va-button type="submit" @click="addPackage">Submit</va-button>
         <div v-if="response">
           <p>{{ response }}</p>
         </div>
@@ -32,8 +32,8 @@ export default defineComponent({
     };
   },
   methods: {
-    async addJob() {
-      const result = await this.$dltApi.addJob(this.job);
+    async addPackage() {
+      const result = await this.$dltApi.addPackage(this.job);
       if (typeof result === 'string') {
         this.response = result;
       }

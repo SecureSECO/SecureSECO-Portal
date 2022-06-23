@@ -2,18 +2,18 @@
   <va-card>
     <va-card-title>Add new package</va-card-title>
     <va-card-content>
-      <add-job-component/>
+      <add-package-component/>
     </va-card-content>
   </va-card>
 </template>
 
 <script>
-import AddJobComponent from '../components/AddJobComponent.vue';
+import AddPackageComponent from '../components/AddPackageComponent.vue';
 
 export default {
   name: 'addjob-view',
   components: {
-    AddJobComponent,
+    AddPackageComponent,
   },
 };
 </script>

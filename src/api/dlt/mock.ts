@@ -2,7 +2,7 @@
 import { fakeDelay } from '@/lib.js';
 import {
   defaultMetrics, defaultPackage,
-  DltInterface, JobForm, Package,
+  DltInterface, AddPackageForm, Package,
 } from '@/api/dlt/interface';
 
 export default class DltMock extends DltInterface {
@@ -53,9 +53,8 @@ export default class DltMock extends DltInterface {
     return [];
   }
 
-  async addJob(job: JobForm) {
+  async addPackage(pack: AddPackageForm) {
     await fakeDelay();
-    console.log('Added Job', job);
     return 'Success';
   }
 

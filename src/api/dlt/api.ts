@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import {
   defaultJob, defaultMetrics, defaultPackage,
-  DltInterface, Job, JobForm, Metrics, Package,
+  DltInterface, Job, AddPackageForm, Metrics, Package,
 } from '@/api/dlt/interface';
 import axios from 'axios';
 import semver from 'semver';
@@ -109,8 +109,8 @@ export default class DltApi extends DltInterface {
     return data.map((item: ApiJob) => parseJob(item));
   }
 
-  async addJob(job: JobForm) {
-    const { data } = await axios.post(this.#getLink('add-job'), job);
+  async addPackage(pack: AddPackageForm) {
+    const { data } = await axios.post(this.#getLink('add-job'), pack);
     console.log(data);
     return data;
   }

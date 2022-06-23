@@ -16,8 +16,8 @@
           </va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button :flat="currentRoute !== 'Add Job'" :square="currentRoute === 'Add Job'" :to="{ name: 'Add Job' }"
-                     color="dark">Add Job
+          <va-button :flat="currentRoute !== 'Add Package'" :square="currentRoute === 'Add Package'"
+                     :to="{ name: 'Add Package' }" color="dark">Add Package
           </va-button>
         </va-navbar-item>
         <va-navbar-item>

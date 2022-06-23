@@ -21,7 +21,7 @@ export interface Job {
   bounty: number,
 }
 
-export interface JobForm {
+export interface AddPackageForm {
   platform: string,
   owner: string,
   name: string,
@@ -45,7 +45,7 @@ export abstract class DltInterface {
 
   abstract getJobs(): Promise<Job[]>;
 
-  abstract addJob(job: JobForm): Promise<string | void>;
+  abstract addPackage(pack: AddPackageForm): Promise<string | void>;
 
   abstract getMetrics(): Promise<Metrics>;
 
