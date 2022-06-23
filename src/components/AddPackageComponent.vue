@@ -1,4 +1,36 @@
 <template>
+   <va-modal
+    v-model="showAddedModal"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Package added</h2>
+    </template>
+    <div>Your package has been added</div>
+    <template #footer>
+      <va-button @click="showAddedModal = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
+  <va-modal
+    v-model="showFieldEmpty"
+    hide-default-actions
+    overlay-opacity="0.2"
+  >
+    <template #header>
+      <h2>Field empty</h2>
+    </template>
+    <div>One or more fields have been left empty.</div>
+    <template #footer>
+      <va-button @click="showFieldEmpty = false">
+        Close
+      </va-button>
+    </template>
+  </va-modal>
+
   <va-form>
     <div class="row">
       <va-input v-model="job.platform" :rules="[validateRequired]" class="flex xs6" label="Platform"/>
@@ -22,6 +54,8 @@ export default defineComponent({
   name: 'add-package-component',
   data() {
     return {
+      showAddedModal:false,
+      showFieldEmpty: false,
       response: '',
       job: {
         platform: '',
@@ -33,10 +67,16 @@ export default defineComponent({
   },
   methods: {
     async addPackage() {
-      const result = await this.$dltApi.addPackage(this.job);
-      if (typeof result === 'string') {
-        this.response = result;
+      if(this.job.platform.length>0 && this.job.owner.length>0 && this.job.name.length>0 && this.job.release.length>0){
+        const result = await this.$dltApi.addPackage(this.job);
+        
+        if (typeof result === 'string') {
+          if(result=="Added jobs.") this.showAddedModal=true;
+        }
+      } else {
+        this.showFieldEmpty=true;
       }
+      
     },
     // TODO: Move to generalized validation system
     validateRequired(value: string) {
