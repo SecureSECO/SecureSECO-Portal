@@ -30,14 +30,14 @@ export default class DltMock extends DltInterface {
     };
   }
 
-  async getTrustFacts(name: string) {
+  async getTrustFacts(name: string, version: string) {
     await fakeDelay();
     const trustFacts = [];
     const count = Math.floor(((name.length + 10) % 20) * Math.random());
     for (let i = 0; i < count; i += 1) {
       trustFacts[i] = {
         type: 'github stars',
-        value: i + 1,
+        value: (i + 1).toString(),
       };
     }
     return trustFacts;

@@ -10,7 +10,7 @@ export interface Package {
 
 export interface TrustFact {
   type: string,
-  value: number,
+  value: string,
 }
 
 export interface Job {
@@ -39,7 +39,7 @@ export abstract class DltInterface {
 
   abstract getPackage(name: string): Promise<Package>;
 
-  abstract getTrustFacts(name: string): Promise<TrustFact[]>;
+  abstract getTrustFacts(name: string, version: string): Promise<TrustFact[]>;
 
   abstract getDownloadLink(): Promise<string>;
 
@@ -66,9 +66,9 @@ export const defaultPackage: Package = {
 
 export const defaultJob: Job = {
   id: 0,
-  package: 'Portal',
-  version: 'v1.2.3',
-  fact: 'stars',
+  package: '',
+  version: '',
+  fact: '',
   bounty: 1000,
 };
 

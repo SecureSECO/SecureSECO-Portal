@@ -28,11 +28,15 @@ export default defineComponent({
     const columns = [
       {
         key: 'type',
+        width: '50%',
+        alignHead: 'right',
+        align: 'right',
         verticalAlign: 'top',
         sortable: true,
       },
       {
         key: 'value',
+        width: '50%',
         verticalAlign: 'top',
         sortable: true,
       },
@@ -62,7 +66,7 @@ export default defineComponent({
   methods: {
     async updateTrustFacts() {
       this.isLoading = true;
-      this.trustFacts = await this.$dltApi.getTrustFacts(this.name);
+      this.trustFacts = await this.$dltApi.getTrustFacts(this.name, this.version);
       this.isLoading = false;
     },
   },
