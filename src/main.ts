@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import { createApp } from 'vue';
 import { createVuestic } from 'vuestic-ui';
 import copyText from "@meforma/vue-copy-to-clipboard";
@@ -7,6 +8,9 @@ import {
 import App from './App.vue';
 
 import router from './router';
+
+dotenv.config();
+process.env.HOST ??= 'localhost:3000';
 
 // Create a fake asynchronous delay
 // Useful for testing loading states and such

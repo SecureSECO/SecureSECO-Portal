@@ -71,7 +71,7 @@ export default {
   methods: {
     async refreshUserTokens() {
       try {
-        const { data } = await axios.get('http://localhost:3000/api/dlt/account');
+        const { data } = await axios.get(`http://${process.env.HOST}/api/dlt/account`);
         this.usertokens = data.slingers;
       } catch {
         this.usertokens = 0;
