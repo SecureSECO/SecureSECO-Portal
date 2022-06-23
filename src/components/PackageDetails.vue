@@ -17,29 +17,32 @@
     <div class="flex xs6">
       <div class="row">
         <div class="flex xs4 propName"><b>Trust score:</b></div>
-        <div class="flex xs8 propValue"><b>{{ score }}</b></div>
+        <div class="flex xs8 propValue"><b>
+          <span v-if="score !== undefined" :title="score">{{ score.toFixed(2) }}</span>
+          <span v-if="score === undefined" title="We do not yet have any Trust Facts on this Package Version">
+            Unknown
+            <va-icon class="material-icons" name="info"/>
+          </span>
+        </b></div>
       </div>
-      <div class="row">
-        <div class="flex xs4 propName">Confidence rating:</div>
-        <div class="flex xs8 propValue">TODO</div>
-      </div>
-      <div class="row">
-        <div class="flex xs4 propName">Number of trust facts:</div>
-        <div class="flex xs8 propValue">{{ trustFactCount }}</div>
+      <!--      <div class="row">-->
+      <!--        <div class="flex xs4 propName">Confidence rating:</div>-->
+      <!--        <div class="flex xs8 propValue">TODO</div>-->
+      <!--      </div>-->
+      <br/>
+      <div v-if="githubLink !== undefined">
+        <va-button :href="githubLink" flat target="_blank">
+          <va-icon name="home"/>
+          GitHub
+        </va-button>
       </div>
     </div>
     <div class="row">
       <div class="flex xs12">
-        <va-radio v-for="version in package.versions" :key="version" v-model="selectedVersion" :option="version">
-          <va-badge :text="version" color="secondary"/>
+        <va-radio v-for="version in package.versions" :key="version" :option="version">
+          <va-button color="secondary" size="small" @click="selectVersion(version)">{{ version }}</va-button>
         </va-radio>
       </div>
-    </div>
-    <div v-if="githubLink !== undefined" class="flex xs12">
-      <va-button :href="githubLink" flat target="_blank">
-        <va-icon name="home"/>
-        GitHub
-      </va-button>
     </div>
   </div>
 </template>
@@ -47,6 +50,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { defaultPackage } from '@/api';
+import router from '@/router';
 
 export default defineComponent({
   name: 'package-details-component',
@@ -55,16 +59,15 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    trustFactCount: {
-      type: Number,
-      default: 0,
+    version: {
+      type: String,
+      required: true,
     },
   },
   data() {
     return {
       package: defaultPackage,
-      selectedVersion: '',
-      score: 0,
+      score: 0 as number | undefined,
     };
   },
   computed: {
@@ -78,13 +81,37 @@ export default defineComponent({
     },
   },
   watch: {
-    async selectedVersion() {
-      this.score = await this.$dltApi.getTrustScore(this.package.name, this.selectedVersion);
+    async version() {
+      await this.updateScore();
     },
   },
-  async created() {
+  async mounted() {
     this.package = await this.$dltApi.getPackage(this.name);
-    this.selectedVersion = this.$route.params.version as string ?? this.package.versions[0];
+    if (this.version === '') {
+      await router.replace({
+        name: 'Package with Version',
+        params: {
+          name: this.name,
+          version: this.package.versions[0],
+        },
+      });
+    } else {
+      await this.updateScore();
+    }
+  },
+  methods: {
+    selectVersion(version: string) {
+      router.push({
+        name: 'Package with Version',
+        params: {
+          name: this.name,
+          version,
+        },
+      });
+    },
+    async updateScore() {
+      this.score = await this.$dltApi.getTrustScore(this.name, this.version);
+    },
   },
 });
 </script>
@@ -106,11 +133,7 @@ export default defineComponent({
   }
 }
 
-.va-badge {
+.va-button {
   margin: 2px;
-
-  .va-badge__text {
-    font-size: 0.8rem;
-  }
 }
 </style>

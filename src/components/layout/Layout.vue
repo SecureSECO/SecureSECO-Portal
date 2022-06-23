@@ -8,19 +8,16 @@
         </div>
       </div>
     </div>
-    <!--    <Footer/>-->
   </div>
 </template>
 
 <script>
 import Header from './Header.vue';
-// import Footer from './Footer.vue';
 
 export default {
   name: 'layout-component',
   components: {
     Header,
-    // Footer,
   },
 };
 </script>
@@ -30,10 +27,6 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
-
-  &__navbar {
-    height: 4rem;
-  }
 
   &__content {
     display: flex;

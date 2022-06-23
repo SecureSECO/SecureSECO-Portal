@@ -1,5 +1,6 @@
 <template>
-  <VueTerminal console-sign="$" height="350px" :messages="logs" style="width: 50%"/>
+  <div v-if="logs.length === 0">Nothing yet</div>
+  <VueTerminal v-if="logs.length > 0" :messages="logs" console-sign="$" height="350px" style="width: 50%"/>
 </template>
 
 <script lang="ts">

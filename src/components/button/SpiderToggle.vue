@@ -59,7 +59,6 @@ export default defineComponent({
       this.isLoading = true;
       this.state = null;
       try {
-        await this.$fakeDelay();
         const newState = await this.$spiderApi.toggleSpider();
         if (typeof newState === 'string' || newState instanceof String){
           //Not succeeded
@@ -84,7 +83,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
 .spiderToggleButton .va-switch__label {
   width: 100px;
 }
