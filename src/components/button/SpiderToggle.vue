@@ -83,7 +83,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
 .spiderToggleButton .va-switch__label {
   width: 100px;
 }

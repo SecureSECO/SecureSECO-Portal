@@ -23,10 +23,6 @@ export default {
 </script>
 
 <style lang="scss">
-.va-input.filter {
-  margin-bottom: var(--va-card-padding);
-}
-
 .app {
   height: 100vh;
   display: flex;
@@ -41,14 +37,6 @@ export default {
   &__page {
     flex-grow: 2;
     overflow-y: scroll;
-  }
-}
-
-.va-card {
-  margin-bottom: 1.5rem;
-
-  &:last-child {
-    margin-bottom: 0;
   }
 }
 </style>

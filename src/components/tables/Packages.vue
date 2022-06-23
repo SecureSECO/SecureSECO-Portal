@@ -103,11 +103,7 @@ export default defineComponent({
   max-height: calc(100vh - 4.0625rem - 2 * 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height) - 2px);
 }
 
-.va-badge {
-  margin: 0 2px;
-}
-
-/* For multiple versions, on row hover switch between range and list views */
+// For multiple versions, on row hover switch between range and list views
 .va-data-table__table-tr {
   .cellVersions {
     .range {

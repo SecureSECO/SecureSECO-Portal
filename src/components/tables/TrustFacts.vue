@@ -75,25 +75,10 @@ export default defineComponent({
   max-height: calc(100vh - 4.0625rem - 2 * 1.5rem - 208px - 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height) - 2px);
 }
 
-.trustFactCount {
-  text-align: right;
-}
-
 .badgeWrapper {
   position: absolute;
   top: -0.5em;
   right: -0.5em;
   margin: -2px;
-}
-</style>
-
-<style lang="scss">
-.va-badge {
-  margin: 2px;
-
-  .va-badge__text {
-    font-size: 0.8rem;
-    text-transform: none;
-  }
 }
 </style>
