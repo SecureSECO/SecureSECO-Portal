@@ -3,7 +3,7 @@
     <Header/>
     <div class="app__content">
       <div class="app__page">
-        <div class="layout">
+        <div class="layout gutter--xl">
           <router-view/>
         </div>
       </div>
