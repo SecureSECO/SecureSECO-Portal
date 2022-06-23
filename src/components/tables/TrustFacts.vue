@@ -4,8 +4,8 @@
     <va-badge :text="`${trustFacts.length} known facts`" color="info"/>
   </div>
   <va-input v-model="filter" class="xs12 filter" placeholder="Filter Trust Facts"/>
-  <va-data-table :columns="columns" :filter="filter" :height="height" :items="trustFacts" :loading="isLoading"
-                 allow-footer-sorting clickable hoverable sticky-header striped/>
+  <va-data-table :columns="columns" :filter="filter" :items="trustFacts" :loading="isLoading" allow-footer-sorting
+                 clickable hoverable sticky-header striped/>
 </template>
 
 <script lang="ts">
@@ -42,12 +42,8 @@ export default defineComponent({
       },
     ];
 
-    // The full viewport - .app__navbar height - .layout padding - previous .va-card height/margin - .va-card__* padding - .va-card__title font-size - filter input height
-    const height = 'calc(100vh - 4.0625rem - 2 * 1.5rem - 208px - 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height))';
-
     return {
       columns,
-      height,
       trustFacts: [] as TrustFact[],
       filter: '',
       isLoading: true,
@@ -74,6 +70,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.va-data-table {
+  // The full viewport - .app__navbar height - .layout padding - previous .va-card height/margin - .va-card__* padding - .va-card__title font-size - filter input height - 2px (idk)
+  max-height: calc(100vh - 4.0625rem - 2 * 1.5rem - 208px - 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height) - 2px);
+}
+
 .trustFactCount {
   text-align: right;
 }

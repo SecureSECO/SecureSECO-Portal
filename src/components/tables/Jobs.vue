@@ -1,7 +1,7 @@
 <template>
   <va-input v-model="filter" class="xs12 filter" placeholder="Filter Jobs"/>
-  <va-data-table :columns="columns" :filter="filter" :height="height" :items="jobs" :loading="isLoading"
-                 allow-footer-sorting clickable hoverable sticky-header striped/>
+  <va-data-table :columns="columns" :filter="filter" :items="jobs" :loading="isLoading" allow-footer-sorting clickable
+                 hoverable sticky-header striped/>
 </template>
 
 <script lang="ts">
@@ -39,12 +39,8 @@ export default defineComponent({
       },
     ];
 
-    // The full viewport - .app__navbar height - .layout padding - previous .va-card height/margin - .va-card__* padding - .va-card__title font-size - filter input height
-    const height = 'calc(100vh - 4.0625rem - 2 * 1.5rem - 162px - 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height))';
-
     return {
       columns,
-      height,
       jobs: [] as Job[],
       filter: '',
       isLoading: true,
@@ -57,5 +53,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.va-data-table {
+  // The full viewport - .app__navbar height - .layout padding - previous .va-card height/margin - .va-card__* padding - .va-card__title font-size - filter input height - 2px (idk)
+  max-height: calc(100vh - 4.0625rem - 2 * 1.5rem - 162px - 1.5rem - 4 * var(--va-card-padding) - 0.625rem - var(--va-input-min-height) - 2px);
+}
 </style>
