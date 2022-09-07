@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <Header/>
+    <HeaderPrimary/>
     <div class="app__content">
       <div class="app__page">
         <div class="layout gutter--xl">
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import Header from './Header.vue';
+import HeaderPrimary from './HeaderPrimary.vue';
 
 export default {
   name: 'layout-component',
   components: {
-    Header,
+    HeaderPrimary,
   },
 };
 </script>
