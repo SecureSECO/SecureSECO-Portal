@@ -4,9 +4,9 @@
       <template v-slot:center>
         <va-navbar-item>
           <va-button
-            :flat="currentRoute !== 'SearchSECO Miners'"
-            :square="currentRoute === 'SearchSECO Miners'"
-            :to="{ name: 'SearchSECO Miners' }"
+            :flat="currentRoute !== 'SearchSECO'"
+            :square="currentRoute === 'SearchSECO'"
+            :to="{ name: 'SearchSECO' }"
             color="dark"
             >Miners
           </va-button>
@@ -47,10 +47,9 @@
 
 <script>
 import router from '@/router';
-import axios from 'axios';
 
 export default {
-  name: 'header-component',
+  name: 'header-search-component',
   computed: {
     currentRoute() {
       return router.currentRoute.value.name;

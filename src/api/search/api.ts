@@ -1,40 +1,24 @@
 /* eslint-disable class-methods-use-this */
 import {
-  // defaultJob,
-  // defaultSearchMetrics,
-  defaultMiner,
-  SearchInterface,
-  Miner,
   AddMinerForm,
-  // SearchMetrics,
+  Miner,
+  MinerStateAction,
+  SearchInterface,
 } from '@/api/search/interface';
 import axios, { AxiosResponse } from 'axios';
-
-interface ApiMiner {
-  minerGithubToken: string;
-  minerWorkerName: string;
-}
-
-// Convert miner data as received from the Dlt Api into the local Package interface
-const parseMiner = (data: ApiMiner): Miner => ({
-  ...defaultMiner,
-  github_token: data.minerGithubToken,
-  worker_name: data.minerWorkerName,
-});
 
 export default class SearchApi extends SearchInterface {
   #baseUrl = 'http://localhost:3000/api/search/';
 
-  async getMiners() {
+  async getMiners(): Promise<Miner[]> {
     const { data } = await axios.get(this.#getLink('miners'));
-    console.log('/search | getMiners | data', data);
-    // return data.miners.map((item: ApiMiner) => parseMiner(item));
-    return [];
+    return data;
   }
 
-  async getMiner(name: string) {
-    const { data } = await axios.get(this.#getLink(`miner/${name}`));
-    return parseMiner(data);
+  async getMiner(id: string): Promise<Miner> {
+    const { data } = await axios.get(this.#getLink(`miner/${id}`));
+    console.log('getMiner', data);
+    return data;
   }
 
   async addMiner(miner: AddMinerForm) {
@@ -44,11 +28,33 @@ export default class SearchApi extends SearchInterface {
     return data;
   }
 
-  async getMetrics() {
-    const { data } = await axios.get(this.#getLink('metrics'));
-    // return parseMetrics(data);
-    return [];
+  async changeMinerState(
+    id: string,
+    action: MinerStateAction,
+  ): Promise<boolean | null> {
+    try {
+      const { data } = await axios.get(this.#getLink(`miner/${id}/${action}`));
+      console.log('changeMinerState return data', data);
+      return data.success ? data.success : data.message;
+    } catch (e) {
+      // If the case where the request returned properly but contains an error message, show that message
+      if (axios.isAxiosError(e) && e.response) {
+        const { data }: AxiosResponse = e.response;
+        if (data.success === false) {
+          throw new Error(data.message);
+        }
+      } else {
+        throw e;
+      }
+    }
+    return null;
   }
+
+  // TODO: async getMetrics() {
+  // TODO:   const { data } = await axios.get(this.#getLink('metrics'));
+  // TODO:   // return parseMetrics(data);
+  // TODO:   return [];
+  // TODO: }
 
   #getLink(to: string) {
     return `${this.#baseUrl}${to}`;
