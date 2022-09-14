@@ -43,8 +43,9 @@ export type MinerStateAction = 'remove' | 'restart' | 'start' | 'stop';
 export interface AddMinerForm {
   github_token: string;
   worker_name: string;
-  // TODO: verbosity
-  // TODO: num cpus
+  // API_IPS: string;
+  // verbose: string;
+  // cpu: string;
 }
 
 export interface SearchMetrics {
