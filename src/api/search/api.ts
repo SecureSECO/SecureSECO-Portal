@@ -17,14 +17,11 @@ export default class SearchApi extends SearchInterface {
 
   async getMiner(id: string): Promise<Miner> {
     const { data } = await axios.get(this.#getLink(`miner/${id}`));
-    console.log('getMiner', data);
     return data;
   }
 
   async addMiner(miner: AddMinerForm) {
-    console.log('addMiner, miner:', miner);
     const { data } = await axios.post(this.#getLink('add-miner'), miner);
-    console.log('addMiner, data:', data);
     return data;
   }
 
@@ -34,7 +31,6 @@ export default class SearchApi extends SearchInterface {
   ): Promise<boolean | null> {
     try {
       const { data } = await axios.get(this.#getLink(`miner/${id}/${action}`));
-      console.log('changeMinerState return data', data);
       return data.success ? data.success : data.message;
     } catch (e) {
       // If the case where the request returned properly but contains an error message, show that message

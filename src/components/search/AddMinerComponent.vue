@@ -1,11 +1,21 @@
 <template>
   <va-modal v-model="showAddedModal" hide-default-actions overlay-opacity="0.2">
     <template #header>
-      <h2>Miner added</h2>
+      <h2>Miner Added</h2>
     </template>
     <div>Your miner has been added</div>
     <template #footer>
       <va-button @click="showAddedModal = false"> Close </va-button>
+    </template>
+  </va-modal>
+
+  <va-modal v-model="showErrorModal" hide-default-actions overlay-opacity="0.2">
+    <template #header>
+      <h2>Add Miner Error</h2>
+    </template>
+    <div>{{ errorMessage }}</div>
+    <template #footer>
+      <va-button @click="showErrorModal = false"> Close </va-button>
     </template>
   </va-modal>
 
@@ -51,8 +61,10 @@ export default defineComponent({
   data() {
     return {
       showAddedModal: false,
+      showErrorModal: false,
       showFieldEmpty: false,
       response: '',
+      errorMessage: '',
       miner: {
         github_token: '',
         worker_name: '',
@@ -64,9 +76,11 @@ export default defineComponent({
       const m = this.miner;
       if (m.github_token.length > 0 && m.worker_name.length > 0) {
         const result = await this.$searchApi.addMiner(m);
-
-        if (typeof result === 'string') {
-          if (result === 'Added miner.') this.showAddedModal = true;
+        if (result && result.success === true) {
+          this.showAddedModal = true;
+        } else {
+          this.showErrorModal = true;
+          this.errorMessage = result.message;
         }
       } else {
         this.showFieldEmpty = true;

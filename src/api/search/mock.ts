@@ -45,12 +45,6 @@ export default class SearchMock extends SearchInterface {
     return miner || defaultMiner;
   }
 
-  async getMinerStatus() {
-    await fakeDelay();
-    // return this.isActive;
-    return Math.random() > 0.5;
-  }
-
   async changeMinerState(
     id: string,
     action: MinerStateAction,
@@ -61,7 +55,16 @@ export default class SearchMock extends SearchInterface {
 
   async addMiner(miner: AddMinerForm) {
     await fakeDelay();
-    return 'Success';
+
+    return {
+      success: true,
+      message: 'Added miner.',
+    };
+
+    // return {
+    //   success: false,
+    //   message: 'Add miner failed...',
+    // };
   }
 
   // TODO: async getMetrics() {

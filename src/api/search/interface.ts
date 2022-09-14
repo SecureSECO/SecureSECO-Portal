@@ -52,12 +52,14 @@ export interface SearchMetrics {
   example: number;
 }
 
+export type MinerAPIResponse = { success: boolean; message: string };
+
 export abstract class SearchInterface {
   abstract getMiners(): Promise<Miner[]>;
 
   abstract getMiner(id: string): Promise<Miner>;
 
-  abstract addMiner(miner: AddMinerForm): Promise<string | void>;
+  abstract addMiner(miner: AddMinerForm): Promise<MinerAPIResponse>;
 
   abstract changeMinerState(
     id: string,
