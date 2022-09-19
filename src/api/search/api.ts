@@ -25,6 +25,11 @@ export default class SearchApi extends SearchInterface {
     return data;
   }
 
+  async rerunMiner(id: string) {
+    const { data } = await axios.get(this.#getLink(`miner/${id}/rerun`));
+    return data;
+  }
+
   async changeMinerState(
     id: string,
     action: MinerStateAction,

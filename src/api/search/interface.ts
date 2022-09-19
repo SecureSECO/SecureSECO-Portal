@@ -62,6 +62,8 @@ export abstract class SearchInterface {
 
   abstract addMiner(miner: AddMinerForm): Promise<MinerAPIResponse>;
 
+  abstract rerunMiner(id: string): Promise<boolean | null>;
+
   abstract changeMinerState(
     id: string,
     action: MinerStateAction,

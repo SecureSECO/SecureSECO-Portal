@@ -67,6 +67,11 @@ export default class SearchMock extends SearchInterface {
     // };
   }
 
+  async rerunMiner(id: string) {
+    await fakeDelay();
+    return null;
+  }
+
   // TODO: async getMetrics() {
   // TODO:   await fakeDelay();
   // TODO:   return {

@@ -30,7 +30,7 @@
         <va-button
           icon="restart_alt"
           class="ml-2"
-          @click.stop="changeMinerState(miner.id, 'restart')"
+          @click.stop="rerunMiner(miner.id)"
         />
         <va-button
           icon="delete"
@@ -100,6 +100,12 @@ export default defineComponent({
           id,
         },
       });
+    },
+    async rerunMiner(id: string) {
+      this.isLoading = true;
+      const data = await this.$searchApi.rerunMiner(id);
+      console.log('data', data);
+      await this.fetchData();
     },
     async toggleMinerRunning(id: string) {
       if (this.isLoading) return;
