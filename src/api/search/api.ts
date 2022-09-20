@@ -20,6 +20,11 @@ export default class SearchApi extends SearchInterface {
     return data;
   }
 
+  async getMinerLogs(id: string): Promise<string[]> {
+    const { data } = await axios.get(this.#getLink(`miner/${id}/logs`));
+    return data;
+  }
+
   async addMiner(miner: AddMinerForm) {
     const { data } = await axios.post(this.#getLink('add-miner'), miner);
     return data;

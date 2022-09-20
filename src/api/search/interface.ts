@@ -60,6 +60,8 @@ export abstract class SearchInterface {
 
   abstract getMiner(id: string): Promise<Miner>;
 
+  abstract getMinerLogs(id: string): Promise<string[]>;
+
   abstract addMiner(miner: AddMinerForm): Promise<MinerAPIResponse>;
 
   abstract rerunMiner(id: string): Promise<boolean | null>;

@@ -6,25 +6,21 @@
     </va-card-content>
   </va-card>
   <va-card>
-    <va-card-title>TODO: SearchSECO Miner Logs</va-card-title>
+    <va-card-title>SearchSECO Miner Logs</va-card-title>
     <va-card-content>
-      <!--
-      <trust-facts-table-component
-        ref="trustFactsTable"
-        :name="name"
-        :version="version"
-      />
-      -->
+      <miner-log-component :id="id" />
     </va-card-content>
   </va-card>
 </template>
 
 <script>
 import MinerDetailsComponent from '@/components/search/MinerDetails.vue';
+import MinerLogComponent from '@/components/search/MinerLog.vue';
 
 export default {
   components: {
     MinerDetailsComponent,
+    MinerLogComponent,
   },
   name: 'search-miner-view',
   props: {

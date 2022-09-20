@@ -45,6 +45,12 @@ export default class SearchMock extends SearchInterface {
     return miner || defaultMiner;
   }
 
+  async getMinerLogs(id: string): Promise<string[]> {
+    await fakeDelay();
+    const logs = ['AAAAAAA', 'BBBBBBB'];
+    return logs;
+  }
+
   async changeMinerState(
     id: string,
     action: MinerStateAction,
