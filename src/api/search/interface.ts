@@ -1,14 +1,6 @@
 import { App } from 'vue';
 import { GlobalConfig } from 'vuestic-ui';
 
-// export interface Miner {
-//   github_token: string;
-//   worker_name: string;
-//   name: string;
-//   id: string; // docker container id
-//   state: number; // docker container running or stopped
-// }
-
 export interface Miner {
   id: string; // docker container id
   name: string; // docker container name
@@ -35,10 +27,11 @@ export interface Miner {
 
 export type MinerStateAction = 'remove' | 'restart' | 'start' | 'stop';
 
-// MinerMetrics
-// ? methods_added_4hrs: string[],
-// ? methods_added_lifetime: string[],
-// ? last_activity: string[],
+export interface MinerMetrics {
+  last_activity: string;
+  methods_added_4hrs: number;
+  methods_added_total: number;
+}
 
 export interface AddMinerForm {
   github_token: string;
@@ -46,11 +39,6 @@ export interface AddMinerForm {
   // API_IPS: string;
   // verbose: string;
   // cpu: string;
-}
-
-export interface SearchMetrics {
-  miners: number;
-  example: number;
 }
 
 export type MinerAPIResponse = { success: boolean; message: string };
@@ -62,6 +50,8 @@ export abstract class SearchInterface {
 
   abstract getMinerLogs(id: string): Promise<string[]>;
 
+  abstract getMinerMetrics(id: string): Promise<MinerMetrics>;
+
   abstract addMiner(miner: AddMinerForm): Promise<MinerAPIResponse>;
 
   abstract rerunMiner(id: string): Promise<boolean | null>;
@@ -71,8 +61,7 @@ export abstract class SearchInterface {
     action: MinerStateAction,
   ): Promise<boolean | null>;
 
-  // TODO: abstract getMetrics(): Promise<SearchMetrics>;
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign
     app.config.globalProperties.$searchApi = this;
@@ -84,8 +73,7 @@ export const defaultMiner: Miner = {
   name: 'xxxxx_xxxxx',
   config: {
     github_token: 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    worker_name: 'xxxx',
-    cpus: 2,
+    worker_name: 'xxxxx',
   },
   state: {
     Status: 'paused',
@@ -102,7 +90,8 @@ export const defaultMiner: Miner = {
   },
 };
 
-export const defaultSearchMetrics: SearchMetrics = {
-  miners: 0,
-  example: 0,
+export const defaultMinerMetrics: MinerMetrics = {
+  last_activity: '',
+  methods_added_4hrs: 0,
+  methods_added_total: 0,
 };

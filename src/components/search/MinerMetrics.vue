@@ -2,20 +2,16 @@
   <div class="row">
     <div class="flex xs6">
       <div class="row">
-        <div class="flex xs4 propName">name:</div>
-        <div class="flex xs8 propValue">{{ miner.name }}</div>
+        <div class="flex xs6 propName">Last Activity:</div>
+        <div class="flex xs6 propValue">{{ metrics.last_activity }}</div>
       </div>
       <div class="row">
-        <div class="flex xs4 propName">id:</div>
-        <div class="flex xs8 propValue">{{ miner.id }}</div>
+        <div class="flex xs6 propName">Methods Added : Last 4 hours:</div>
+        <div class="flex xs6 propValue">{{ metrics.methods_added_4hrs }}</div>
       </div>
       <div class="row">
-        <div class="flex xs4 propName">config:</div>
-        <div class="flex xs8 json">{{ miner.config }}</div>
-      </div>
-      <div class="row">
-        <div class="flex xs4 propName">state:</div>
-        <div class="flex xs8 json">{{ miner.state }}</div>
+        <div class="flex xs6 propName">Methods Added : Total:</div>
+        <div class="flex xs6 json">{{ metrics.methods_added_total }}</div>
       </div>
     </div>
   </div>
@@ -23,10 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { defaultMiner } from '@/api';
+import { defaultMetrics } from '@/api';
 
 export default defineComponent({
-  name: 'miner-details-component',
+  name: 'metrics-metrics-component',
   props: {
     id: {
       type: String,
@@ -35,11 +31,11 @@ export default defineComponent({
   },
   data() {
     return {
-      miner: defaultMiner,
+      metrics: defaultMetrics,
     };
   },
   async mounted() {
-    this.miner = await this.$searchApi.getMiner(this.id);
+    this.metrics = await this.$searchApi.getMinerMetrics(this.id);
   },
 });
 </script>

@@ -2,6 +2,7 @@
 import {
   AddMinerForm,
   Miner,
+  MinerMetrics,
   MinerStateAction,
   SearchInterface,
 } from '@/api/search/interface';
@@ -23,6 +24,15 @@ export default class SearchApi extends SearchInterface {
   async getMinerLogs(id: string): Promise<string[]> {
     const { data } = await axios.get(this.#getLink(`miner/${id}/logs`));
     return data;
+  }
+
+  // TODO
+  async getMinerMetrics(id: string): Promise<MinerMetrics> {
+    return {
+      last_activity: 'Not Implemented.',
+      methods_added_4hrs: -1,
+      methods_added_total: -1,
+    };
   }
 
   async addMiner(miner: AddMinerForm) {
@@ -55,12 +65,6 @@ export default class SearchApi extends SearchInterface {
     }
     return null;
   }
-
-  // TODO: async getMetrics() {
-  // TODO:   const { data } = await axios.get(this.#getLink('metrics'));
-  // TODO:   // return parseMetrics(data);
-  // TODO:   return [];
-  // TODO: }
 
   #getLink(to: string) {
     return `${this.#baseUrl}${to}`;

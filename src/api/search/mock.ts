@@ -1,12 +1,12 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this,@typescript-eslint/no-unused-vars */
 import { fakeDelay } from '@/lib.js';
 import {
-  defaultSearchMetrics,
-  defaultMiner,
-  SearchInterface,
   AddMinerForm,
   Miner,
+  MinerMetrics,
   MinerStateAction,
+  SearchInterface,
+  defaultMiner,
 } from '@/api/search/interface';
 
 export default class SearchMock extends SearchInterface {
@@ -49,6 +49,15 @@ export default class SearchMock extends SearchInterface {
     await fakeDelay();
     const logs = ['AAAAAAA', 'BBBBBBB'];
     return logs;
+  }
+
+  async getMinerMetrics(id: string): Promise<MinerMetrics> {
+    await fakeDelay();
+    return {
+      last_activity: 'Parsed something.',
+      methods_added_4hrs: 33,
+      methods_added_total: 33333,
+    };
   }
 
   async changeMinerState(
