@@ -22,7 +22,7 @@ import { defineComponent } from 'vue';
 import { defaultMetrics } from '@/api';
 
 export default defineComponent({
-  name: 'metrics-metrics-component',
+  name: 'miner-metrics-component',
   props: {
     id: {
       type: String,

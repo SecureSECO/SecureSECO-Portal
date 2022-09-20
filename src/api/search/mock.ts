@@ -75,22 +75,10 @@ export default class SearchMock extends SearchInterface {
       success: true,
       message: 'Added miner.',
     };
-
-    // return {
-    //   success: false,
-    //   message: 'Add miner failed...',
-    // };
   }
 
   async rerunMiner(id: string) {
     await fakeDelay();
     return null;
   }
-
-  // TODO: async getMetrics() {
-  // TODO:   await fakeDelay();
-  // TODO:   return {
-  // TODO:     ...defaultSearchMetrics,
-  // TODO:   };
-  // TODO: }
 }

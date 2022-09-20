@@ -27,6 +27,7 @@ export default class SearchApi extends SearchInterface {
   }
 
   // TODO
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getMinerMetrics(id: string): Promise<MinerMetrics> {
     return {
       last_activity: 'Not Implemented.',

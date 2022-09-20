@@ -59,24 +59,6 @@
       <va-button @click="showModalCPU = false"> Close </va-button>
     </template>
   </va-modal>
-
-  <va-modal
-    v-model="showModalAPIIPS"
-    hide-default-actions
-    overlay-opacity="0.2"
-  >
-    <template #header>
-      <h2>API_IPS</h2>
-    </template>
-    <div>
-      The IP adresses and ports of the database APIs to connect to.<br />
-      Leave blank for defaults.<br />
-      IPs should be in format ip1?port1,ip2?port2
-    </div>
-    <template #footer>
-      <va-button @click="showModalAPIIPS = false"> Close </va-button>
-    </template>
-  </va-modal>
   -->
 
   <va-form>
@@ -120,13 +102,6 @@
           >info</va-icon
         >
       </div>
-
-      <div class="row">
-        <va-input v-model="miner.API_IPS" class="flex xs11" label="API IPs" />
-        <va-icon class="flex xs1 material-icons" @click="showModalAPIIPS = true"
-          >info</va-icon
-        >
-      </div>
       -->
 
       <div class="flex xs12 mt-2">
@@ -146,7 +121,6 @@ export default defineComponent({
   name: 'add-miner-component',
   data() {
     return {
-      // showModalAPIIPS: false,
       // showModalCPU: false,
       // showModalVerbose: false,
       showFieldEmpty: false,
@@ -157,7 +131,6 @@ export default defineComponent({
       miner: {
         github_token: '',
         worker_name: '',
-        // API_IPS: '',
         // verbose: '4',
         // cpu: '2',
       },

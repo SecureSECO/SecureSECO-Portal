@@ -20,15 +20,6 @@
             >Add Miner
           </va-button>
         </va-navbar-item>
-        <va-navbar-item>
-          <va-button
-            :flat="currentRoute !== 'SearchSECO Metrics'"
-            :square="currentRoute === 'SearchSECO Metrics'"
-            :to="{ name: 'SearchSECO Metrics' }"
-            color="dark"
-            >Metrics
-          </va-button>
-        </va-navbar-item>
       </template>
       <template v-slot:right>
         <va-navbar-item>

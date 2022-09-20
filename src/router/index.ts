@@ -66,12 +66,6 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
       },
       {
-        path: 'search/metrics/',
-        name: 'SearchSECO Metrics',
-        component: () => import('@/views/search/Metrics.vue'),
-        props: true,
-      },
-      {
         path: 'search/miner/:id',
         name: 'SearchSECO Miner',
         component: () => import('@/views/search/Miner.vue'),

@@ -1,8 +1,15 @@
 import { createApp } from 'vue';
 import { createVuestic } from 'vuestic-ui';
 import copyText from '@meforma/vue-copy-to-clipboard';
-import { dltApi, spiderApi, DltInterface, SpiderInterface, searchApi, SearchInterface } from './api';
 import App from './App.vue';
+import {
+  DltInterface,
+  SearchInterface,
+  SpiderInterface,
+  dltApi,
+  searchApi,
+  spiderApi,
+} from './api';
 
 import router from './router';
 
