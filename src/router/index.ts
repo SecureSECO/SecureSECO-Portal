@@ -53,6 +53,24 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/AddPackage.vue'),
         props: true,
       },
+      {
+        path: 'search/',
+        name: 'SearchSECO',
+        component: () => import('@/views/search/Miners.vue'),
+        props: true,
+      },
+      {
+        path: 'search/add-miner/',
+        name: 'SearchSECO Add Miner',
+        component: () => import('@/views/search/AddMiner.vue'),
+        props: true,
+      },
+      {
+        path: 'search/miner/:id',
+        name: 'SearchSECO Miner',
+        component: () => import('@/views/search/Miner.vue'),
+        props: true,
+      },
     ],
   },
 ];

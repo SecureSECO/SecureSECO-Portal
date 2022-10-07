@@ -3,9 +3,6 @@
     <va-navbar color="#ffffff" text-color="primary">
       <template v-slot:left>
         <va-navbar-item>
-          <va-chip color="dark" size="large" square>TrustSECO</va-chip>
-        </va-navbar-item>
-        <va-navbar-item>
           <va-chip color="dark" flat @click="refreshUserTokens">User tokens: {{ usertokens }}</va-chip>
         </va-navbar-item>
       </template>
@@ -32,9 +29,6 @@
         </va-navbar-item>
       </template>
       <template v-slot:right>
-        <va-navbar-item>
-          <va-button v-if="isDevMode" color="dark" disabled flat>DEV</va-button>
-        </va-navbar-item>
         <va-navbar-item>
           <va-button :flat="currentRoute !== 'Settings'" :square="currentRoute === 'Settings'"
                      :to="{ name: 'Settings' }" color="dark">Settings
@@ -70,9 +64,6 @@ export default {
     this.refreshUserTokens();
   },
   computed: {
-    isDevMode() {
-      return !import.meta.env.PROD;
-    },
     currentRoute() {
       return router.currentRoute.value.name;
     },
