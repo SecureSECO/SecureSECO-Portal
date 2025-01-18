@@ -1,6 +1,9 @@
 <template>
   <va-card>
     <va-card-title>CoSy and Spider status</va-card-title>
+    <va-card-content v-if="this.server_type===0">
+      <div> In order to add packages or mine jobs for a token reward, download and run an instance locally:</div>
+    </va-card-content>
     <va-card-content>
       <DownloadCosyButton/>
     </va-card-content>
@@ -17,6 +20,7 @@
 </template>
 
 <script>
+import { ServerType } from '@/api';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
 import JobsListComponent from '../components/tables/Jobs.vue';
@@ -27,6 +31,14 @@ export default {
     DownloadCosyButton,
     SpiderToggleButton,
     JobsListComponent,
+  },
+  data() {
+    return {
+      server_type: ServerType.Public,
+    };
+  },
+  async mounted() {
+    this.server_type = await this.$api.getServerType();
   },
 };
 </script>
