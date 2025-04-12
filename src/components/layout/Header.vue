@@ -12,19 +12,24 @@
                      color="dark">Home
           </va-button>
         </va-navbar-item>
+        <va-navbar-item>
+          <va-button :flat="currentRoute !== 'Package List'" :square="currentRoute === 'Package List'"
+                     :to="{ name: 'Package List' }" color="dark">Trust Scores
+          </va-button>
+        </va-navbar-item>
         <va-navbar-item v-if="this.server_type===1">
           <va-button :flat="currentRoute !== 'Add Package'" :square="currentRoute === 'Add Package'"
                      :to="{ name: 'Add Package' }" color="dark">Add Package
           </va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button :flat="currentRoute !== 'Metrics'" :square="currentRoute === 'Metrics'" :to="{ name: 'Metrics' }"
-                     color="dark">Metrics
+          <va-button :flat="currentRoute !== 'Job List'" :square="currentRoute === 'Job List'"
+                     :to="{ name: 'Job List' }" color="dark">Job List
           </va-button>
         </va-navbar-item>
         <va-navbar-item>
-          <va-button :flat="currentRoute !== 'Package List'" :square="currentRoute === 'Package List'"
-                     :to="{ name: 'Package List' }" color="dark">Trust Scores
+          <va-button :flat="currentRoute !== 'Metrics'" :square="currentRoute === 'Metrics'" :to="{ name: 'Metrics' }"
+                     color="dark">Metrics
           </va-button>
         </va-navbar-item>
       </template>

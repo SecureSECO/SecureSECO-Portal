@@ -11,26 +11,18 @@
       <SpiderToggleButton/>
     </va-card-content>
   </va-card>
-  <va-card>
-    <va-card-title>Job list</va-card-title>
-    <va-card-content>
-      <JobsListComponent/>
-    </va-card-content>
-  </va-card>
 </template>
 
 <script>
 import { ServerType } from '@/api';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
-import JobsListComponent from '../components/tables/Jobs.vue';
 
 export default {
   name: 'home-view',
   components: {
     DownloadCosyButton,
     SpiderToggleButton,
-    JobsListComponent,
   },
   data() {
     return {
