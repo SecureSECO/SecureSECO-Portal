@@ -14,7 +14,7 @@ defineProps<{ packages: TopPackageResult[] }>();
         :src="platformImage(pack.packagePlatform)" />
       <div class="package-info">
         <div class="va-list-item-label"> {{ pack.packageName }} </div>
-        <div class="score va-list-item-label va-list-item-label--caption"> Score: {{ pack.score }} </div>
+        <div class="score va-list-item-label va-list-item-label--caption"> Score: {{ Math.round(pack.score) }} </div>
       </div>
     </div>
   </div>
