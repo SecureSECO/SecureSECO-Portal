@@ -60,7 +60,7 @@ export default {
   methods: {
     async refreshUserTokens() {
       try {
-        const { data } = await axios.get(`https://${import.meta.env.VITE_HOST}/api/dlt/account`);
+        const { data } = await axios.get(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}/api/dlt/account`);
         this.usertokens = data.slingers;
       } catch {
         this.usertokens = 0;
