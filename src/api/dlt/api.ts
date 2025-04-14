@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import {
   defaultJob, defaultMetrics, defaultPackage,
-  DltInterface, Job, AddPackageForm, Metrics, Package, TrustFact,
+  DltInterface, Job, AddPackageForm, Metrics, Package, TrustFact, TopPackageResult,
 } from '@/api/dlt/interface';
 import axios from 'axios';
 import semver from 'semver';
@@ -112,7 +112,6 @@ export default class DltApi extends DltInterface {
       .map((item: ApiTrustFact) => parseTrustFact(item));
   }
 
-  // TODO: This doesn't really belong to the DLT Api, but...
   async getDownloadLink() {
     const { data } = await axios.get(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}/api/download`);
     return data;
@@ -147,6 +146,11 @@ export default class DltApi extends DltInterface {
 
   async getTrustScoreCategories(name: string, version: string): Promise<Record<string, number>> {
     const { data } = await axios.get(this.#getLink(`package/${name}/trust-score-categories/${version}`));
+    return data;
+  }
+
+  async getTopPackages(order: 'ascending' | 'descending', count: Number): Promise<TopPackageResult[]> {
+    const { data } = await axios.get(this.#getLink(`leaderboard?order=${order}&count=${count}`));
     return data;
   }
 

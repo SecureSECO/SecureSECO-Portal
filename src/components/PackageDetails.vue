@@ -52,7 +52,7 @@ import { defaultPackage } from '@/api';
 import router from '@/router';
 
 export default defineComponent({
-  name: 'package-details-component',
+  name: 'PackageDetailsComponent',
   props: {
     name: {
       type: String,

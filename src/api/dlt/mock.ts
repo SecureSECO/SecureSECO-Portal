@@ -6,6 +6,7 @@ import {
   DltInterface,
   AddPackageForm,
   Package,
+  TopPackageResult,
 } from '@/api/dlt/interface';
 
 function random_int(max: number): number {
@@ -13,12 +14,12 @@ function random_int(max: number): number {
 }
 
 let platforms = [
-    "CRAN",
-    "Go",
-    "Maven",
-    "NPM",
-    "NuGet",
-    "PyPi",
+  "CRAN",
+  "Go",
+  "Maven",
+  "NPM",
+  "NuGet",
+  "PyPi",
 ]
 
 export default class DltMock extends DltInterface {
@@ -578,7 +579,7 @@ export default class DltMock extends DltInterface {
   }
 
   async getMostRecentVersion(pack: Package): Promise<string> {
-      return "v7.8.9";
+    return "v7.8.9";
   }
 
   async getMetrics() {
@@ -605,6 +606,21 @@ export default class DltMock extends DltInterface {
       "Dependencies and Ecosystem": this.randomScore(),
       "Community and Popularity": this.randomScore()
     }
+  }
+
+  async getTopPackages(order: 'ascending' | 'descending', count: Number): Promise<TopPackageResult[]> {
+    let topPackages = [];
+    let packages = await this.getPackages();
+    for (let i = 0; i < count; i++) {
+      topPackages[i] = {
+        packageName: packages[i].name,
+        packagePlatform: packages[i].platform,
+        packageOwner: packages[i].owner,
+        packageRelease: packages[i].versions[0],
+        score: order === 'ascending' ? i : packages.length - i,
+      }
+    }
+    return topPackages
   }
 }
 

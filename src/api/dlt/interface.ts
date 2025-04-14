@@ -34,6 +34,14 @@ export interface Metrics {
   nodes: number,
 }
 
+export interface TopPackageResult {
+    packageName: string,
+    packagePlatform: string,
+    packageOwner: string,
+    packageRelease: string,
+    score: number,
+}
+
 export abstract class DltInterface {
   abstract getPackages(): Promise<Package[]>;
 
@@ -54,6 +62,8 @@ export abstract class DltInterface {
   abstract getTrustScore(name: string, version?: string): Promise<number | undefined>;
 
   abstract getTrustScoreCategories(name: string, version: string): Promise<Record<string, number>>;
+
+  abstract getTopPackages(order: "ascending" | "descending", count: Number): Promise<TopPackageResult[]>;
 
   install(app: App, config: GlobalConfig) {
     // eslint-disable-next-line no-param-reassign

@@ -3,45 +3,11 @@ import {
   ref, onMounted, getCurrentInstance, defineProps,
 } from 'vue';
 import { Package } from '@/api';
-import router from '@/router';
+import { loadPackage, loadPackageVersion, platformImage } from '../../api/package';
 
 const props = defineProps<{ package: Package }>();
 
 const score = ref(' - ');
-
-function loadPackage(name: string) {
-  router.push({
-    name: 'Package',
-    params: {
-      name,
-    },
-  });
-}
-
-function loadPackageVersion(name: string, version: string) {
-  router.push({
-    name: 'Package with Version',
-    params: {
-      name,
-      version,
-    },
-  });
-}
-
-function platformImage(platform: string): string {
-  switch (platform.toLowerCase()) {
-    case 'cran':
-    case 'go':
-    case 'maven':
-    case 'npm':
-    case 'nuget':
-    case 'pypi':
-    case 'cargo':
-      return `/${platform.toLowerCase()}.png`;
-    default:
-      return '/package.svg';
-  }
-}
 
 // This is a bit cursed, but this is how its accessed in the compostion api
 const proxy = getCurrentInstance()?.proxy;

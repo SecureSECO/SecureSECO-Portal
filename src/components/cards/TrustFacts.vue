@@ -132,7 +132,6 @@ export default defineComponent({
 
     <va-card-content>
       <p> There are no known facts for this package and version </p>
-      <package-details-component ref="packageDetails" :name="name" :version="version" />
     </va-card-content>
   </va-card>
   <div class="cardContainer">
