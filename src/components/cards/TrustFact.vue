@@ -117,6 +117,27 @@ function convertDuration(secs: number): string {
   return formatted;
 }
 
+const intSuffixes = [
+  { value: 1e9, suffix: 'B' },
+  { value: 1e6, suffix: 'M' },
+  { value: 1e3, suffix: 'k' },
+  { value: 1, suffix: '' },
+];
+
+function convertInt(num: number): string {
+  for (const { value, suffix } of intSuffixes) {
+    if (num >= value) {
+      let formatted = (num / value).toFixed(1);
+      // Remove trailing .0 for cleaner output
+      if (formatted.endsWith('.0')) {
+        formatted = formatted.slice(0, -2);
+      }
+      return `${formatted}${suffix}`;
+    }
+  }
+  return num.toString();
+}
+
 function convertFactValue(factValue: string, factCode: string): string {
   let res;
   switch (factCode) {
@@ -125,33 +146,52 @@ function convertFactValue(factValue: string, factCode: string): string {
       break;
     case 'lib_first_release_date':
     case 'lib_latest_release_date':
-    {
-      const date = Date.parse(factValue.replaceAll('"', ''));
-      res = new Intl.DateTimeFormat('en-GB', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(date);
-      break;
-    }
+      {
+        const date = Date.parse(factValue.replaceAll('"', ''));
+        res = new Intl.DateTimeFormat('en-GB', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }).format(date);
+        break;
+      }
     case 'so_popularity':
     case 'vs_virus_ration':
     case 'gh_issue_ratio':
-    {
-      const num = parseFloat(factValue);
-      res = num.toFixed(3);
-      break;
-    }
+      {
+        const num = parseFloat(factValue);
+        res = num.toFixed(3);
+        break;
+      }
     case 'gh_average_resolution_time':
     case 'lib_release_frequency':
-    {
-      const num2 = parseFloat(factValue);
-      res = convertDuration(num2);
-      break;
-    }
+      {
+        const num2 = parseFloat(factValue);
+        res = convertDuration(num2);
+        break;
+      }
     case 'cve_vulnerabilities':
       res = '';
       break;
+    case 'cve_count':
+    case 'gh_contributor_count':
+    case 'gh_open_issues_count':
+    case 'gh_owner_stargazer_count':
+    case 'gh_release_download_count':
+    case 'gh_release_issues_count':
+    case 'gh_total_download_count':
+    case 'gh_user_count':
+    case 'gh_yearly_commit_count':
+    case 'gh_zero_response_issues_count':
+    case 'lib_contributor_count':
+    case 'lib_dependency_count':
+    case 'lib_dependent_count':
+    case 'lib_release_count':
+      {
+        const num3 = Number(factValue);
+        res = convertInt(num3);
+        break;
+      }
     default:
       res = factValue;
       break;
@@ -167,16 +207,10 @@ function convertFactValue(factValue: string, factCode: string): string {
       {{ convertFactValue(fact_content, fact_code) }}
     </p>
     <div class="seperator" />
-    <p
-      class="card-child explanation"
-      v-if="fact_code !== 'cve_vulnerabilities'"
-    >
+    <p class="card-child explanation" v-if="fact_code !== 'cve_vulnerabilities'">
       {{ codeToExplanation[fact_code] }}
     </p>
-    <CveVulnerabilities
-      v-if="fact_code === 'cve_vulnerabilities'"
-      :cve_data="JSON.parse(fact_content)"
-    />
+    <CveVulnerabilities v-if="fact_code === 'cve_vulnerabilities'" :cve_data="JSON.parse(fact_content)" />
   </div>
   <div class="card card-loading" v-if="loading">
     <div class="card-content-loading"></div>
