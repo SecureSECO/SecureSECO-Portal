@@ -1,13 +1,12 @@
 <template>
-  <va-input
-    v-model="filter"
-    class="xs12 filter"
-    placeholder="Filter Packages"
-  />
+  <va-input v-model="query.filter" class="xs12 filter" placeholder="Filter Packages" />
   <div class="loading-container" v-if="isLoading">
     <VaIcon name="loop" size="4em" spin />
   </div>
-  <PackageComponent v-for="pack in filteredPackages" :package="pack" :key="pack"></PackageComponent>
+  <PackageComponent v-for="pack in packages" :package="pack" :key="pack" v-if="!isLoading"></PackageComponent>
+  <div class="center">
+    <VaPagination v-model="query.page" :pages="pages" input />
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,23 +19,35 @@ export default defineComponent({
   data() {
     return {
       packages: [] as Package[],
-      filter: '',
+      query: {
+        filter: '',
+        count: 20,
+        page: 1,
+      },
+      total: 0,
       isLoading: true,
+      pages: 1,
     };
-  },
-  mounted() {
-    this.fetchData();
   },
   methods: {
     async fetchData() {
-      this.packages = await this.$dltApi.getPackages();
+      this.isLoading = true;
+      console.log(this.query)
+      const { packages, total } = await this.$dltApi.getPackages((this.query.page - 1) * this.query.count, this.query.count, this.query.filter);
+      this.packages = packages;
+      this.total = total;
+      this.pages = Math.ceil(this.total / this.query.count);
       this.isLoading = false;
     },
   },
-  computed: {
-    filteredPackages(): Package[] {
-      return this.packages.filter((x) => x.name.includes(this.filter));
-    },
+  watch: {
+    query: {
+      handler() {
+        this.fetchData();
+      },
+      immediate: true,
+      deep: true
+    }
   },
   components: {
     PackageComponent,
@@ -44,7 +55,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .loading-container {
   width: 100%;
   height: 100%;
@@ -52,7 +63,9 @@ export default defineComponent({
   justify-content: space-around;
 }
 
-.seperator:last-child {
-  display: none;
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

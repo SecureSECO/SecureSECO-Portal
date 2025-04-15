@@ -23,9 +23,9 @@ let platforms = [
 ]
 
 export default class DltMock extends DltInterface {
-  async getPackages() {
+  async getPackages(from?: number, count?: number, query?: string) {
     await fakeDelay();
-    const packages: Package[] = [];
+    let packages: Package[] = [];
     for (let i = 0; i < 100; i += 1) {
       const versions: string[] = [];
       const amount = random_int(30);
@@ -43,7 +43,11 @@ export default class DltMock extends DltInterface {
       ...packages[49],
       name: 'Search me #49',
     };
-    return packages;
+    if (query) packages = packages.filter((pack) => pack.name.includes(query) || pack.owner.includes(query));
+    return {
+      packages: packages.slice(from, typeof count === "number" && typeof from === "number" ? from + count : undefined),
+      total: packages.length
+    };
   }
 
   async getPackage(name: string) {

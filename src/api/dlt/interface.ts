@@ -43,7 +43,7 @@ export interface TopPackageResult {
 }
 
 export abstract class DltInterface {
-  abstract getPackages(): Promise<Package[]>;
+  abstract getPackages(from?: number, count?: number, query?: string): Promise<{ packages: Package[], total: number } >;
 
   abstract getPackage(name: string): Promise<Package | null>;
 
