@@ -11,6 +11,9 @@ body {
   margin-bottom: var(--va-card-padding);
 }
 
+.va-card__title {
+  font-size: 0.9em;
+}
 // Card spacing without using .row
 .va-card {
   margin-bottom: 1.5rem;
