@@ -79,7 +79,7 @@ export default {
     this.server_type = await this.$api.getServerType();
     for (let list of this.packagelists){
       list.loading = true;
-      list.packages = await this.$dltApi.getTopPackages("ascending", 10);
+      list.packages = await this.$dltApi.getTopPackages(list.order, list.count);
       list.loading = false;
     }
   },
