@@ -25,7 +25,12 @@ declare module '@vue/runtime-core' {
 }
 
 const app = createApp(App)
-  .use(createVuestic())
+  .use(createVuestic({
+    config: {
+      colors: { variables: { primary: "#2C82E0" } },
+      components: { VaButton: { round: true, color: "dark"} }
+    }
+  }))
   .use(router)
   .use(dltApi)
   .use(spiderApi)
