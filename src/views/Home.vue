@@ -31,26 +31,31 @@
       <SpiderToggleButton />
     </va-card-content>
   </va-card>
-  <va-card>
-    <va-card-title>Packages with the highest trust score</va-card-title>
+  <va-card v-for="list in packagelists">
+    <va-card-title> {{list.title}} </va-card-title>
     <va-card-content>
-
-      <TopPackages :packages="this.top_packages"></TopPackages>
-    </va-card-content>
-  </va-card>
-  <va-card>
-    <va-card-title> Packages with the lowest trust score </va-card-title>
-    <va-card-content>
-      <TopPackages :packages="this.worst_packages"></TopPackages>
+      <div class="loading-container" v-if="list.loading">
+        <VaIcon name="loop" size="4em" spin />
+      </div>
+      <TopPackages :packages="list.packages"></TopPackages>
     </va-card-content>
   </va-card>
 </template>
 
-<script>
+<script lang="ts">
 import { ServerType } from '@/api';
 import SpiderToggleButton from '../components/button/SpiderToggle.vue';
 import DownloadCosyButton from '../components/button/DownloadCoSy.vue';
 import TopPackages from '../components/TopPackages.vue';
+import { TopPackageResult } from '@/api';
+
+interface package_list{
+  count: number,
+  order: "ascending" | "descending",
+  packages: TopPackageResult[],
+  title: string,
+  loading: boolean
+}
 
 export default {
   name: 'home-view',
@@ -62,14 +67,21 @@ export default {
   data() {
     return {
       server_type: ServerType.Public,
+      packagelists: [
+        {packages: [], count: 10, order: "descending", title:"Packages with the highest trust score", loading: true },
+        {packages: [], count: 10, order: "ascending", title:"Packages with the lowest trust score", loading: true }
+      ] as package_list[],
       top_packages: [],
       worst_packages: [],
     };
   },
   async mounted() {
     this.server_type = await this.$api.getServerType();
-    this.top_packages = await this.$dltApi.getTopPackages("descending", 10);
-    this.worst_packages = await this.$dltApi.getTopPackages("ascending", 10);
+    for (let list of this.packagelists){
+      list.loading = true;
+      list.packages = await this.$dltApi.getTopPackages("ascending", 10);
+      list.loading = false;
+    }
   },
 };
 </script>
