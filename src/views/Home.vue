@@ -1,6 +1,6 @@
 <template>
   <va-card>
-    <va-card-title>About TrustSECO</va-card-title>
+    <va-card-title style="text-transform: none; font-size: 1em;">About TrustSECO</va-card-title>
     <va-card-content>
       <p> TrustSECO is a community-managed infrastructure that underpins the Software Ecosystem (SECO) with a trust
         layer.
