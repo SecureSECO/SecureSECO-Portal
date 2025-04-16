@@ -8,6 +8,32 @@ defineProps({
   loading: { type: Boolean, required: true },
 });
 
+const rightAlignedFacts = new Set([
+  'cve_count',
+  'gh_average_resolution_time',
+  'gh_contributor_count',
+  'gh_gitstar_ranking',
+  'gh_issue_ratio',
+  'gh_open_issues_count',
+  'gh_owner_stargazer_count',
+  'gh_release_download_count',
+  'gh_release_issues_count',
+  'gh_total_download_count',
+  'gh_user_count',
+  'gh_yearly_commit_count',
+  'gh_zero_response_issues_count',
+  'lib_contributor_count',
+  'lib_dependency_count',
+  'lib_dependent_count',
+  'lib_first_release_date',
+  'lib_latest_release_date',
+  'lib_release_count',
+  'lib_release_frequency',
+  'lib_sourcerank',
+  'so_popularity',
+  'vs_virus_ratio',
+]);
+
 const codeToName: Record<string, string> = {
   cve_count: 'Cve count',
   cve_vulnerabilities: 'Cve vulnerabilities',
@@ -62,7 +88,7 @@ const codeToExplanation: Record<string, string> = {
   // back to github but some how comes up with a different number, strange
   gh_contributor_count: 'Contributor count sourced from GitHub.',
   lib_contributor_count: 'Contributor count sourced from libraries.io.',
-  lib_dependency_count: 'Number of packages the package is dependant on.',
+  lib_dependency_count: 'Number of packages the package is dependent on.',
   lib_dependent_count: 'Number of packages that depend on this package.',
   lib_first_release_date: 'Date of the initial release of this package.',
   lib_latest_release_date: 'Date of the most recent release.',
@@ -203,7 +229,7 @@ function convertFactValue(factValue: string, factCode: string): string {
 <template>
   <div class="card" v-if="!loading">
     <h2 class="fact-name card-child">{{ codeToName[fact_code] }}</h2>
-    <p class="card-child fact-value" v-if="fact_code !== 'cve_vulnerabilities'">
+    <p class="card-child fact-value" v-if="fact_code !== 'cve_vulnerabilities'" :style="rightAlignedFacts.has(fact_code) ? 'text-align: right;' : ''">
       {{ convertFactValue(fact_content, fact_code) }}
     </p>
     <div class="seperator" />
