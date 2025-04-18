@@ -17,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Home.vue'),
       },
       {
+        path: 'score-calculation/',
+        name: 'Trustscore Calculation',
+        component: () => import('@/views/TrustscoreCalculation.vue'),
+      },
+      {
         path: 'jobs',
         name: 'Job List',
         component: () => import('@/views/JobList.vue'),

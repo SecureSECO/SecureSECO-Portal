@@ -23,6 +23,11 @@
           </va-button>
         </va-navbar-item>
         <va-navbar-item>
+          <va-button :flat="currentRoute !== 'Trustscore Calculation'" :square="currentRoute === 'Trustscore Calculation'"
+                     :to="{ name: 'Trustscore Calculation' }" color="dark">Trustscore Calculation
+          </va-button>
+        </va-navbar-item>
+        <va-navbar-item>
           <va-button :flat="currentRoute !== 'Job List'" :square="currentRoute === 'Job List'"
                      :to="{ name: 'Job List' }" color="dark">Job List
           </va-button>
