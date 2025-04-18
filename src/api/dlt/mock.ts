@@ -51,11 +51,7 @@ export default class DltMock extends DltInterface {
   }
 
   async getPackage(name: string) {
-    await fakeDelay();
-    return {
-      ...defaultPackage,
-      name,
-    };
+    return (await this.getPackages()).packages.find((pack) => pack.name === name) ?? defaultPackage;
   }
 
   async getTrustFacts(name: string, version: string) {

@@ -29,10 +29,6 @@
         <div class="flex xs4 propName">Language:</div>
         <div class="flex xs8 propValue">{{ language }}</div>
       </div>
-      <!--      <div class="row">-->
-      <!--        <div class="flex xs4 propName">Confidence rating:</div>-->
-      <!--        <div class="flex xs8 propValue">TODO</div>-->
-      <!--      </div>-->
       <div class="row">
         <div class="flex xs4 propName">Repo:</div>
         <a :href="githubLink"><div class="flex xs16 propValue">{{package.owner}}/{{package.name}}</div></a>
@@ -40,7 +36,24 @@
     </div>
     <div class="row">
       <div class="flex xs12">
-        <va-button-toggle focus-color="textPrimary" size="small" v-model="versionLocal" :options="package.versions.map(v=> ({'label':v, 'value':v}))"/>
+        <va-button-toggle
+          focus-color="textPrimary"
+          size="small"
+          v-model="versionLocal"
+          :options="package.versions.map(v=> ({'label':v, 'value':v}))"
+          v-if="package.versions.length <= 7"
+        />
+        <va-select
+          v-model="version"
+          v-model:search="autoCompleteSearchValue"
+          class="col-span-1"
+          label="Version"
+          placeholder="Type or select version"
+          :options="package.versions"
+          autocomplete
+          highlight-matched-text
+          v-else
+        ></va-select>
       </div>
     </div>
   </div>
