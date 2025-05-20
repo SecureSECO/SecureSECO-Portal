@@ -1,8 +1,8 @@
 <template>
   <div class="app-layout__navbar">
     <va-navbar color="#ffffff" text-color="primary">
-      <template v-slot:left v-if="this.server_type===1">
-        <va-navbar-item>
+      <template v-slot:left>
+        <va-navbar-item v-if="this.server_type===1">
           <va-chip color="dark" flat @click="refreshUserTokens">User tokens: {{ usertokens }}</va-chip>
         </va-navbar-item>
       </template>
@@ -38,8 +38,8 @@
           </va-button>
         </va-navbar-item>
       </template>
-      <template v-slot:right v-if="this.server_type===1">
-        <va-navbar-item>
+      <template v-slot:right>
+        <va-navbar-item v-if="this.server_type===1">
           <va-button :flat="currentRoute !== 'Settings'" :square="currentRoute === 'Settings'"
                      :to="{ name: 'Settings' }" color="dark">Settings
           </va-button>
