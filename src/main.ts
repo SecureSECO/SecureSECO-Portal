@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
   }
 }
 
+// @ts-ignore
 const app = createApp(App)
   .use(createVuestic())
   .use(router)

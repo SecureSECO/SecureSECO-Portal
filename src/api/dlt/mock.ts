@@ -608,7 +608,7 @@ export default class DltMock extends DltInterface {
     }
   }
 
-  async getTopPackages(order: 'ascending' | 'descending', count: Number): Promise<TopPackageResult[]> {
+  async getTopPackages(order: 'ascending' | 'descending', count: number): Promise<TopPackageResult[]> {
     let topPackages = [];
     let packages = (await this.getPackages()).packages;
     for (let i = 0; i < count; i++) {

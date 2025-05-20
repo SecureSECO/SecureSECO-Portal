@@ -1,5 +1,5 @@
 <template>
-  <va-input v-model="filter" class="xs12 filter" placeholder="Filter Jobs"/>
+  <va-input v-model="filter" class="filter" placeholder="Filter Jobs"/>
   <va-data-table :columns="columns" :filter="filter" :items="jobs" :loading="isLoading" allow-footer-sorting clickable
                  hoverable sticky-header striped/>
 </template>

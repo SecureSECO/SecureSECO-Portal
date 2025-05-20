@@ -100,7 +100,7 @@ export default class DltApi extends DltInterface {
 
   async getPackage(name: string) {
     const { data } = await axios.get(this.#getLink(`package/${name}`));
-    if (data.length === 0) return null;
+    if (!data.packageName) return null;
     return parsePackage(data);
   }
 

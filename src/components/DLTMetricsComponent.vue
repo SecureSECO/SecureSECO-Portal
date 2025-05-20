@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <va-input v-model="metrics.packages" class="mb-4" label="Total number of packages in system" readonly/>
-    <va-input v-model="metrics.blockheight" class="mb-4" label="Blockheight" readonly/>
-    <va-input v-model="metrics.nodes" class="mb-4" label="Number of peers connected" readonly/>
-    <va-button :loading="isLoading" class="mt-2" type="button" @click="refreshMetrics">Refresh</va-button>
+  <div class="row">
+    <va-input v-model="metrics.packages" class="flex xs4" label="Total number of packages in system" readonly/>
+    <va-input v-model="metrics.blockheight" class="flex xs4" label="Blockheight" readonly/>
+    <va-input v-model="metrics.nodes" class="flex xs4" label="Number of peers connected" readonly/>
   </div>
+  <va-button :loading="isLoading" class="flex xs3 button" type="button" @click="refreshMetrics">Refresh</va-button>
 </template>
 
 <script lang="ts">

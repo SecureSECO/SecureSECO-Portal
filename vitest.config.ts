@@ -13,10 +13,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      'lisk-client': path.resolve(
-        __dirname,
-        './node_modules/@liskhq/lisk-client/dist-browser/index.min.js',
-      ),
     },
   },
   setupFiles: ['../../src/main.ts'],
