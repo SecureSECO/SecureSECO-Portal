@@ -1,4 +1,4 @@
-FROM node:18 as build
+FROM node:24 as build
 
 # Create app directory
 WORKDIR /app
