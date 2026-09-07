@@ -15,16 +15,23 @@
       </div>
     </div>
     <div class="flex xs6">
-      <div class="row">
-        <div class="flex xs4 propName"><b>Confirmed trust score:</b></div>
-        <div class="flex xs8 propValue"><b>
-          <span v-if="score !== undefined" :title="score">{{ score.toFixed(2) }}</span>
-          <span v-if="score === undefined" title="A score is shown once the recorded measurements have reached ledger finality">
-            Unknown
-            <va-icon class="material-icons" name="info"/>
-          </span>
-        </b></div>
-      </div>
+      <section class="score-panel" aria-label="Trust scores">
+        <h3>Trust score</h3>
+        <div v-for="kind in ['local', 'confirmed']" :key="kind" class="score-line">
+          <span :class="['score-indicator', scorePair?.[kind]?.score != null ? kind : 'unavailable']" aria-hidden="true">{{ kind === 'confirmed' && scorePair?.confirmed?.score != null ? '✓' : '●' }}</span>
+          <span>{{ kind === 'local' ? 'Local estimate' : 'Confirmed' }}</span>
+          <strong>{{ scorePair?.[kind]?.score != null ? scorePair[kind].score.toFixed(1) : 'Not available yet' }}</strong>
+          <details class="score-explanation">
+            <summary :aria-label="`About the ${kind} score`">ⓘ</summary>
+            <p>{{ kind === 'local' ? 'Uses the latest available measurements, including those awaiting ledger confirmation.' : 'Uses only finalized measurements. New pending data does not replace older confirmed inputs.' }} Both use the same scoring formula. Finality does not prove source accuracy.</p>
+            <p v-if="scorePair">Calculated: {{ new Date(scorePair.updatedAt).toLocaleString() }}</p>
+          </details>
+        </div>
+        <p class="score-coverage" v-if="scorePair">{{ scorePair.local.measurementCount }} scoring measurements locally · {{ scorePair.confirmed.measurementCount }} finalized</p>
+        <p class="score-coverage" v-if="scorePair">Coverage: {{ scorePair.local.factTypeCount }}/{{ scorePair.local.totalFactTypes }} scoring types locally · {{ scorePair.confirmed.factTypeCount }}/{{ scorePair.confirmed.totalFactTypes }} finalized</p>
+        <p class="score-coverage">Different coverage can explain a difference in scores.</p>
+        <p v-if="scoreError" role="status">{{ scoreError }}</p>
+      </section>
       <div class="row" v-if="language">
         <div class="flex xs4 propName">Language:</div>
         <div class="flex xs8 propValue">{{ language }}</div>
@@ -80,7 +87,8 @@ export default defineComponent({
   data() {
     return {
       package: defaultPackage,
-      score: undefined as number | undefined,
+      scorePair: null as any,
+      scoreError: '',
       timer: undefined as ReturnType<typeof setInterval> | undefined,
       // version prop is immutable so this is needed to use in a v-model
       versionLocal: this.version,
@@ -103,7 +111,7 @@ export default defineComponent({
     },
   },
   async mounted() {
-    this.timer = setInterval(() => this.updateScore().catch(() => { this.score = undefined; }), 5000);
+    this.timer = setInterval(() => this.updateScore().catch(() => { this.scorePair = null; this.scoreError = 'Scores temporarily unavailable.'; }), 5000);
     this.package = await this.$dltApi.getPackage(this.name);
     if (this.version === '') {
       await router.replace({
@@ -131,8 +139,9 @@ export default defineComponent({
     },
     async updateScore() {
       const trustfacts = await this.$dltApi.getTrustFacts(this.name, this.version);
-      const {data} = await axios.get(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}/api/dlt/confirmed-score/${encodeURIComponent(this.name)}/${encodeURIComponent(this.version)}`);
-      this.score = typeof data.score === 'number' ? data.score : undefined;
+      const {data} = await axios.get(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}/api/dlt/scores/${encodeURIComponent(this.name)}/${encodeURIComponent(this.version)}`);
+      this.scorePair = data;
+      this.scoreError = data.ledgerAvailable ? '' : 'Ledger unavailable; confirmed score cannot be checked.';
       this.language = trustfacts.find((fact) => fact.type === 'gh_repository_language')?.value.replaceAll('"', '');
     },
   },
@@ -140,6 +149,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.score-panel { padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 16px; }
+.score-panel h3 { margin-bottom: 12px; }
+.score-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0; }
+.score-line strong { margin-left: auto; }
+.score-indicator.unavailable { color: #94a3b8; }
+.score-indicator.local { color: #d99012; }
+.score-indicator.confirmed { background: #1769bb; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; }
+.score-coverage { font-size: 12px; color: #64748b; margin-top: 8px; }
+.score-explanation { font-size: 13px; }
+.score-explanation summary { cursor: pointer; }
+.score-explanation[open] { flex-basis: 100%; }
+
 .propName {
   text-align: right;
 }
