@@ -94,6 +94,11 @@ export default defineComponent({
   },
   beforeUnmount() { clearInterval(this.refreshTimer); this.socket?.close(); },
   computed: {
+    measurementSummary() {
+      const confirmed = this.trustFacts.filter(f => f.status === 'confirmed').length;
+      const failed = this.trustFacts.filter(f => f.status === 'failed').length;
+      return { total: this.trustFacts.length, confirmed, failed, pending: this.trustFacts.length - confirmed - failed };
+    },
     /** Filters out the correct facts for each category, and filters out any
     categories that do not contain any trustfacts */
     categoryTrustFacts(): Category[] {
@@ -138,11 +143,20 @@ export default defineComponent({
 </script>
 
 <template>
-  <div style="margin: 16px 0">
-    <va-switch v-model="confirmedOnly" label="Confirmed only" />
-    <p>Measurements appear as they are collected. A blue check means ledger finality, not independent verification of accuracy.</p>
+  <section class="measurement-summary" aria-label="Measurement summary">
+    <div class="summary-row">
+      <div class="summary-counts" v-if="!isLoading">
+        <strong>{{ measurementSummary.total }} measurements</strong>
+        <span class="summary-confirmed">✓ {{ measurementSummary.confirmed }} confirmed</span>
+        <span><span class="summary-pending-dot" aria-hidden="true"></span>{{ measurementSummary.pending }} pending</span>
+        <span v-if="measurementSummary.failed">ⓘ {{ measurementSummary.failed }} need attention</span>
+      </div>
+      <span v-else>Loading measurements…</span>
+      <va-switch v-model="confirmedOnly" label="Confirmed only" />
+    </div>
+    <p class="summary-hint">Live measurements, with ledger confirmation when available. Hover or tap an indicator for details.</p>
     <p v-if="loadError" role="alert">{{ loadError }}</p>
-  </div>
+  </section>
   <va-card v-if="categoryTrustFacts.length === 0">
     <va-card-title>{{ confirmedOnly ? 'No finalized measurements yet' : 'No measurements collected yet' }}</va-card-title>
 
@@ -163,6 +177,15 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.measurement-summary { margin: 20px 0; padding: 18px 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; }
+.summary-row, .summary-counts { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.summary-row { justify-content: space-between; }
+.summary-counts { color: #64748b; font-size: 14px; }
+.summary-counts strong { color: #1e293b; }
+.summary-confirmed { color: #1769bb; }
+.summary-pending-dot { display: inline-block; width: 8px; height: 8px; background: #d99012; border-radius: 50%; margin-right: 6px; }
+.summary-hint { margin-top: 12px; color: #64748b; font-size: 13px; }
+
 .cardContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));

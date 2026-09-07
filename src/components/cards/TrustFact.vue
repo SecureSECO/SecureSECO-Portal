@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, PropType } from 'vue';
+import { defineProps, PropType, ref } from 'vue';
 import { TrustFact } from '../../api';
 import CveVulnerabilities from './CveVulnerabilities.vue';
 
@@ -9,6 +9,10 @@ defineProps({
   fact_content: { type: String, required: true },
   loading: { type: Boolean, required: true },
 });
+
+const statusHovered = ref(false);
+const statusFocused = ref(false);
+const statusPinned = ref(false);
 
 const rightAlignedFacts = new Set([
   'cve_count',
@@ -230,18 +234,26 @@ function convertFactValue(factValue: string, factCode: string): string {
 
 <template>
   <div class="card" v-if="!loading">
-    <details v-if="measurement" class="card-child" style="overflow-wrap: anywhere">
-      <summary :style="measurement.status === 'confirmed' ? 'color: #1769bb' : ''">
-        {{ ({collected: 'Collected · awaiting submission', submitted: 'Submitted · awaiting inclusion', recorded: 'Recorded · awaiting finality', confirmed: '✓ Ledger-confirmed', failed: 'Submission failed'})[measurement.status || 'collected'] }}
-      </summary>
-      <p>Source: {{ measurement.source || 'Unknown' }}</p>
-      <p>Collected: {{ measurement.collectedAt || 'Not recorded for this historical measurement' }}</p>
-      <p>Submitted by: {{ measurement.uid }}</p>
-      <p v-if="measurement.transactionID">Transaction: {{ measurement.transactionID }}</p>
-      <p v-if="measurement.observedHeight">Observed in ledger state at block {{ measurement.observedHeight }} ({{ measurement.observedBlockID }})</p>
-      <p v-if="measurement.error">{{ measurement.error }}</p>
-    </details>
-    <h2 class="fact-name card-child">{{ codeToName[fact_code] }}</h2>
+    <div class="measurement-heading">
+      <h2 class="fact-name card-child">{{ codeToName[fact_code] }}</h2>
+      <div v-if="measurement" class="measurement-status" @mouseenter="statusHovered = true" @mouseleave="statusHovered = false" @focusin="statusFocused = true" @focusout="statusFocused = false" @keydown.esc="statusPinned = false; statusHovered = false; statusFocused = false">
+        <button type="button" @click="statusPinned = !statusPinned" :aria-expanded="statusHovered || statusFocused || statusPinned" :class="['status-dot', measurement.status === 'confirmed' ? 'confirmed' : measurement.status === 'failed' ? 'failed' : 'pending']"
+          :aria-label="measurement.status === 'confirmed' ? 'Ledger-confirmed. Show details' : measurement.status === 'failed' ? 'Could not submit to ledger. Show details' : 'Confirmation pending. Show details'">
+          <span aria-hidden="true">{{ measurement.status === 'confirmed' ? '✓' : measurement.status === 'failed' ? 'i' : '' }}</span>
+        </button>
+        <div v-show="statusHovered || statusFocused || statusPinned" class="status-popover">
+          <strong>{{ ({collected: 'Measurement collected', submitted: 'Submitted to the ledger', recorded: 'Recorded on the ledger', confirmed: 'Ledger-confirmed', failed: 'Could not submit to ledger'})[measurement.status || 'collected'] }}</strong>
+          <p>{{ measurement.status === 'confirmed' ? 'Finalized on the ledger. This does not independently verify source accuracy.' : measurement.status === 'failed' ? 'The measurement remains available, but submission failed.' : 'Waiting for final confirmation.' }}</p>
+          <p>Source: {{ measurement.source || 'Unknown' }}</p>
+          <p>Collected: {{ measurement.collectedAt ? new Date(measurement.collectedAt).toLocaleString() : 'Time not recorded' }}</p>
+          <p>Submitted by: {{ measurement.uid }}</p>
+          <p v-if="measurement.transactionID">Transaction: {{ measurement.transactionID }}</p>
+          <p v-if="measurement.observedHeight">First observed in ledger state at block {{ measurement.observedHeight }}.</p>
+          <p v-if="measurement.error">{{ measurement.error }}</p>
+        </div>
+      </div>
+    </div>
+    <p v-if="measurement" class="measurement-source">{{ measurement.source || 'Unknown source' }}<span v-if="measurement.collectedAt"> · {{ new Date(measurement.collectedAt).toLocaleString() }}</span></p>
     <p class="card-child fact-value" v-if="fact_code !== 'cve_vulnerabilities'" :style="rightAlignedFacts.has(fact_code) ? 'text-align: right;' : ''">
       {{ convertFactValue(fact_content, fact_code) }}
     </p>
@@ -257,6 +269,21 @@ function convertFactValue(factValue: string, factCode: string): string {
 </template>
 
 <style scoped>
+.measurement-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-right: 14px; }
+.measurement-heading h2 { flex: 1; }
+.measurement-source { color: #64748b; font-size: 12px; margin: 0 12px 12px; }
+.measurement-status { position: relative; flex: 0 0 auto; margin-top: 12px; }
+.status-dot { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 0; padding: 0; list-style: none; font-size: 14px; font-weight: 700; }
+.status-dot::-webkit-details-marker { display: none; }
+.status-dot.pending { background: #f0a629; border: 5px solid #fff3d9; }
+.status-dot.confirmed { background: #1769bb; color: white; }
+.status-dot.failed { background: #e2e8f0; color: #475569; }
+.status-dot:focus-visible { outline: 3px solid #1769bb; outline-offset: 3px; }
+.status-popover { display: block; position: absolute; right: 0; top: 30px; width: min(280px, 75vw); z-index: 20; background: white; color: #334155; padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 8px 24px #0f172a24; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.status-popover p { margin-top: 8px; }
+.measurement-status[open] .status-popover, .measurement-status:focus-within .status-popover { display: block; }
+@media (hover: hover) { .measurement-status:hover .status-popover { display: block; } }
+
 .card {
   border-top: 3px solid rgb(44, 130, 224);
   border-radius: 5px;
