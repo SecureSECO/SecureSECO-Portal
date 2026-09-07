@@ -19,17 +19,17 @@
       <p> For more information visit the <a href="https://github.com/SecureSECO/SecureSECO">GitHub page.</a> </p>
     </va-card-content>
   </va-card>
-  <va-card>
-    <va-card-title>CoSy and Spider status</va-card-title>
-    <va-card-content v-if="this.server_type === 0">
-      <div> In order to add packages or mine jobs for a token reward, download and run an instance locally:</div>
-    </va-card-content>
-    <va-card-content>
-      <DownloadCosyButton />
-    </va-card-content>
+  <va-card v-if="server_type === 1">
+    <va-card-title>Data collection</va-card-title>
     <va-card-content>
       <SpiderToggleButton />
+      <p style="margin-top: 16px">Collects measurements for outstanding package jobs and submits signed results.</p>
+      <p style="margin-top: 8px">Add a package to request measurements. Collection starts automatically when this local instance starts.</p>
     </va-card-content>
+  </va-card>
+  <va-card>
+    <va-card-title>Run your own node</va-card-title>
+    <va-card-content><DownloadCosyButton /></va-card-content>
   </va-card>
   <va-card v-for="list in packagelists">
     <va-card-title> {{list.title}} </va-card-title>

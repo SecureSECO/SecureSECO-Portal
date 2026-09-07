@@ -21,8 +21,8 @@
         v-model="job.platform"
         v-model:search="autoCompleteSearchValue"
         class="col-span-1 flex xs6"
-        label="Platform"
-        placeholder="Type or select platform"
+        label="Package registry"
+        placeholder="Type or select package registry"
         :options="platform_options"
         autocomplete
         highlight-matched-text

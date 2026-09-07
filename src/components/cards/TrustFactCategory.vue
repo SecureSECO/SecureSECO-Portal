@@ -18,10 +18,11 @@ defineProps<{
   </div>
   <TrustFactCard
     v-for="trustfact in trustFacts"
-    :key="trustfact.type"
+    :key="`${trustfact.type}:${trustfact.jobID}:${trustfact.uid}`"
     :fact_code="trustfact.type"
     :fact_content="trustfact.value"
     :loading="isLoading"
+    :measurement="trustfact"
   ></TrustFactCard>
 </template>
 
