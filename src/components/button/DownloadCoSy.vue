@@ -1,5 +1,5 @@
 <template>
-  <va-button :loading="isLoading" @click="download">Download TrustSECO instance</va-button>
+  <va-button :loading="isLoading" @click="download">View setup instructions</va-button>
 </template>
 
 <script lang="ts">

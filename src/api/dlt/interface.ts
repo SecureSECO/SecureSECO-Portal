@@ -9,6 +9,15 @@ export interface Package {
 }
 
 export interface TrustFact {
+  status?: string,
+  source?: string,
+  collectedAt?: string,
+  transactionID?: string,
+  observedHeight?: number,
+  observedBlockID?: string,
+  uid?: string,
+  error?: string,
+  jobID?: number,
   type: string,
   value: string,
 }

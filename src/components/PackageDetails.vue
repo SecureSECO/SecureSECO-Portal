@@ -16,10 +16,10 @@
     </div>
     <div class="flex xs6">
       <div class="row">
-        <div class="flex xs4 propName"><b>Trust score:</b></div>
+        <div class="flex xs4 propName"><b>Confirmed trust score:</b></div>
         <div class="flex xs8 propValue"><b>
           <span v-if="score !== undefined" :title="score">{{ score.toFixed(2) }}</span>
-          <span v-if="score === undefined" title="We do not yet have any Trust Facts on this Package Version">
+          <span v-if="score === undefined" title="A score is shown once the recorded measurements have reached ledger finality">
             Unknown
             <va-icon class="material-icons" name="info"/>
           </span>
@@ -61,6 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import axios from 'axios';
 import { defaultPackage } from '@/api';
 import router from '@/router';
 
@@ -79,7 +80,8 @@ export default defineComponent({
   data() {
     return {
       package: defaultPackage,
-      score: 0 as number | undefined,
+      score: undefined as number | undefined,
+      timer: undefined as ReturnType<typeof setInterval> | undefined,
       // version prop is immutable so this is needed to use in a v-model
       versionLocal: this.version,
       language: undefined as string | undefined,
@@ -101,6 +103,7 @@ export default defineComponent({
     },
   },
   async mounted() {
+    this.timer = setInterval(() => this.updateScore().catch(() => { this.score = undefined; }), 5000);
     this.package = await this.$dltApi.getPackage(this.name);
     if (this.version === '') {
       await router.replace({
@@ -115,6 +118,7 @@ export default defineComponent({
     }
     this.versionLocal = this.version;
   },
+  beforeUnmount() { clearInterval(this.timer); },
   methods: {
     selectVersion(version: string) {
       router.push({
@@ -126,8 +130,9 @@ export default defineComponent({
       });
     },
     async updateScore() {
-      this.score = await this.$dltApi.getTrustScore(this.name, this.version);
       const trustfacts = await this.$dltApi.getTrustFacts(this.name, this.version);
+      const {data} = await axios.get(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}/api/dlt/confirmed-score/${encodeURIComponent(this.name)}/${encodeURIComponent(this.version)}`);
+      this.score = typeof data.score === 'number' ? data.score : undefined;
       this.language = trustfacts.find((fact) => fact.type === 'gh_repository_language')?.value.replaceAll('"', '');
     },
   },

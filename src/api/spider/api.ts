@@ -17,7 +17,7 @@ export default class SpiderApi extends SpiderInterface {
       const { data } = await axios.get(this.#getLink(action));
 
       if (data.success) {
-        this.isActive = !this.isActive;
+        this.isActive = targetState;
         return this.isActive;
       } else {
         return data.message;

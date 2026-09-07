@@ -10,12 +10,11 @@ interface Category {
 }
 
 const categories = [
-  // Technical specifications category is not included here, as the programming
-  // language fact has been moved to the packageDetails component
+  { name: 'Technical specifications', fact_codes: ['gh_repository_language'] },
   {
     name: 'Community and Popularity',
     fact_codes: [
-      'gh_gitstart_ranking',
+      'gh_gitstar_ranking',
       'gh_owner_stargazer_count',
       'gh_release_download_count',
       'so_popularity',
@@ -70,6 +69,11 @@ export default defineComponent({
     return {
       trustFacts: [] as TrustFact[],
       filter: '',
+      confirmedOnly: false,
+      refreshTimer: undefined as ReturnType<typeof setInterval> | undefined,
+      socket: undefined as WebSocket | undefined,
+      loadError: '',
+      refreshing: false,
       isLoading: true,
       categories,
       scoreCategories: {} as Record<string, number>,
@@ -81,10 +85,14 @@ export default defineComponent({
     },
   },
   async mounted() {
+    this.refreshTimer = setInterval(() => this.updateTrustFacts(), 5000);
+    this.socket = new WebSocket(`${import.meta.env.VITE_PROTOCOL === 'https' ? 'wss' : 'ws'}://${import.meta.env.VITE_HOST}/websocket/measurements`);
+    this.socket.onmessage = () => this.updateTrustFacts();
     if (this.version !== '') {
       await this.updateTrustFacts();
     }
   },
+  beforeUnmount() { clearInterval(this.refreshTimer); this.socket?.close(); },
   computed: {
     /** Filters out the correct facts for each category, and filters out any
     categories that do not contain any trustfacts */
@@ -93,7 +101,7 @@ export default defineComponent({
       /* eslint-disable-next-line no-restricted-syntax */
       for (const category of categories) {
         // Filter only the facts the belong to this category
-        const categoryFacts = this.trustFacts.filter((fact: TrustFact) => category.fact_codes.includes(fact.type));
+        const categoryFacts = this.trustFacts.filter((fact: TrustFact) => category.fact_codes.includes(fact.type) && (!this.confirmedOnly || fact.status === 'confirmed'));
         if (categoryFacts.length > 0) {
           categorys.push({ name: category.name, trustfacts: categoryFacts, score: this.scoreCategories[category.name] });
         }
@@ -111,13 +119,16 @@ export default defineComponent({
   },
   methods: {
     async updateTrustFacts() {
-      this.isLoading = true;
+      if (this.refreshing) return;
+      this.refreshing = true;
+      try {
       this.trustFacts = (
         await this.$dltApi.getTrustFacts(this.name, this.version)
       /* eslint-disable-next-line no-nested-ternary */
       ).sort((a, b) => (a.type === b.type ? 0 : a.type > b.type ? 1 : -1));
-      this.scoreCategories = await this.$dltApi.getTrustScoreCategories(this.name, this.version);
-      this.isLoading = false;
+      this.loadError = '';
+      } catch { this.loadError = 'Unable to refresh measurements. Previously loaded values are shown.'; }
+      finally { this.isLoading = false; this.refreshing = false; }
     },
   },
   components: {
@@ -127,11 +138,16 @@ export default defineComponent({
 </script>
 
 <template>
+  <div style="margin: 16px 0">
+    <va-switch v-model="confirmedOnly" label="Confirmed only" />
+    <p>Measurements appear as they are collected. A blue check means ledger finality, not independent verification of accuracy.</p>
+    <p v-if="loadError" role="alert">{{ loadError }}</p>
+  </div>
   <va-card v-if="categoryTrustFacts.length === 0">
-    <va-card-title>No known facts</va-card-title>
+    <va-card-title>{{ confirmedOnly ? 'No finalized measurements yet' : 'No measurements collected yet' }}</va-card-title>
 
     <va-card-content>
-      <p> There are no known facts for this package and version </p>
+      <p> Collection and ledger confirmation may still be in progress. This view updates automatically. </p>
     </va-card-content>
   </va-card>
   <div class="cardContainer">

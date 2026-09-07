@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, PropType } from 'vue';
+import { TrustFact } from '../../api';
 import CveVulnerabilities from './CveVulnerabilities.vue';
 
 defineProps({
+  measurement: { type: Object as PropType<TrustFact>, required: false },
   fact_code: { type: String, required: true },
   fact_content: { type: String, required: true },
   loading: { type: Boolean, required: true },
@@ -228,6 +230,17 @@ function convertFactValue(factValue: string, factCode: string): string {
 
 <template>
   <div class="card" v-if="!loading">
+    <details v-if="measurement" class="card-child" style="overflow-wrap: anywhere">
+      <summary :style="measurement.status === 'confirmed' ? 'color: #1769bb' : ''">
+        {{ ({collected: 'Collected · awaiting submission', submitted: 'Submitted · awaiting inclusion', recorded: 'Recorded · awaiting finality', confirmed: '✓ Ledger-confirmed', failed: 'Submission failed'})[measurement.status || 'collected'] }}
+      </summary>
+      <p>Source: {{ measurement.source || 'Unknown' }}</p>
+      <p>Collected: {{ measurement.collectedAt || 'Not recorded for this historical measurement' }}</p>
+      <p>Submitted by: {{ measurement.uid }}</p>
+      <p v-if="measurement.transactionID">Transaction: {{ measurement.transactionID }}</p>
+      <p v-if="measurement.observedHeight">Observed in ledger state at block {{ measurement.observedHeight }} ({{ measurement.observedBlockID }})</p>
+      <p v-if="measurement.error">{{ measurement.error }}</p>
+    </details>
     <h2 class="fact-name card-child">{{ codeToName[fact_code] }}</h2>
     <p class="card-child fact-value" v-if="fact_code !== 'cve_vulnerabilities'" :style="rightAlignedFacts.has(fact_code) ? 'text-align: right;' : ''">
       {{ convertFactValue(fact_content, fact_code) }}

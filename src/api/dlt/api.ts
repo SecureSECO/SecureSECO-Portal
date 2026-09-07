@@ -14,6 +14,7 @@ interface ApiPackage {
 }
 
 interface ApiTrustFact {
+  status?: string; source?: string; collectedAt?: string; transactionID?: string; observedHeight?: number; observedBlockID?: string; error?: string;
   jobID: number,
   version: string,
   fact: string,
@@ -66,6 +67,9 @@ const parseTrustFact = (data: ApiTrustFact): TrustFact => ({
   ...defaultPackage,
   type: data.fact,
   value: data.factData,
+  status: data.status, source: data.source, collectedAt: data.collectedAt,
+  transactionID: data.transactionID, observedHeight: data.observedHeight,
+  observedBlockID: data.observedBlockID, uid: data.account.uid, error: data.error, jobID: data.jobID,
 });
 
 // Convert job data as received from the Dlt Api into the local Job interface
@@ -106,13 +110,13 @@ export default class DltApi extends DltInterface {
 
   // TODO: Trust Facts should be per name AND version, but the API doesn't support this
   async getTrustFacts(name: string, version: string) {
-    const { data } = await axios.get(this.#getLink(`trust-facts/${name}`));
+    const { data } = await axios.get(this.#getLink(`measurements/${name}`));
     if (!data.facts) {
       return [];
     }
 
     const versionFilter = (item: ApiTrustFact) => item.version === version;
-    return data.facts.filter(versionFilter)
+    return data.facts.map(item => data.ledgerAvailable === false ? {...item, status: item.status === 'confirmed' ? 'recorded' : item.status} : item).filter(versionFilter)
       .map((item: ApiTrustFact) => parseTrustFact(item));
   }
 

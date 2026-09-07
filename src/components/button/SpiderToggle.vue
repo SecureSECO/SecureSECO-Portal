@@ -2,8 +2,10 @@
   <va-switch v-model="state" :color="getColor" :loading="isLoading"
              class="spiderToggleButton" indeterminate left-label
              @click.capture.stop="toggle" v-if="this.server_type===1">
-    {{ getStatusText }}
+    Collect measurements automatically
   </va-switch>
+
+  <p role="status" style="margin-top: 12px">{{ activity }}</p>
 
   <PopUpMessage v-model="showSpiderErrorModal" title="Error: couldn't start spider">
     {{ modalErrorMessage }}
@@ -13,6 +15,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import axios from 'axios';
 import PopUpMessage from '@/components/PopUpMessage.vue';
 import { ServerType } from '@/api';
 
@@ -21,6 +24,8 @@ export default defineComponent({
   components: { PopUpMessage },
   data() {
     return {
+      activity: 'Checking collection status…',
+      poll: undefined as ReturnType<typeof setInterval> | undefined,
       state: null as boolean | null,
       isActive: false,
       isLoading: false,
@@ -32,9 +37,11 @@ export default defineComponent({
   async mounted() {
     this.isActive = await this.$spiderApi.getSpiderStatus();
     this.state = this.isActive;
-    console.log('SpiderToggle.load', this.isActive);
+    await this.refreshActivity();
+    this.poll = setInterval(() => this.refreshActivity(), 5000);
     this.server_type = await this.$api.getServerType();
   },
+  beforeUnmount() { clearInterval(this.poll); },
   computed: {
     getColor(): string {
       return (this.isActive ? 'success' : 'warning');
@@ -44,6 +51,13 @@ export default defineComponent({
     },
   },
   methods: {
+    async refreshActivity() {
+      try {
+        const { data } = await axios.get(`${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_HOST}/api/spider/activity`);
+        this.activity = data.activity;
+        if (!this.isLoading) { this.isActive = data.running; this.state = data.running; }
+      } catch { this.activity = 'Collection status unavailable.'; }
+    },
     async toggle() {
       if (this.isLoading) {
         return;
@@ -70,6 +84,7 @@ export default defineComponent({
         console.error('SpiderToggle.toggle', e.message);
       }
       this.isLoading = false;
+      await this.refreshActivity();
     },
   },
 });
@@ -77,6 +92,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .spiderToggleButton .va-switch__label {
-  width: 100px;
+  max-width: 240px;
 }
 </style>
